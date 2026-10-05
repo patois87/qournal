@@ -71,8 +71,12 @@ jobs:
             ctest --test-dir build -R tst_xournalpp --output-on-failure
         env:
           QT_QPA_PLATFORM: offscreen
+      # Without the GStreamer backend of Qt Multimedia: the application records and plays with the FFmpeg one,
+      # and the tool that fills the AppImage stops at a library of GStreamer that is not installed here
       - name: Build the AppImage
-        run: packaging/linux/appimage.sh build "$QT_ROOT_DIR"
+        run: |
+          rm -f "$QT_ROOT_DIR/plugins/multimedia/libgstreamermediaplugin.so"
+          packaging/linux/appimage.sh build "$QT_ROOT_DIR"
       - name: Start the AppImage
         run: |
           status=0
