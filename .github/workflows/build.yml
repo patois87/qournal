@@ -13,6 +13,8 @@ name: Build
 on:
   push:
   pull_request:
+  # By hand: "Run workflow" on the page of the workflow
+  workflow_dispatch:
 
 env:
   QT_VERSION: 6.12.0
