@@ -7,6 +7,8 @@
  */
 
 #include <QFile>
+#include <QFont>
+#include <QFontInfo>
 #include <QImage>
 #include <QLinearGradient>
 #include <QPainter>
@@ -50,6 +52,22 @@ double difference(const QImage& a, const QImage& b) {
         }
     }
     return static_cast<double>(different) / (x.width() * x.height());
+}
+
+/**
+ * Whether this system has fonts with the widths of Helvetica and Times. A PDF may use these without having them
+ * inside; they are drawn with what the system has for "Arial" and "Times New Roman" then, and the drawing only
+ * matches the one of Qt PDF, which has such fonts of its own, if those are of the same widths
+ */
+bool hasStandardFonts() {
+    static const QStringList SANS = {QStringLiteral("Arial"),     QStringLiteral("Liberation Sans"),
+                                     QStringLiteral("Arimo"),     QStringLiteral("Nimbus Sans"),
+                                     QStringLiteral("Helvetica"), QStringLiteral("TeX Gyre Heros")};
+    static const QStringList SERIF = {QStringLiteral("Times New Roman"), QStringLiteral("Liberation Serif"),
+                                      QStringLiteral("Tinos"),           QStringLiteral("Nimbus Roman"),
+                                      QStringLiteral("Times"),           QStringLiteral("TeX Gyre Termes")};
+    return SANS.contains(QFontInfo(QFont(QStringLiteral("Arial"))).family()) &&
+           SERIF.contains(QFontInfo(QFont(QStringLiteral("Times New Roman"))).family());
 }
 
 /// Draws every page of a file as vectors and compares it with Qt PDF. Returns the worst difference
@@ -230,6 +248,9 @@ private slots:
                            QStringLiteral("-sOutputFile=") + pdf, ps});
         QVERIFY(process.waitForFinished(60000));
         QVERIFY2(QFile::exists(pdf), process.readAllStandardError().constData());
+        if (!hasStandardFonts()) {
+            QSKIP("No fonts with the widths of Helvetica and Times (e.g. Liberation) are installed");
+        }
         QString why;
         const double worst = compareAll(pdf, &why);
         QVERIFY2(worst < 0.01, qPrintable(QStringLiteral("difference %1 %2").arg(worst).arg(why)));
@@ -295,9 +316,12 @@ private slots:
         QCOMPARE(reader.resolve(*action.toDict().find("URI")).stringBytes(),
                  QByteArray("https://xournalpp.github.io/"));
 #ifdef HAVE_QTPDF
-        QString why;
-        const double d = compareAll(path, &why);
-        QVERIFY2(d < 0.01, qPrintable(QStringLiteral("%1 %2").arg(d).arg(why)));
+        // The files have a text in Helvetica, which is not inside them
+        if (hasStandardFonts()) {
+            QString why;
+            const double d = compareAll(path, &why);
+            QVERIFY2(d < 0.01, qPrintable(QStringLiteral("%1 %2").arg(d).arg(why)));
+        }
 #endif
     }
 

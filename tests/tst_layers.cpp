@@ -8,6 +8,7 @@
  */
 
 #include <QClipboard>
+#include <QFontMetricsF>
 #include <QGuiApplication>
 #include <QPainter>
 #include <QPdfWriter>
@@ -348,9 +349,17 @@ private slots:
         QCOMPARE(c->pdfMarkerAlpha(), 1);
         c->undo();
 
-        // A rectangle selects the characters in it, of both lines
+        // A rectangle selects the characters in it, of both lines. As wide as the first words in the font the
+        // PDF was written with, which is another one on every system
+        QFont written(QStringLiteral("Sans"));
+        written.setPixelSize(20);
+        const QFontMetricsF metrics(written);
+        const double right = 100 +
+                             std::max(metrics.horizontalAdvance(QStringLiteral("Hello")),
+                                      metrics.horizontalAdvance(QStringLiteral("Second"))) +
+                             3;
         c->setTool(PageCanvas::SelectPdfTextRect);
-        f.stroke(f.onPage(0, QPointF(95, 175)), f.onPage(0, QPointF(165, 250)));
+        f.stroke(f.onPage(0, QPointF(95, 175)), f.onPage(0, QPointF(right, 250)));
         QVERIFY(c->hasPdfSelection());
         const QStringList lines = c->pdfSelectionText().split(u'\n');
         QVERIFY2(lines.size() == 2 && lines[0].startsWith(QStringLiteral("Hello")) &&

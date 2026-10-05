@@ -23,9 +23,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # An old distribution: the AppImage needs at least the C library of the machine it was built on
+          # An old distribution: the AppImage needs at least the C library of the machine it was built on. The Qt
+          # for arm64 is itself built on Ubuntu 24.04 and does not run on an older one
           - {arch: x86_64, runner: ubuntu-22.04, qt_host: linux, qt_arch: linux_gcc_64}
-          - {arch: arm64, runner: ubuntu-22.04-arm, qt_host: linux_arm64, qt_arch: linux_gcc_arm64}
+          - {arch: arm64, runner: ubuntu-24.04-arm, qt_host: linux_arm64, qt_arch: linux_gcc_arm64}
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
@@ -100,7 +101,7 @@ jobs:
           apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends
           build-essential cmake ninja-build git ca-certificates file dpkg-dev
           qt6-base-dev qt6-declarative-dev qt6-pdf-dev qt6-svg-dev qt6-multimedia-dev qt6-tools-dev
-          qt6-l10n-tools liblua5.4-dev zlib1g-dev libgl1-mesa-dev fonts-dejavu-core
+          qt6-l10n-tools liblua5.4-dev zlib1g-dev libgl1-mesa-dev fonts-dejavu-core fonts-liberation
           qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts
           qml6-module-qtquick-templates qml6-module-qtquick-window qml6-module-qtquick-dialogs
           qml6-module-qt-labs-folderlistmodel qml6-module-qtcore qml6-module-qtqml-workerscript
@@ -110,6 +111,7 @@ jobs:
           dnf install -y gcc-c++ cmake ninja-build git rpm-build
           qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtpdf-devel qt6-qtsvg-devel qt6-qtmultimedia-devel
           qt6-qttools-devel lua-devel zlib-devel mesa-libGL-devel dejavu-sans-fonts
+          liberation-sans-fonts liberation-serif-fonts liberation-mono-fonts
       - uses: actions/checkout@v4
       - name: Build and test
         run: |
