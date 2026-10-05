@@ -29,6 +29,24 @@
 namespace {
 
 /// Notes the mouse events a window gets
+/// Stands for the overlay of Qt Quick Controls, in which menus and dialogs are: the canvas knows it by its name
+class QQuickOverlay: public QQuickItem {
+    Q_OBJECT
+public:
+    using QQuickItem::QQuickItem;
+};
+
+/// Stands for a menu: it takes the clicks, so that they do not reach what is below it
+class ClickTaker: public QQuickItem {
+public:
+    explicit ClickTaker(QQuickItem* parent): QQuickItem(parent) { setAcceptedMouseButtons(Qt::AllButtons); }
+
+protected:
+    void mousePressEvent(QMouseEvent* event) override { event->accept(); }
+    void mouseMoveEvent(QMouseEvent* event) override { event->accept(); }
+    void mouseReleaseEvent(QMouseEvent* event) override { event->accept(); }
+};
+
 class MouseRecorder: public QObject {
 public:
     QList<QEvent::Type> types;
@@ -739,6 +757,32 @@ private slots:
         f.tablet(QEvent::TabletRelease, inside + QPointF(40, 0), 0);
         QCOMPARE(recorder.types.last(), QEvent::MouseButtonRelease);
         QVERIFY(c->document().pages[0].layers[0].elements.empty());
+
+        // In a menu or dialog, which may lie over the pages, a tap stays where it began although the pen slides
+        // a little: a menu that scrolls took it for the beginning of that, and its entry was not chosen
+        QQuickOverlay overlay(f.window.contentItem());
+        overlay.setSize(QSizeF(f.window.size()));
+        ClickTaker menu(&overlay);
+        menu.setSize(overlay.size());
+        recorder.types.clear();
+        f.tablet(QEvent::TabletPress, inside, 0.5);
+        f.tablet(QEvent::TabletMove, inside + QPointF(3, 4), 0.5);
+        f.tablet(QEvent::TabletMove, inside + QPointF(6, -5), 0.5);
+        f.tablet(QEvent::TabletRelease, inside + QPointF(6, -5), 0);
+        QCOMPARE(recorder.types, (QList<QEvent::Type>{QEvent::MouseButtonPress, QEvent::MouseButtonRelease}));
+        QCOMPARE(recorder.lastPosition, inside);
+        QVERIFY(c->document().pages[0].layers[0].elements.empty());
+        // Moved clearly, it drags: a slider, or the menu is scrolled
+        recorder.types.clear();
+        f.tablet(QEvent::TabletPress, inside, 0.5);
+        f.tablet(QEvent::TabletMove, inside + QPointF(0, 60), 0.5);
+        f.tablet(QEvent::TabletMove, inside + QPointF(0, 62), 0.5);
+        f.tablet(QEvent::TabletRelease, inside + QPointF(0, 62), 0);
+        QCOMPARE(recorder.types, (QList<QEvent::Type>{QEvent::MouseButtonPress, QEvent::MouseMove, QEvent::MouseMove,
+                                                      QEvent::MouseButtonRelease}));
+        QCOMPARE(recorder.lastPosition, inside + QPointF(0, 62));
+        menu.setParentItem(nullptr);
+        overlay.setParentItem(nullptr);
 
         // On the pages it still draws, and is no mouse
         recorder.types.clear();

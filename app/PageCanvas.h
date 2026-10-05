@@ -1347,7 +1347,9 @@ private:
 #else
     bool m_penClicksAsMouse = false;
 #endif
-    bool m_penMouseDown = false;  ///< the pen is pressed as a mouse: what follows is for where it was pressed
+    bool m_penMouseDown = false;    ///< the pen is pressed as a mouse: what follows is for where it was pressed
+    QPointF m_penMousePress;        ///< where it was pressed
+    bool m_penMouseSteady = false;  ///< small movements are left out, see sendPenAsMouse()
     bool sendPenAsMouse(QTabletEvent* tablet);
     /// Whether a menu or a dialog is open in the window
     bool popupOpen() const;

@@ -371,16 +371,33 @@ void PageCanvas::einkPenUpdate() {
 bool PageCanvas::sendPenAsMouse(QTabletEvent* tablet) {
     QEvent::Type type = QEvent::MouseMove;
     Qt::MouseButton button = Qt::NoButton;
+    QPointF position = tablet->position();
     if (tablet->type() == QEvent::TabletPress) {
         type = QEvent::MouseButtonPress;
         button = Qt::LeftButton;
         m_penMouseDown = true;
+        // A pen that taps slides a little on the glass. A menu that is longer than the window scrolls when what
+        // is pressed moves, and took such a tap for the beginning of that: its entry was shown as pressed, but
+        // not chosen. In a menu or dialog the tap stays where it began until the pen has clearly moved
+        m_penMousePress = position;
+        m_penMouseSteady = popupOpen();
     } else if (tablet->type() == QEvent::TabletRelease) {
         type = QEvent::MouseButtonRelease;
         button = Qt::LeftButton;
         m_penMouseDown = false;
+        if (m_penMouseSteady) {
+            position = m_penMousePress;
+        }
+        m_penMouseSteady = false;
+    } else if (m_penMouseDown && m_penMouseSteady) {
+        const double slop = 2.0 * QGuiApplication::styleHints()->startDragDistance();
+        if (QLineF(m_penMousePress, position).length() < slop) {
+            tablet->accept();
+            return true;
+        }
+        m_penMouseSteady = false;  // dragged on purpose: a slider, or the menu is scrolled
     }
-    QMouseEvent mouse(type, tablet->position(), tablet->globalPosition(), button,
+    QMouseEvent mouse(type, position, tablet->globalPosition() + (position - tablet->position()), button,
                       m_penMouseDown ? Qt::LeftButton : Qt::NoButton, tablet->modifiers());
     if (QQuickWindow* target = window()) {
         QCoreApplication::sendEvent(target, &mouse);
