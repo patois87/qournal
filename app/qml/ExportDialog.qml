@@ -36,7 +36,7 @@ Dialog {
         columnSpacing: 12
 
         Label { text: qsTr("Format") }
-        ComboBox {
+        FitComboBox {
             id: formatBox
 
             Layout.fillWidth: true
@@ -60,7 +60,7 @@ Dialog {
         }
 
         Label { text: qsTr("Background") }
-        ComboBox {
+        FitComboBox {
             id: backgroundBox
 
             Layout.fillWidth: true

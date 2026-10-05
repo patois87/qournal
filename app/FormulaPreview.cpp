@@ -25,6 +25,14 @@ void FormulaPreview::setPaper(const QColor& paper) {
     }
 }
 
+void FormulaPreview::setZoom(double zoom) {
+    if (zoom > 0 && !qFuzzyCompare(m_zoom, zoom)) {
+        m_zoom = zoom;
+        update();
+        emit zoomChanged();
+    }
+}
+
 void FormulaPreview::paint(QPainter* painter) {
     painter->fillRect(boundingRect(), m_paper);
 #ifdef HAVE_QTPDF
@@ -38,11 +46,11 @@ void FormulaPreview::paint(QPainter* painter) {
     if (document.pageCount() < 1) {
         return;
     }
-    // As large as it is on the page, or smaller if it does not fit
+    // Larger than it is on the page, where it is read from nearby, or smaller if it does not fit
     const QSizeF natural = document.pagePointSize(0);
     const double margin = 8;
     const double scale =
-            std::min({1.5, (width() - 2 * margin) / natural.width(), (height() - 2 * margin) / natural.height()});
+            std::min({m_zoom, (width() - 2 * margin) / natural.width(), (height() - 2 * margin) / natural.height()});
     if (scale <= 0) {
         return;
     }

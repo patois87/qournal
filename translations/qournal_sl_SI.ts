@@ -324,7 +324,7 @@ Prosimo nastavite mapo za snemanje pod &quot;Nastavitve &gt; Zvočni posnetek&qu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

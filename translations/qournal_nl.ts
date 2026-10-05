@@ -324,7 +324,7 @@ Stel de opname map in via &apos;Voorkeuren &gt; Audio-opname&apos;</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

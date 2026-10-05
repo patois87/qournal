@@ -324,8 +324,8 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
         <translation>LaTeX wurde auf diesem Gerät nicht gefunden: Das Programm setzt die Formel selbst. Es kennt die Formeln von LaTeX, aber keine Pakete und keine Vorlage.</translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
-        <translation>Die Formel, im Mathematikmodus von LaTeX</translation>
+        <source>Formula</source>
+        <translation>Formel</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -865,7 +865,7 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>Tools</translation>
+        <translation>&amp;Werkzeuge</translation>
     </message>
     <message>
         <source>Draw</source>
@@ -1077,7 +1077,7 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
     </message>
     <message>
         <source>Laser Pointer - Highlighter</source>
-        <translation>Laser Zeiger - Highlighter</translation>
+        <translation>Laserpointer - Textmarker</translation>
     </message>
     <message>
         <source>Select Linear PDF Text</source>

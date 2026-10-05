@@ -324,7 +324,7 @@ Ezarri grabaketa karpeta &quot;Hobespenak &gt; Audio-grabazioa&quot; atalean</tr
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

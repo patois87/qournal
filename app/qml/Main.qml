@@ -1612,8 +1612,15 @@ ApplicationWindow {
     }
 
     /// Makes a menu as wide as its widest entry: the styles give it a width of their own, and longer entries were
-    /// cut off on the right
+    /// cut off on the right. Called when the menu is about to show
     function fitMenuWidth(menu) {
+        // A long menu starts at its first entry, as every menu does, with its entries where they are shown: a
+        // list that was scrolled once jumped to another place under the finger, and the entry that came to be
+        // there was chosen
+        if (!menu.visible && menu.contentItem instanceof ListView) {
+            menu.contentItem.forceLayout()
+            menu.contentItem.positionViewAtBeginning()
+        }
         let widest = 200
         for (let i = 0; i < menu.count; ++i) {
             const item = menu.itemAt(i)
@@ -2355,7 +2362,7 @@ ApplicationWindow {
         ColumnLayout {
             anchors.fill: parent
 
-            ComboBox {
+            FitComboBox {
                 id: licenseBox
 
                 Layout.fillWidth: true

@@ -324,7 +324,7 @@ Configureu la carpeta d&apos;enregistrament a «Configuració → Gravació d&ap
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

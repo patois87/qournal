@@ -9,6 +9,7 @@ set(QML_SOURCES
     qml/Main.qml
     qml/OutlineSidebar.qml
     qml/PageSettingsDialog.qml
+    qml/FitComboBox.qml
     qml/ModalDim.qml
     qml/WrapCheckBox.qml
     qml/PageSidebar.qml

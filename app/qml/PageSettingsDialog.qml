@@ -114,7 +114,7 @@ Dialog {
         columnSpacing: 12
 
         Label { text: qsTr("Paper format") }
-        ComboBox {
+        FitComboBox {
             id: formatBox
 
             Layout.fillWidth: true
@@ -218,7 +218,7 @@ Dialog {
             visible: !pdfButton.checked && !keepBackground.checked
             text: qsTr("Ruling")
         }
-        ComboBox {
+        FitComboBox {
             id: styleBox
 
             Layout.fillWidth: true

@@ -324,7 +324,7 @@ Bonvolu agordi la sondosierujon ĉe «Agordoj &gt; Sonregistrado»</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

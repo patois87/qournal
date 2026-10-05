@@ -324,7 +324,7 @@ Por favor, defina a pasta de gravação em &quot;Preferências &gt; Gravação d
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

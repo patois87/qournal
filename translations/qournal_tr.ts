@@ -324,7 +324,7 @@ Lütfen kayıt klasörünü &quot;Tercihler&gt; Ses kaydı&quot; altında ayarla
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

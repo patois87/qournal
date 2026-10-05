@@ -22,6 +22,8 @@ class FormulaPreview: public QQuickPaintedItem {
     Q_PROPERTY(QByteArray pdf READ pdf WRITE setPdf NOTIFY pdfChanged)
     /// What is behind the formula
     Q_PROPERTY(QColor paper READ paper WRITE setPaper NOTIFY paperChanged)
+    /// How much larger than on the page the formula is shown, if there is room for that
+    Q_PROPERTY(double zoom READ zoom WRITE setZoom NOTIFY zoomChanged)
 
 public:
     explicit FormulaPreview(QQuickItem* parent = nullptr);
@@ -30,14 +32,18 @@ public:
     void setPdf(const QByteArray& pdf);
     QColor paper() const { return m_paper; }
     void setPaper(const QColor& paper);
+    double zoom() const { return m_zoom; }
+    void setZoom(double zoom);
 
     void paint(QPainter* painter) override;
 
 signals:
     void pdfChanged();
     void paperChanged();
+    void zoomChanged();
 
 private:
     QByteArray m_pdf;
     QColor m_paper = Qt::white;
+    double m_zoom = 1.5;
 };

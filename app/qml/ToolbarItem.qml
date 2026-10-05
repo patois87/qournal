@@ -274,7 +274,7 @@ Loader {
     Component {
         id: eraserTypeComponent
 
-        ComboBox {
+        FitComboBox {
             readonly property bool shown: loader.canvas.tool === PageCanvas.Eraser
 
             implicitWidth: 130
@@ -311,7 +311,7 @@ Loader {
     Component {
         id: sizeComponent
 
-        ComboBox {
+        FitComboBox {
             readonly property bool shown: true
 
             implicitWidth: Math.max(110, loader.iconSize * 5)  // room for the longest name in larger styles
@@ -331,7 +331,7 @@ Loader {
     Component {
         id: lineStyleComponent
 
-        ComboBox {
+        FitComboBox {
             readonly property bool shown: loader.canvas.tool === PageCanvas.Pen || loader.canvas.hasSelection
             readonly property var styles: loader.app.lineStyles
 
@@ -380,14 +380,14 @@ Loader {
                 Row {
                     spacing: 4
 
-                    ComboBox {
+                    FitComboBox {
                         width: 170
                         model: Qt.fontFamilies()
                         currentIndex: model.indexOf(loader.canvas.textFamily)
                         displayText: loader.canvas.textFamily
                         onActivated: index => loader.canvas.textFamily = model[index]
                     }
-                    ComboBox {
+                    FitComboBox {
                         width: 80
                         editable: true
                         model: loader.app.textSizes
@@ -414,7 +414,7 @@ Loader {
                         ToolTip.visible: hovered
                         ToolTip.text: qsTr("Italic")
                     }
-                    ComboBox {
+                    FitComboBox {
                         width: 100
                         model: [qsTr("Left"), qsTr("Centre"), qsTr("Right")]
                         currentIndex: Math.max(["left", "center", "right"].indexOf(loader.canvas.textAlign), 0)

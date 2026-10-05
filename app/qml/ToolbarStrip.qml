@@ -254,6 +254,16 @@ ToolBar {
             text: "»"
             rotation: strip.vertical ? 90 : 0
             font.pixelSize: Math.round(strip.iconSize * 0.8)
+            // In the colour of the icons: the style of Android writes on a toolbar in white, which is for a
+            // toolbar in its own colour and could hardly be seen on this one
+            contentItem: Text {
+                text: overflowButton.text
+                font: overflowButton.font
+                color: strip.theme.colors.windowText
+                opacity: overflowButton.enabled ? 1 : 0.4
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
             onClicked: overflowMenu.popup(overflowButton, strip.vertical ? overflowButton.width : 0,
                                           strip.vertical ? 0 : overflowButton.height)
 

@@ -324,7 +324,7 @@ Kérjük, állítsa be a felvétel mappáját a „Beállítások &gt; Hangfelv�
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

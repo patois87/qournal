@@ -324,7 +324,7 @@ Ustaw proszę folder do nagrań pod &quot;Preferencje &gt; Nagrywanie dźwięku&
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

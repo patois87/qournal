@@ -114,7 +114,7 @@ Dialog {
             Layout.fillWidth: true
             columns: dialog.narrow ? 4 : 5
 
-            ComboBox {
+            FitComboBox {
                 id: configBox
 
                 Layout.fillWidth: true
@@ -180,7 +180,7 @@ Dialog {
             visible: text !== ""
         }
 
-        ComboBox {
+        FitComboBox {
             id: barBox
 
             Layout.fillWidth: true

@@ -140,7 +140,7 @@ Dialog {
             TabButton { text: qsTr("Audio") }
         }
         // On a phone the tabs do not fit next to each other: a list to choose the page from instead
-        ComboBox {
+        FitComboBox {
             Layout.fillWidth: true
             visible: dialog.narrow
             model: [qsTr("Input"), qsTr("Touch"), qsTr("View"), qsTr("Defaults"), qsTr("Audio")]
@@ -185,7 +185,7 @@ Dialog {
                         Repeater {
                             model: dialog.buttons
 
-                            ComboBox {
+                            FitComboBox {
                                 required property var modelData
                                 required property int index
 
@@ -219,7 +219,7 @@ Dialog {
                                 visible: action === PageCanvas.Pen || action === PageCanvas.Highlighter
                                          || action === PageCanvas.Eraser
 
-                                ComboBox {
+                                FitComboBox {
                                     Layout.fillWidth: true
                                     visible: optionsRow.action !== PageCanvas.Eraser
                                     model: [qsTr("Drawing type of the tool")].concat(dialog.app.drawingTypes)
@@ -227,7 +227,7 @@ Dialog {
                                     onActivated: index => dialog.canvas.setButtonOptions(optionsRow.modelData.button,
                                                                                          { drawingType: index - 1 })
                                 }
-                                ComboBox {
+                                FitComboBox {
                                     Layout.fillWidth: true
                                     model: [qsTr("Size of the tool"), qsTr("Very fine"), qsTr("Fine"), qsTr("Medium"),
                                             qsTr("Thick"), qsTr("Very thick")]
@@ -306,7 +306,7 @@ Dialog {
                             Layout.column: dialog.narrow ? 0 : 0
                             text: qsTr("Square of the eraser")
                         }
-                        ComboBox {
+                        FitComboBox {
                             Layout.row: dialog.cell(6 + 2 * dialog.buttons.length, 1)
                             Layout.column: dialog.narrow ? 0 : 1
                             Layout.fillWidth: true
@@ -322,7 +322,7 @@ Dialog {
                             Layout.column: dialog.narrow ? 0 : 0
                             text: qsTr("Pointer of the pen")
                         }
-                        ComboBox {
+                        FitComboBox {
                             Layout.row: dialog.cell(7 + 2 * dialog.buttons.length, 1)
                             Layout.column: dialog.narrow ? 0 : 1
                             Layout.fillWidth: true
@@ -517,7 +517,7 @@ Dialog {
                                 elide: Text.ElideRight
                                 text: deviceRow.modelData.name + " (" + deviceRow.modelData.type + ")"
                             }
-                            ComboBox {
+                            FitComboBox {
                                 readonly property var names: [qsTr("Disabled"), qsTr("Mouse"), qsTr("Pen"),
                                                               qsTr("Eraser"), qsTr("Touchscreen")]
 
@@ -602,7 +602,7 @@ Dialog {
 
                     Heading { text: qsTr("Appearance") }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Colours") }
-                    ComboBox {
+                    FitComboBox {
                         readonly property var modes: ["system", "light", "dark", "eink"]
 
                         Layout.fillWidth: true
@@ -628,7 +628,7 @@ Dialog {
                         onToggled: dialog.input.einkPatternFills = checked
                     }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Arrangement") }
-                    ComboBox {
+                    FitComboBox {
                         readonly property var modes: ["auto", "desktop", "touch"]
 
                         Layout.fillWidth: true
@@ -637,7 +637,7 @@ Dialog {
                         onActivated: index => dialog.app.layoutMode = modes[index]
                     }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Icons") }
-                    ComboBox {
+                    FitComboBox {
                         readonly property var themes: ["lucide", "color", "none"]
 
                         Layout.fillWidth: true
@@ -681,7 +681,8 @@ Dialog {
                             }
                         }
                         Button {
-                            height: 26
+                            // At its own height: the style of Android has no room for the text in less
+                            anchors.verticalCenter: parent.verticalCenter
                             text: qsTr("Other…")
                             onClicked: {
                                 canvasColorDialog.selectedColor = dialog.canvas.canvasColor
@@ -690,7 +691,7 @@ Dialog {
                         }
                     }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Language") }
-                    ComboBox {
+                    FitComboBox {
                         // The first entry stands for the language of the system
                         readonly property var codes: [""].concat(dialog.localization.languages.map(l => l.code))
 
@@ -759,7 +760,7 @@ Dialog {
 
                     Heading { text: qsTr("Pages") }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Scroll bars") }
-                    ComboBox {
+                    FitComboBox {
                         readonly property var places: ["auto", "right", "left", "hidden"]
 
                         Layout.fillWidth: true
@@ -832,7 +833,7 @@ Dialog {
                         onToggled: dialog.app.sidebarRight = checked
                     }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Numbers of the pages") }
-                    ComboBox {
+                    FitComboBox {
                         readonly property var styles: ["below", "circle", "square", "none"]
 
                         Layout.fillWidth: true
@@ -955,7 +956,7 @@ Dialog {
                     }
 
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Unit of the page size") }
-                    ComboBox {
+                    FitComboBox {
                         readonly property var units: ["cm", "mm", "in", "pt"]
 
                         Layout.fillWidth: true
@@ -964,7 +965,7 @@ Dialog {
                         onActivated: index => dialog.app.paperUnit = units[index]
                     }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("A new page is appended") }
-                    ComboBox {
+                    FitComboBox {
                         Layout.fillWidth: true
                         model: [qsTr("Never by itself"), qsTr("When the last page is written on"),
                                 qsTr("When the view is scrolled to the end")]
@@ -1124,7 +1125,7 @@ Dialog {
 
                     Heading { text: qsTr("Devices") }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Microphone") }
-                    ComboBox {
+                    FitComboBox {
                         Layout.fillWidth: true
                         enabled: dialog.audio.available
                         model: [qsTr("As the system")].concat(dialog.audio.inputDevices)
@@ -1141,7 +1142,7 @@ Dialog {
                         onMoved: dialog.audio.gain = value
                     }
                     Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Playback") }
-                    ComboBox {
+                    FitComboBox {
                         Layout.fillWidth: true
                         enabled: dialog.audio.available
                         model: [qsTr("As the system")].concat(dialog.audio.outputDevices)

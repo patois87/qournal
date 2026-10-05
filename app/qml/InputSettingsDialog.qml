@@ -83,7 +83,7 @@ Dialog {
             text: qsTr("Stroke stabilizer")
         }
         Label { text: qsTr("Averaging") }
-        ComboBox {
+        FitComboBox {
             id: averagingBox
 
             Layout.fillWidth: true
@@ -117,7 +117,7 @@ Dialog {
         }
 
         Label { text: qsTr("Preprocessor") }
-        ComboBox {
+        FitComboBox {
             id: preprocessorBox
 
             Layout.fillWidth: true

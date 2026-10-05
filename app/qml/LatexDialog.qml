@@ -29,10 +29,17 @@ Dialog {
         open()
         sourceArea.forceActiveFocus()
         sourceArea.selectAll()
+        // The preview shows the formula at once, not only when it is changed
+        if (runner.available && source.trim() !== "") {
+            previewTimer.start_()
+        }
     }
 
     anchors.centerIn: parent
-    width: Math.min(parent.width - 32, 560 * Math.max(1, font.pixelSize / 13))
+    /// Dialogs are laid out for a font of 13 pixels; phones and tablets have larger ones
+    readonly property real sizeFactor: Math.max(1, font.pixelSize / 13)
+
+    width: Math.min(parent.width - 32, 560 * sizeFactor)
     modal: true
     Overlay.modal: ModalDim {}
     title: existing ? qsTr("Edit formula") : qsTr("New formula")
@@ -102,7 +109,11 @@ Dialog {
 
                 font.family: "monospace"
                 wrapMode: TextArea.Wrap
-                placeholderText: qsTr("The formula, in LaTeX math mode")
+                // Short: the style of Android moves it into the frame of the field, where a long one took two
+                // lines and covered the formula
+                placeholderText: qsTr("Formula")
+                // A formula is not a sentence: no capital letter at its start, no words proposed
+                inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
                 onTextChanged: {
                     if (dialog.visible && runner.available && text.trim() !== "") {
                         previewTimer.restart()
@@ -114,7 +125,8 @@ Dialog {
             id: preview
 
             Layout.fillWidth: true
-            Layout.preferredHeight: 110
+            Layout.preferredHeight: 150 * dialog.sizeFactor
+            zoom: 3 * dialog.sizeFactor
             visible: runner.available
         }
         ScrollView {

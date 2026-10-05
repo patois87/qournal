@@ -324,7 +324,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -324,7 +324,7 @@ Configure o cartafol de gravacións en «Preferencias &gt; Gravación de son»</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

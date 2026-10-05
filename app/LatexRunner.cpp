@@ -114,6 +114,11 @@ void LatexRunner::run(const QString& formula, const QColor& color) {
     }
     texFile.close();
     for (QString& argument: arguments) {
+        // The command of Xournal++ quotes the file as a shell wants it ('{}'), but no shell takes the quotes away
+        // here: LaTeX would look for a file with them in its name, and not find it if the path has a space
+        if (argument.size() >= 2 && argument.startsWith(u'\'') && argument.endsWith(u'\'')) {
+            argument = argument.mid(1, argument.size() - 2);
+        }
         argument.replace(QStringLiteral("{}"), texPath);
     }
 

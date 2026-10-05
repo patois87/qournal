@@ -44,7 +44,7 @@ Dialog {
         }
 
         Label { text: qsTr("Printer") }
-        ComboBox {
+        FitComboBox {
             id: printerBox
 
             Layout.fillWidth: true
@@ -71,7 +71,7 @@ Dialog {
         }
 
         Label { text: qsTr("Paper") }
-        ComboBox {
+        FitComboBox {
             id: paperBox
 
             Layout.fillWidth: true
@@ -79,7 +79,7 @@ Dialog {
         }
 
         Label { text: qsTr("Both sides") }
-        ComboBox {
+        FitComboBox {
             id: duplexBox
 
             Layout.fillWidth: true

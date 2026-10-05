@@ -323,7 +323,7 @@ Please set the recording folder under &quot;Preferences &gt; Audio recording&quo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The formula, in LaTeX math mode</source>
+        <source>Formula</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
