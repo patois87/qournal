@@ -116,8 +116,8 @@ build/app/qournal
 ### Windows
 
 Build with the Qt for MSVC or MinGW as above. Put `qournal.exe` into a folder `package` at the root of the
-sources, run `windeployqt --release --qmldir app\qml package\qournal.exe`, and copy the folders `plugins` and
-`licenses`, `LICENSE` and `THIRD-PARTY.md` next to it. From that folder:
+sources, run `windeployqt --release --no-translations --qmldir app\qml package\qournal.exe`, and copy the folders
+`plugins` and `licenses`, `LICENSE` and `THIRD-PARTY.md` next to it. From that folder:
 
 - the installer, with Inno Setup: `iscc /DAppVersion=1.0.0 /DArch=x64 packaging\windows\qournal.iss`
 - the package for the Microsoft Store, with the Windows SDK: `packaging\windows\msix.ps1 -Version 1.0.0 -Arch x64`

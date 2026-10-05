@@ -222,7 +222,7 @@ jobs:
           Copy-Item -Recurse licenses package\licenses
           Copy-Item LICENSE package\LICENSE.txt
           Copy-Item THIRD-PARTY.md package
-          & "$env:QT_ROOT_DIR\bin\windeployqt.exe" --release --qmldir app\qml package\qournal.exe
+          & "$env:QT_ROOT_DIR\bin\windeployqt.exe" --release --no-translations --qmldir app\qml package\qournal.exe
           if ($LASTEXITCODE -ne 0) { throw "windeployqt failed" }
       - name: Build the installer
         shell: pwsh
