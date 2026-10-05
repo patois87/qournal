@@ -23,9 +23,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # An old distribution: the AppImage needs at least the C library of the machine it was built on. The Qt
-          # for arm64 is itself built on Ubuntu 24.04 and does not run on an older one
-          - {arch: x86_64, runner: ubuntu-22.04, qt_host: linux, qt_arch: linux_gcc_64}
+          # The AppImage needs at least the C library of the machine it was built on: the one of Ubuntu 24.04.
+          # Not an older one: the Qt for arm64 is itself built on Ubuntu 24.04
+          - {arch: x86_64, runner: ubuntu-24.04, qt_host: linux, qt_arch: linux_gcc_64}
           - {arch: arm64, runner: ubuntu-24.04-arm, qt_host: linux_arm64, qt_arch: linux_gcc_arm64}
     runs-on: ${{ matrix.runner }}
     steps:
