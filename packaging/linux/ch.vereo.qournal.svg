@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The icon of Qournal: a Q written with a pen on squared paper. Own work, GPL 2 or later like the application -->
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <clipPath id="sheet">
+      <rect x="20" y="20" width="216" height="216" rx="40"/>
+    </clipPath>
+  </defs>
+  <rect x="20" y="24" width="216" height="216" rx="40" fill="#1b3a57" opacity="0.25"/>
+  <rect x="20" y="20" width="216" height="216" rx="40" fill="#fbfaf6"/>
+  <g clip-path="url(#sheet)" stroke="#c9d6e2" stroke-width="2">
+    <path d="M56 20V236M92 20V236M128 20V236M164 20V236M200 20V236"/>
+    <path d="M20 56H236M20 92H236M20 128H236M20 164H236M20 200H236"/>
+  </g>
+  <rect x="20" y="20" width="216" height="216" rx="40" fill="none" stroke="#1b3a57" stroke-width="6"/>
+  <!-- The Q: its bowl, and the tail that the pen is drawing -->
+  <ellipse cx="116" cy="122" rx="54" ry="60" fill="none" stroke="#1b3a57" stroke-width="18"/>
+  <path d="M132 150 C146 168 158 184 178 196" fill="none" stroke="#1b3a57" stroke-width="18" stroke-linecap="round"/>
+  <!-- The pen, with its tip at the end of the tail -->
+  <g transform="translate(178 196) rotate(-45)">
+    <path d="M0 0 L22 -12 L22 12 Z" fill="#f2d7a6"/>
+    <path d="M0 0 L9 -5 L9 5 Z" fill="#1b3a57"/>
+    <rect x="22" y="-12" width="46" height="24" fill="#1f9d8f"/>
+    <rect x="22" y="-12" width="46" height="8" fill="#35b8a9"/>
+    <rect x="68" y="-12" width="8" height="24" fill="#d0d6db"/>
+    <path d="M76 -12 H80 A12 12 0 0 1 80 12 H76 Z" fill="#e0607e"/>
+  </g>
+</svg>

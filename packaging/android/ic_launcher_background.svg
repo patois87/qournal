@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The back layer of the icon on Android: the squared paper, which the launcher cuts to its shape -->
+<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">
+  <rect width="108" height="108" fill="#fbfaf6"/>
+  <g stroke="#c9d6e2" stroke-width="0.8">
+    <path d="M6 0V108M18 0V108M30 0V108M42 0V108M54 0V108M66 0V108M78 0V108M90 0V108M102 0V108"/>
+    <path d="M0 6H108M0 18H108M0 30H108M0 42H108M0 54H108M0 66H108M0 78H108M0 90H108M0 102H108"/>
+  </g>
+</svg>

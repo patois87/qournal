@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-xopp">
+        <comment>Xournal++ document</comment>
+        <comment xml:lang="de">Xournal++-Dokument</comment>
+        <icon name="application-x-xopp"/>
+        <glob pattern="*.xopp"/>
+    </mime-type>
+    <mime-type type="application/x-xoj">
+        <comment>Xournal document</comment>
+        <comment xml:lang="de">Xournal-Dokument</comment>
+        <icon name="application-x-xopp"/>
+        <glob pattern="*.xoj"/>
+    </mime-type>
+</mime-info>

@@ -1,0 +1,244 @@
+# Builds, tests and packages Qournal:
+#
+#   linux      AppImage (x86_64, arm64), with the Qt of the Qt project inside
+#   packages   .deb for Debian 13 and Ubuntu 26.04, .rpm for Fedora (x86_64, arm64), with the Qt of the distribution;
+#              package-test installs each in a fresh container and starts it
+#   windows    installer (x64, arm64)
+#   release    for a tag "v...": a release of this repository with these packages
+#
+# The steps are those of the readme ("Building it"). The packages for Android and for the Microsoft Store are
+# offered in the stores and are not built here.
+name: Build
+
+on:
+  push:
+  pull_request:
+
+env:
+  QT_VERSION: 6.12.0
+
+jobs:
+  linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # An old distribution: the AppImage needs at least the C library of the machine it was built on
+          - {arch: x86_64, runner: ubuntu-22.04, qt_host: linux, qt_arch: linux_gcc_64}
+          - {arch: arm64, runner: ubuntu-22.04-arm, qt_host: linux_arm64, qt_arch: linux_gcc_arm64}
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: ${{ matrix.qt_host }}
+          arch: ${{ matrix.qt_arch }}
+          modules: qtmultimedia
+          extensions: qtpdf
+          cache: true
+      - name: Install build tools and the libraries the plugins of Qt need
+        run: >
+          sudo apt-get update && sudo apt-get install -y ninja-build file libgl1-mesa-dev libxkbcommon-dev
+          libxkbcommon-x11-0 libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0
+          libxcb-render-util0 libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libwayland-client0 libwayland-cursor0
+          libwayland-egl1 libcups2 libpulse-dev libasound2
+      - name: Build
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DREQUIRE_ALL_FEATURES=ON \
+            -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR"
+          cmake --build build
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+        env:
+          QT_QPA_PLATFORM: offscreen
+      # Against Xournal++ itself: it opens the files written here, and draws its test files as they are drawn here
+      - name: Test against Xournal++
+        if: matrix.arch == 'x86_64'
+        run: |
+          sudo apt-get install -y libgtk-3-bin
+          curl -fL -o xournalpp.AppImage \
+            https://github.com/xournalpp/xournalpp/releases/download/v1.3.8/xournalpp-1.3.8-x86_64.AppImage
+          chmod +x xournalpp.AppImage
+          ./xournalpp.AppImage --appimage-extract > /dev/null
+          broadwayd :7 &
+          XOURNALPP=$PWD/squashfs-root/AppRun GDK_BACKEND=broadway BROADWAY_DISPLAY=:7 \
+            ctest --test-dir build -R tst_xournalpp --output-on-failure
+        env:
+          QT_QPA_PLATFORM: offscreen
+      - name: Build the AppImage
+        run: packaging/linux/appimage.sh build "$QT_ROOT_DIR"
+      - name: Start the AppImage
+        run: |
+          status=0
+          QT_QPA_PLATFORM=offscreen timeout 10 build/qournal-*.AppImage --appimage-extract-and-run || status=$?
+          test $status -eq 124  # still running when the time was up
+      - uses: actions/upload-artifact@v4
+        with:
+          name: appimage-${{ matrix.arch }}
+          path: build/qournal-*.AppImage
+
+  packages:
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: [debian13, ubuntu2604, fedora]
+        arch: [x86_64, arm64]
+        include:
+          - {distro: debian13, image: "debian:13", kind: deb, generator: DEB}
+          - {distro: ubuntu2604, image: "ubuntu:26.04", kind: deb, generator: DEB}
+          - {distro: fedora, image: "fedora:latest", kind: rpm, generator: RPM}
+          - {arch: x86_64, runner: ubuntu-24.04}
+          - {arch: arm64, runner: ubuntu-24.04-arm}
+    runs-on: ${{ matrix.runner }}
+    container: ${{ matrix.image }}
+    steps:
+      - name: Install what the build needs (deb)
+        if: matrix.kind == 'deb'
+        run: >
+          apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends
+          build-essential cmake ninja-build git ca-certificates file dpkg-dev
+          qt6-base-dev qt6-declarative-dev qt6-pdf-dev qt6-svg-dev qt6-multimedia-dev qt6-tools-dev
+          qt6-l10n-tools liblua5.4-dev zlib1g-dev libgl1-mesa-dev
+          qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts
+          qml6-module-qtquick-templates qml6-module-qtquick-window qml6-module-qtquick-dialogs
+          qml6-module-qt-labs-folderlistmodel qml6-module-qtcore qml6-module-qtqml-workerscript
+      - name: Install what the build needs (rpm)
+        if: matrix.kind == 'rpm'
+        run: >
+          dnf install -y gcc-c++ cmake ninja-build git rpm-build
+          qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtpdf-devel qt6-qtsvg-devel qt6-qtmultimedia-devel
+          qt6-qttools-devel lua-devel zlib-devel mesa-libGL-devel
+      - uses: actions/checkout@v4
+      - name: Build and test
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DREQUIRE_ALL_FEATURES=ON
+          cmake --build build
+          QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure
+      - name: Package
+        run: |
+          cd build
+          cpack -G ${{ matrix.generator }}
+          for file in qournal*.${{ matrix.kind }}; do
+            mv "$file" "${file%.${{ matrix.kind }}}-${{ matrix.distro }}.${{ matrix.kind }}"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.kind }}-${{ matrix.distro }}-${{ matrix.arch }}
+          path: build/qournal*.${{ matrix.kind }}
+
+  # Installs each package where nothing else is installed and starts it: shows dependencies that were forgotten
+  package-test:
+    needs: packages
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: [debian13, ubuntu2604, fedora]
+        arch: [x86_64, arm64]
+        include:
+          - {distro: debian13, image: "debian:13", kind: deb}
+          - {distro: ubuntu2604, image: "ubuntu:26.04", kind: deb}
+          - {distro: fedora, image: "fedora:latest", kind: rpm}
+          - {arch: x86_64, runner: ubuntu-24.04}
+          - {arch: arm64, runner: ubuntu-24.04-arm}
+    runs-on: ${{ matrix.runner }}
+    container: ${{ matrix.image }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.kind }}-${{ matrix.distro }}-${{ matrix.arch }}
+      - name: Install the package
+        run: |
+          if [ ${{ matrix.kind }} = deb ]; then
+            apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ./qournal*.deb
+          else
+            dnf install -y ./qournal*.rpm
+          fi
+      - name: Start it
+        run: |
+          status=0
+          QT_QPA_PLATFORM=offscreen timeout 10 qournal || status=$?
+          test $status -eq 124  # still running when the time was up
+
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {arch: x64, runner: windows-latest, qt_host: windows, qt_arch: win64_msvc2022_64, vc: x64}
+          - {arch: arm64, runner: windows-11-arm, qt_host: windows_arm64, qt_arch: win64_msvc2022_arm64, vc: arm64}
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: ${{ matrix.qt_host }}
+          arch: ${{ matrix.qt_arch }}
+          modules: qtmultimedia
+          extensions: qtpdf
+          cache: true
+      - name: Set up the compiler
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: ${{ matrix.vc }}
+      - name: Build
+        shell: pwsh
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DREQUIRE_ALL_FEATURES=ON `
+            "-DCMAKE_PREFIX_PATH=$env:QT_ROOT_DIR"
+          cmake --build build
+      - name: Test
+        shell: pwsh
+        run: ctest --test-dir build --output-on-failure
+        env:
+          QT_QPA_PLATFORM: offscreen
+      # The program with what it needs next to it, in the folder the installer is made of
+      - name: Put the program together
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory package | Out-Null
+          $exe = Get-ChildItem -Path build -Recurse -Filter qournal.exe | Select-Object -First 1
+          Copy-Item $exe.FullName package
+          # Lua is a DLL, so that plugins can load Lua modules written in C
+          $lua = Join-Path $exe.DirectoryName "lua54.dll"
+          if (Test-Path $lua) { Copy-Item $lua package }
+          Copy-Item -Recurse plugins package\plugins
+          Copy-Item -Recurse licenses package\licenses
+          Copy-Item LICENSE package\LICENSE.txt
+          Copy-Item THIRD-PARTY.md package
+          & "$env:QT_ROOT_DIR\bin\windeployqt.exe" --release --qmldir app\qml package\qournal.exe
+          if ($LASTEXITCODE -ne 0) { throw "windeployqt failed" }
+      - name: Build the installer
+        shell: pwsh
+        run: |
+          choco install innosetup --no-progress -y
+          $project = Select-String -Path CMakeLists.txt -Pattern 'project\(qournal VERSION ([0-9.]+)'
+          $version = $project.Matches[0].Groups[1].Value
+          $iscc = Get-ChildItem "${env:ProgramFiles(x86)}", "$env:ProgramFiles" -Directory -Filter "Inno Setup *" |
+            ForEach-Object { Join-Path $_.FullName "ISCC.exe" } | Where-Object { Test-Path $_ } | Select-Object -Last 1
+          & $iscc "/DAppVersion=$version" "/DArch=${{ matrix.arch }}" packaging\windows\qournal.iss
+          if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-${{ matrix.arch }}
+          path: qournal-*-setup.exe
+
+  # A tag "v1.0.0" makes a release with the packages of the jobs above
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux, package-test, windows]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: packages
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: packages/*
+          generate_release_notes: true

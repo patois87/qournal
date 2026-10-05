@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>ch.vereo.qournal</id>
+    <name>Qournal</name>
+    <summary>Take handwritten notes and annotate PDF files</summary>
+    <summary xml:lang="de">Handschriftliche Notizen machen und PDF-Dateien beschriften</summary>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>GPL-2.0-or-later</project_license>
+    <developer id="ch.vereo">
+        <name>vereo</name>
+    </developer>
+    <description>
+        <p>
+            A project of its own, not made by the developers of Xournal++. It reads and writes the files of
+            Xournal++ and offers its tools, written anew on Qt: pen,
+            highlighter, eraser, shapes, text, images, LaTeX formulas, layers, audio recordings and plugins. PDF
+            files can be annotated and exported again.
+        </p>
+    </description>
+    <url type="homepage">https://vereo.ch/software/qournal</url>
+    <url type="bugtracker">https://github.com/patois87/qournal/issues</url>
+    <url type="vcs-browser">https://github.com/patois87/qournal</url>
+    <launchable type="desktop-id">ch.vereo.qournal.desktop</launchable>
+    <provides>
+        <binary>qournal</binary>
+        <mediatype>application/x-xopp</mediatype>
+        <mediatype>application/x-xoj</mediatype>
+    </provides>
+    <content_rating type="oars-1.1"/>
+</component>

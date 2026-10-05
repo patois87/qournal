@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The front layer of the icon on Android: the Q and the pen, inside the part every shape of a launcher shows -->
+<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">
+  <g transform="translate(54 54) scale(0.3) translate(-146 -132)">
+    <ellipse cx="116" cy="122" rx="54" ry="60" fill="none" stroke="#1b3a57" stroke-width="18"/>
+    <path d="M132 150 C146 168 158 184 178 196" fill="none" stroke="#1b3a57" stroke-width="18" stroke-linecap="round"/>
+    <g transform="translate(178 196) rotate(-45)">
+      <path d="M0 0 L22 -12 L22 12 Z" fill="#f2d7a6"/>
+      <path d="M0 0 L9 -5 L9 5 Z" fill="#1b3a57"/>
+      <rect x="22" y="-12" width="46" height="24" fill="#1f9d8f"/>
+      <rect x="22" y="-12" width="46" height="8" fill="#35b8a9"/>
+      <rect x="68" y="-12" width="8" height="24" fill="#d0d6db"/>
+      <path d="M76 -12 H80 A12 12 0 0 1 80 12 H76 Z" fill="#e0607e"/>
+    </g>
+  </g>
+</svg>

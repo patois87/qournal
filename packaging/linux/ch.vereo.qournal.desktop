@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Qournal
+GenericName=Note-taking application
+GenericName[de]=Notizprogramm
+Comment=Take handwritten notes and annotate PDF files
+Comment[de]=Handschriftliche Notizen machen und PDF-Dateien beschriften
+Keywords=tablet;Wacom;pen input;PDF Annotation;markup;journal;handwriting;diary;notes;
+Exec=qournal %f
+Icon=ch.vereo.qournal
+Terminal=false
+StartupNotify=true
+StartupWMClass=qournal
+MimeType=application/x-xoj;application/x-xopp;application/pdf;
+Categories=Office;Qt;
