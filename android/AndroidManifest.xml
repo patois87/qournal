@@ -5,7 +5,20 @@
     android:installLocation="auto"
     android:versionCode="-- %%INSERT_VERSION_CODE%% --"
     android:versionName="-- %%INSERT_VERSION_NAME%% --">
-    <!-- %%INSERT_PERMISSIONS -->
+    <!-- The permissions are listed here instead of being inserted by Qt (no "INSERT_PERMISSIONS"): Qt Multimedia
+         would add the camera, which is not used, and with it Google Play would not offer the application to
+         devices without one, as many tablets with electronic paper are. Network and storage are those of Qt Core
+         and Qt Network, the audio ones are for the recordings -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- Qt Multimedia looks for headsets with it; since Android 12 it has no effect -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <!-- Neither is needed to write: without these lines the permissions above would make them required -->
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     <!-- %%INSERT_FEATURES -->
     <supports-screens
         android:anyDensity="true"
