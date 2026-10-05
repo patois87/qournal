@@ -92,6 +92,12 @@ The sources are here. Packages for Linux (AppImage, `.deb`, `.rpm`) and an insta
 the [releases](https://github.com/patois87/qournal/releases) of this repository. For Android and for the Microsoft
 Store, Qournal is offered in the stores.
 
+## Donations
+
+The packages here cost nothing. If Qournal is of use to you, a donation helps the work on it to go on: there is a
+button for it at [vereo.ch/software/qournal](https://vereo.ch/software/qournal). The donation goes through the
+payment provider of that web site; the application has no part in it and knows nothing of it.
+
 ## Building it
 
 Qt 6.5 or newer with Qt Quick, Quick Controls 2, and for all features Qt PDF, SVG, Print Support and Multimedia;
