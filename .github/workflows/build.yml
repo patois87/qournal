@@ -3,7 +3,7 @@
 #   linux      AppImage (x86_64, arm64), with the Qt of the Qt project inside
 #   packages   .deb for Debian 13 and Ubuntu 26.04, .rpm for Fedora (x86_64, arm64), with the Qt of the distribution;
 #              package-test installs each in a fresh container and starts it
-#   windows    installer (x64, arm64)
+#   windows    installer (x64)
 #   release    for a tag "v...": a release of this repository with these packages
 #
 # The steps are those of the readme ("Building it"). The packages for Android and for the Microsoft Store are
@@ -35,8 +35,7 @@ jobs:
           version: ${{ env.QT_VERSION }}
           host: ${{ matrix.qt_host }}
           arch: ${{ matrix.qt_arch }}
-          modules: qtmultimedia
-          extensions: qtpdf
+          modules: qtmultimedia qtpdf
           cache: true
       - name: Install build tools and the libraries the plugins of Qt need
         run: >
@@ -94,13 +93,14 @@ jobs:
     runs-on: ${{ matrix.runner }}
     container: ${{ matrix.image }}
     steps:
+      # With a font: a container has none, and the tests that draw or measure text fail without one
       - name: Install what the build needs (deb)
         if: matrix.kind == 'deb'
         run: >
           apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends
           build-essential cmake ninja-build git ca-certificates file dpkg-dev
           qt6-base-dev qt6-declarative-dev qt6-pdf-dev qt6-svg-dev qt6-multimedia-dev qt6-tools-dev
-          qt6-l10n-tools liblua5.4-dev zlib1g-dev libgl1-mesa-dev
+          qt6-l10n-tools liblua5.4-dev zlib1g-dev libgl1-mesa-dev fonts-dejavu-core
           qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts
           qml6-module-qtquick-templates qml6-module-qtquick-window qml6-module-qtquick-dialogs
           qml6-module-qt-labs-folderlistmodel qml6-module-qtcore qml6-module-qtqml-workerscript
@@ -109,7 +109,7 @@ jobs:
         run: >
           dnf install -y gcc-c++ cmake ninja-build git rpm-build
           qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtpdf-devel qt6-qtsvg-devel qt6-qtmultimedia-devel
-          qt6-qttools-devel lua-devel zlib-devel mesa-libGL-devel
+          qt6-qttools-devel lua-devel zlib-devel mesa-libGL-devel dejavu-sans-fonts
       - uses: actions/checkout@v4
       - name: Build and test
         run: |
@@ -161,14 +161,18 @@ jobs:
           QT_QPA_PLATFORM=offscreen timeout 10 qournal || status=$?
           test $status -eq 124  # still running when the time was up
 
+  # Only x64, and with an older Qt than the other jobs: the tool that downloads Qt here (aqtinstall 3.3) does not
+  # find Qt 6.11 and newer for Windows, whose folders on the server of Qt are named differently, and has no Qt PDF
+  # for the arm64 kit. To be changed back when it can
   windows:
     strategy:
       fail-fast: false
       matrix:
         include:
           - {arch: x64, runner: windows-latest, qt_host: windows, qt_arch: win64_msvc2022_64, vc: x64}
-          - {arch: arm64, runner: windows-11-arm, qt_host: windows_arm64, qt_arch: win64_msvc2022_arm64, vc: arm64}
     runs-on: ${{ matrix.runner }}
+    env:
+      QT_VERSION: 6.10.3
     steps:
       - uses: actions/checkout@v4
       - name: Install Qt
@@ -177,8 +181,7 @@ jobs:
           version: ${{ env.QT_VERSION }}
           host: ${{ matrix.qt_host }}
           arch: ${{ matrix.qt_arch }}
-          modules: qtmultimedia
-          extensions: qtpdf
+          modules: qtmultimedia qtpdf
           cache: true
       - name: Set up the compiler
         uses: ilammy/msvc-dev-cmd@v1
