@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- From the template of Qt 6.8 (src/android/templates). Added: the name, the documents the application opens -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.vereo.qournal"
+    package="ch.vereo.qournal.android"
     android:installLocation="auto"
     android:versionCode="-- %%INSERT_VERSION_CODE%% --"
     android:versionName="-- %%INSERT_VERSION_NAME%% --">

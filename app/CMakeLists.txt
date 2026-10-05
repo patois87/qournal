@@ -228,10 +228,11 @@ if (ANDROID)
         endif ()
         file(COPY ${HIDDEN_API_FILE} DESTINATION ${ANDROID_PACKAGE_DIR}/libs)
     endif ()
-    # The id is preliminary and cannot change once the app is published
+    # Not the id of the application: Google Play never lets an app that was free once have a price again, and
+    # "ch.vereo.qournal" was set to free there by mistake. It cannot change once the app is published
     set_target_properties(qournal PROPERTIES
         QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_PACKAGE_DIR}
-        QT_ANDROID_PACKAGE_NAME ch.vereo.qournal
+        QT_ANDROID_PACKAGE_NAME ch.vereo.qournal.android
         QT_ANDROID_VERSION_NAME ${PROJECT_VERSION}
         QT_ANDROID_VERSION_CODE 2
     )
