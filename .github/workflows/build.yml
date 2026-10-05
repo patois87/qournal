@@ -63,6 +63,12 @@ jobs:
           chmod +x xournalpp.AppImage
           ./xournalpp.AppImage --appimage-extract > /dev/null
           broadwayd :7 &
+          # It listens a moment after it was started: Xournal++ found no display when it was asked at once
+          for i in $(seq 1 40); do
+            if [ -S "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/broadway8.socket" ]; then break; fi
+            sleep 0.25
+          done
+          sleep 1
           XOURNALPP=$PWD/squashfs-root/AppRun GDK_BACKEND=broadway BROADWAY_DISPLAY=:7 \
             ctest --test-dir build -R tst_xournalpp --output-on-failure
         env:
