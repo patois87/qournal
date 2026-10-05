@@ -7,9 +7,8 @@
  * @license GNU GPLv2 or later
  */
 
-#include <cmath>
-
 #include <QTest>
+#include <cmath>
 
 #include "Document.h"
 #include "Eraser.h"
@@ -424,6 +423,11 @@ private slots:
         QVERIFY(near(Snapping::projToLine(QPointF(5, 7), QPointF(0, 0), QPointF(10, 0)), QPointF(5, 0)));
         QVERIFY(near(Snapping::distanceLine(QPointF(5, 7), QPointF(0, 0), QPointF(10, 0)), 7.0));
         QVERIFY(near(Snapping::distanceLine(QPointF(13, 4), QPointF(0, 0), QPointF(10, 0)), 5.0));
+        // Next to a vertical and next to a slanted segment, at an end, and with a segment that is a point
+        QVERIFY(near(Snapping::distanceLine(QPointF(3, 5), QPointF(0, 0), QPointF(0, 10)), 3.0));
+        QVERIFY(near(Snapping::distanceLine(QPointF(0, 10), QPointF(0, 0), QPointF(10, 10)), std::sqrt(50.0)));
+        QVERIFY(near(Snapping::distanceLine(QPointF(10, 3), QPointF(0, 0), QPointF(10, 0)), 3.0));
+        QVERIFY(near(Snapping::distanceLine(QPointF(3, 4), QPointF(0, 0), QPointF(0, 0)), 5.0));
     }
 
     void snapperFollowsTheRuling() {

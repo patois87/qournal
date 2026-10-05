@@ -54,10 +54,17 @@ QPointF Snapping::projToLine(const QPointF& pos, const QPointF& first, const QPo
 }
 
 double Snapping::distanceLine(const QPointF& pos, const QPointF& first, const QPointF& second) {
-    const QPointF proj = projToLine(pos, first, second);
-    if (std::min(first.x(), second.x()) <= proj.x() && proj.x() <= std::max(first.x(), second.x()) &&
-        std::min(first.y(), second.y()) <= proj.y() && proj.y() <= std::max(first.y(), second.y())) {
-        return distance(pos, proj);
+    // Whether the foot of the perpendicular is on the segment is told by its place along the segment, not by
+    // comparing its coordinates with those of the ends: for a horizontal or vertical segment the coordinate
+    // across it is a rounded result, which may lie beside the segment by the last digit. It did where the
+    // processor multiplies and adds in one step (arm64), and the distance to an end was returned instead
+    const QPointF along = second - first;
+    const double length2 = QPointF::dotProduct(along, along);
+    if (length2 > 0) {
+        const double t = QPointF::dotProduct(pos - first, along) / length2;
+        if (t >= 0 && t <= 1) {
+            return distance(pos, first + t * along);
+        }
     }
     return std::min(distance(pos, first), distance(pos, second));
 }
