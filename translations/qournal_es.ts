@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>No microphone was found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró ningún micrófono</translation>
     </message>
     <message>
         <source>Audio folder not set or invalid! Recording won&apos;t work!
@@ -19,38 +19,38 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>This system has no encoder for audio recordings</source>
-        <translation type="unfinished"></translation>
+        <translation>Este sistema no tiene codificador para grabaciones de audio</translation>
     </message>
     <message>
         <source>This build cannot record audio: it was built without Qt Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede grabar audio: se compiló sin Qt Multimedia</translation>
     </message>
     <message>
         <source>The recording %1 failed: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>La grabación %1 ha fallado: %2</translation>
     </message>
     <message>
         <source>The file is neither in the folder of the recordings (%1) nor next to the document.</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo no está en la carpeta de grabaciones (%1) ni junto al documento.</translation>
     </message>
     <message>
         <source>This build cannot play audio: it was built without Qt Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede reproducir audio: se compiló sin Qt Multimedia</translation>
     </message>
     <message>
         <source>The application is not allowed to use the microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>La aplicación no tiene permiso para usar el micrófono</translation>
     </message>
 </context>
 <context>
     <name>BuiltinLatex</name>
     <message>
         <source>The fonts for formulas could not be unpacked</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudieron extraer los tipos de letra para fórmulas</translation>
     </message>
     <message>
         <source>The formula is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>La fórmula está vacía</translation>
     </message>
 </context>
 <context>
@@ -65,7 +65,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Morado</translation>
     </message>
     <message>
         <source>Light Green</source>
@@ -81,7 +81,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Verde oscuro</translation>
     </message>
     <message>
         <source>Red</source>
@@ -89,7 +89,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Azul oscuro</translation>
     </message>
     <message>
         <source>Black</source>
@@ -113,50 +113,50 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Light Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Gris claro</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Gris oscuro</translation>
     </message>
 </context>
 <context>
     <name>Export</name>
     <message>
         <source>&quot;%1&quot; is not a range: use numbers like &quot;1-3,5,7-&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» no es un intervalo: use números como «1-3,5,7-»</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is beyond the last one, which is %2</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» está más allá del último, que es %2</translation>
     </message>
     <message>
         <source>The numbers start with 1</source>
-        <translation type="unfinished"></translation>
+        <translation>La numeración empieza en 1</translation>
     </message>
     <message>
         <source>&quot;%1&quot;: the first number is larger than the second</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1»: el primer número es mayor que el segundo</translation>
     </message>
     <message>
         <source>There is nothing to export</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay nada que exportar</translation>
     </message>
     <message>
         <source>Could not write &quot;%1&quot;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo escribir «%1»: %2</translation>
     </message>
     <message>
         <source>This build cannot write SVG files: it was built without Qt SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede escribir archivos SVG: se compiló sin Qt SVG</translation>
     </message>
     <message>
         <source>Could not write &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo escribir «%1»</translation>
     </message>
     <message>
         <source>Several pages cannot be exported as images to this place: choose one page, or PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pueden exportar varias páginas como imágenes a este lugar: elija una página, o PDF</translation>
     </message>
 </context>
 <context>
@@ -167,7 +167,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato</translation>
     </message>
     <message>
         <source>Pages</source>
@@ -175,15 +175,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>All; or e.g. 1-3,5,7-</source>
-        <translation type="unfinished"></translation>
+        <translation>Todas; o p. ej. 1-3,5,7-</translation>
     </message>
     <message>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Capas</translation>
     </message>
     <message>
         <source>The visible ones; or e.g. 1-2</source>
-        <translation type="unfinished"></translation>
+        <translation>Las visibles; o p. ej. 1-2</translation>
     </message>
     <message>
         <source>Background</source>
@@ -191,11 +191,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>As shown</source>
-        <translation type="unfinished"></translation>
+        <translation>Como se muestra</translation>
     </message>
     <message>
         <source>Without ruling</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin pauta</translation>
     </message>
     <message>
         <source>None</source>
@@ -203,38 +203,38 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>One page per layer, each with the layers up to it</source>
-        <translation type="unfinished"></translation>
+        <translation>Una página por capa, cada una con las capas hasta ella</translation>
     </message>
     <message>
         <source>Resolution (dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>Resolución (ppp)</translation>
     </message>
     <message>
         <source>The pages of the background PDF are exported as images: their text cannot be selected in the exported file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Las páginas del PDF de fondo se exportan como imágenes: su texto no se puede seleccionar en el archivo exportado.</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar a</translation>
     </message>
     <message>
         <source>%1 files (*.%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos %1 (*.%2)</translation>
     </message>
 </context>
 <context>
     <name>InputSettingsDialog</name>
     <message>
         <source>Pen input</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada del lápiz</translation>
     </message>
     <message>
         <source>Pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Presión</translation>
     </message>
     <message>
         <source>The pen draws wider with more pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>El lápiz dibuja más ancho con más presión</translation>
     </message>
     <message>
         <source>Minimum pressure</source>
@@ -242,15 +242,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Multiplier</source>
-        <translation type="unfinished"></translation>
+        <translation>Multiplicador</translation>
     </message>
     <message>
         <source>Stroke stabilizer</source>
-        <translation type="unfinished"></translation>
+        <translation>Estabilizador de trazo</translation>
     </message>
     <message>
         <source>Averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Promediado</translation>
     </message>
     <message>
         <source>None</source>
@@ -266,11 +266,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Number of events</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de eventos</translation>
     </message>
     <message>
         <source>Sigma</source>
-        <translation type="unfinished"></translation>
+        <translation>Sigma</translation>
     </message>
     <message>
         <source>Preprocessor</source>
@@ -286,11 +286,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Radius (pixels)</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio (píxeles)</translation>
     </message>
     <message>
         <source>Keep sharp turns sharp</source>
-        <translation type="unfinished"></translation>
+        <translation>Conservar agudas las esquinas agudas</translation>
     </message>
     <message>
         <source>Drag</source>
@@ -302,30 +302,30 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Draw up to the pen when the stroke ends</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar hasta el lápiz al terminar el trazo</translation>
     </message>
 </context>
 <context>
     <name>LatexDialog</name>
     <message>
         <source>Edit formula</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar fórmula</translation>
     </message>
     <message>
         <source>New formula</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva fórmula</translation>
     </message>
     <message>
         <source>LaTeX was not found on this device. Formulas can be shown, but not created or changed. The command is: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró LaTeX en este dispositivo. Las fórmulas se pueden mostrar, pero no crear ni modificar. El comando es: %1</translation>
     </message>
     <message>
         <source>LaTeX was not found on this device: the application sets the formula itself. It knows the formulas of LaTeX, but no packages and no template.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró LaTeX en este dispositivo: la aplicación compone la fórmula ella misma. Conoce las fórmulas de LaTeX, pero no paquetes ni plantillas.</translation>
     </message>
     <message>
         <source>Formula</source>
-        <translation type="unfinished"></translation>
+        <translation>Fórmula</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -333,7 +333,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Insertar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -344,42 +344,42 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     <name>LatexRunner</name>
     <message>
         <source>No command to run LaTeX is set</source>
-        <translation type="unfinished"></translation>
+        <translation>No se ha definido ningún comando para ejecutar LaTeX</translation>
     </message>
     <message>
         <source>The program to run LaTeX was not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró el programa para ejecutar LaTeX: %1</translation>
     </message>
     <message>
         <source>Could not write the LaTeX file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo escribir el archivo LaTeX: %1</translation>
     </message>
     <message>
         <source>LaTeX did not write a PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>LaTeX no ha escrito ningún PDF</translation>
     </message>
     <message>
         <source>LaTeX could not render the formula</source>
-        <translation type="unfinished"></translation>
+        <translation>LaTeX no pudo componer la fórmula</translation>
     </message>
     <message>
         <source>LaTeX could not be started</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo iniciar LaTeX</translation>
     </message>
     <message>
         <source>This platform cannot run LaTeX</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta plataforma no puede ejecutar LaTeX</translation>
     </message>
     <message>
         <source>Could not read the LaTeX template &quot;%1&quot;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo leer la plantilla LaTeX «%1»: %2</translation>
     </message>
 </context>
 <context>
     <name>LayerSidebar</name>
     <message>
         <source>Show or hide</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar u ocultar</translation>
     </message>
     <message>
         <source>Background</source>
@@ -387,11 +387,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>New layer above this one</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva capa encima de esta</translation>
     </message>
     <message>
         <source>Duplicate layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicar capa</translation>
     </message>
     <message>
         <source>Delete layer</source>
@@ -399,15 +399,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Move layer up</source>
-        <translation type="unfinished"></translation>
+        <translation>Subir capa</translation>
     </message>
     <message>
         <source>Move layer down</source>
-        <translation type="unfinished"></translation>
+        <translation>Bajar capa</translation>
     </message>
     <message>
         <source>Merge with the layer below</source>
-        <translation type="unfinished"></translation>
+        <translation>Combinar con la capa inferior</translation>
     </message>
     <message>
         <source>Rename layer</source>
@@ -426,15 +426,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     <name>LinkDialog</name>
     <message>
         <source>Edit link</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar enlace</translation>
     </message>
     <message>
         <source>New link</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo enlace</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Dirección</translation>
     </message>
     <message>
         <source>Text</source>
@@ -442,7 +442,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>The address, if left empty</source>
-        <translation type="unfinished"></translation>
+        <translation>La dirección, si se deja vacío</translation>
     </message>
     <message>
         <source>Open</source>
@@ -450,7 +450,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitar</translation>
     </message>
     <message>
         <source>OK</source>
@@ -469,7 +469,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Espacio</translation>
     </message>
     <message>
         <source>Drawing type</source>
@@ -477,19 +477,19 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Eraser type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de borrador</translation>
     </message>
     <message>
         <source>Colours</source>
-        <translation type="unfinished"></translation>
+        <translation>Colores</translation>
     </message>
     <message>
         <source>Size of the tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de la herramienta</translation>
     </message>
     <message>
         <source>Line style</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo de línea</translation>
     </message>
     <message>
         <source>Font</source>
@@ -497,7 +497,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Zoom level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel de escala</translation>
     </message>
     <message>
         <source>Layer</source>
@@ -557,11 +557,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Seek backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Rebobinar</translation>
     </message>
     <message>
         <source>Seek forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Adelantar</translation>
     </message>
     <message>
         <source>Insert image…</source>
@@ -589,15 +589,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>100 %</source>
-        <translation type="unfinished"></translation>
+        <translation>100 %</translation>
     </message>
     <message>
         <source>Fit width</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustar al ancho</translation>
     </message>
     <message>
         <source>Fit page</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustar a la página</translation>
     </message>
     <message>
         <source>Presentation mode</source>
@@ -629,7 +629,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Floating toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuadro de herramientas flotante</translation>
     </message>
     <message>
         <source>Customize toolbars…</source>
@@ -681,11 +681,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Enlace</translation>
     </message>
     <message>
         <source>LaTeX formula</source>
-        <translation type="unfinished"></translation>
+        <translation>Fórmula LaTeX</translation>
     </message>
     <message>
         <source>Play object</source>
@@ -693,7 +693,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>A mano alzada</translation>
     </message>
     <message>
         <source>Shape recognizer</source>
@@ -713,7 +713,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Continua</translation>
     </message>
     <message>
         <source>Dashed</source>
@@ -729,7 +729,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Plugin &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Complemento «%1»</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -741,7 +741,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Open recent</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir recientes</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -761,11 +761,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Select on all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar en todas las capas</translation>
     </message>
     <message>
         <source>Move selection to layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover selección a la capa</translation>
     </message>
     <message>
         <source>Arrange</source>
@@ -797,15 +797,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Columnas</translation>
     </message>
     <message>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Filas</translation>
     </message>
     <message>
         <source>Fill columns first</source>
-        <translation type="unfinished"></translation>
+        <translation>Llenar primero las columnas</translation>
     </message>
     <message>
         <source>Right to left</source>
@@ -845,19 +845,19 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Move page towards the beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover página hacia el principio</translation>
     </message>
     <message>
         <source>Move page towards the end</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover página hacia el final</translation>
     </message>
     <message>
         <source>Insert a region of the screen…</source>
-        <translation type="unfinished"></translation>
+        <translation>Insertar una región de la pantalla…</translation>
     </message>
     <message>
         <source>Paper format and background…</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de papel y fondo…</translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
@@ -869,19 +869,19 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar</translation>
     </message>
     <message>
         <source>Pen input…</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada del lápiz…</translation>
     </message>
     <message>
         <source>Load colour palette…</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar paleta de colores…</translation>
     </message>
     <message>
         <source>Default colour palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Paleta de colores predeterminada</translation>
     </message>
     <message>
         <source>Back</source>
@@ -893,7 +893,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Draw with a pen, the mouse or a finger to see input details</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuje con un lápiz, el ratón o un dedo para ver detalles de la entrada</translation>
     </message>
     <message>
         <source>Page</source>
@@ -909,31 +909,31 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Capas</translation>
     </message>
     <message>
         <source>Outline</source>
-        <translation type="unfinished"></translation>
+        <translation>Índice</translation>
     </message>
     <message>
         <source>The file could not be opened</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo abrir el archivo</translation>
     </message>
     <message>
         <source>The document could not be exported</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo exportar el documento</translation>
     </message>
     <message>
         <source>Highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Resaltar</translation>
     </message>
     <message>
         <source>Underline</source>
-        <translation type="unfinished"></translation>
+        <translation>Subrayar</translation>
     </message>
     <message>
         <source>Strike through</source>
-        <translation type="unfinished"></translation>
+        <translation>Tachar</translation>
     </message>
     <message>
         <source>Find</source>
@@ -941,15 +941,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>%1 of %2 on page %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 de %2 en la página %3</translation>
     </message>
     <message>
         <source>Not found</source>
-        <translation type="unfinished"></translation>
+        <translation>No encontrado</translation>
     </message>
     <message>
         <source>The document could not be saved</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo guardar el documento</translation>
     </message>
     <message>
         <source>Open file</source>
@@ -957,31 +957,31 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Xournal++ and PDF files (*.xopp *.xoj *.pdf)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de Xournal++ y PDF (*.xopp *.xoj *.pdf)</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos los archivos (*)</translation>
     </message>
     <message>
         <source>Insert a region of the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Insertar una región de la pantalla</translation>
     </message>
     <message>
         <source>Recover unsaved changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Recuperar los cambios no guardados?</translation>
     </message>
     <message>
         <source>The last session did not end regularly. An automatically saved version of this document is newer than the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>La última sesión no terminó correctamente. Una versión de este documento guardada automáticamente es más reciente que el archivo.</translation>
     </message>
     <message>
         <source>The last session did not end regularly. A document that was never saved is still there.</source>
-        <translation type="unfinished"></translation>
+        <translation>La última sesión no terminó correctamente. Aún existe un documento que nunca se guardó.</translation>
     </message>
     <message>
         <source>Recover</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuperar</translation>
     </message>
     <message>
         <source>Discard</source>
@@ -993,19 +993,19 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Xournal++ files (*.xopp)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de Xournal++ (*.xopp)</translation>
     </message>
     <message>
         <source>The palette could not be loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo cargar la paleta</translation>
     </message>
     <message>
         <source>Load colour palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar paleta de colores</translation>
     </message>
     <message>
         <source>GIMP palettes (*.gpl)</source>
-        <translation type="unfinished"></translation>
+        <translation>Paletas de GIMP (*.gpl)</translation>
     </message>
     <message>
         <source>Insert image</source>
@@ -1013,23 +1013,23 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Images (*.png *.jpg *.jpeg *.gif *.bmp *.svg *.webp)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imágenes (*.png *.jpg *.jpeg *.gif *.bmp *.svg *.webp)</translation>
     </message>
     <message>
         <source>Licenses…</source>
-        <translation type="unfinished"></translation>
+        <translation>Licencias…</translation>
     </message>
     <message>
         <source>Version %1&lt;br&gt;&lt;br&gt;A project of its own, not made by the developers of &lt;a href=&quot;https://xournalpp.github.io&quot;&gt;Xournal++&lt;/a&gt;. It reads and writes the files of Xournal++ and has its tools, written anew on Qt, with parts of its source code, its icons, plugins and translations.&lt;br&gt;&lt;br&gt;Free software under the GNU General Public License, version 2 or later. It comes without any warranty.&lt;br&gt;&lt;br&gt;&lt;a href=&quot;https://vereo.ch/software/qournal&quot;&gt;vereo.ch/software/qournal&lt;/a&gt;&lt;br&gt;The source code is at &lt;a href=&quot;https://github.com/patois87/qournal&quot;&gt;github.com/patois87/qournal&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión %1&lt;br&gt;&lt;br&gt;Un proyecto independiente, no realizado por los desarrolladores de &lt;a href=&quot;https://xournalpp.github.io&quot;&gt;Xournal++&lt;/a&gt;. Lee y escribe los archivos de Xournal++ y tiene sus herramientas, escritas de nuevo con Qt, con partes de su código fuente, sus iconos, complementos y traducciones.&lt;br&gt;&lt;br&gt;Software libre bajo la Licencia Pública General de GNU, versión 2 o posterior. Se ofrece sin garantía alguna.&lt;br&gt;&lt;br&gt;&lt;a href=&quot;https://vereo.ch/software/qournal&quot;&gt;vereo.ch/software/qournal&lt;/a&gt;&lt;br&gt;El código fuente está en &lt;a href=&quot;https://github.com/patois87/qournal&quot;&gt;github.com/patois87/qournal&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>Licenses</source>
-        <translation type="unfinished"></translation>
+        <translation>Licencias</translation>
     </message>
     <message>
         <source>Error in the plugin &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Error en el complemento «%1»</translation>
     </message>
     <message>
         <source>Go to page</source>
@@ -1037,11 +1037,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Discard unsaved changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Descartar los cambios no guardados?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; has changes that are not saved. They are lost if you continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» tiene cambios sin guardar. Se perderán si continúa.</translation>
     </message>
     <message>
         <source>Record / Stop</source>
@@ -1121,7 +1121,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Zoom to 100%</source>
-        <translation>Escala al 100 %</translation>
+        <translation>Escala al 100&#xa0;%</translation>
     </message>
     <message>
         <source>New Page at End</source>
@@ -1129,15 +1129,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Stop playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Detener reproducción</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menú</translation>
     </message>
     <message>
         <source>%1 / %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 / %2</translation>
     </message>
     <message>
         <source>Image</source>
@@ -1145,11 +1145,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>First page alone, like a cover</source>
-        <translation type="unfinished"></translation>
+        <translation>Primera página sola, como portada</translation>
     </message>
     <message>
         <source>Highlight the position of the pointer</source>
-        <translation type="unfinished"></translation>
+        <translation>Resaltar la posición del puntero</translation>
     </message>
     <message>
         <source>Show Menubar</source>
@@ -1173,11 +1173,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>All pages of the PDF are in the document.</source>
-        <translation type="unfinished"></translation>
+        <translation>Todas las páginas del PDF están en el documento.</translation>
     </message>
     <message>
         <source>Image as background of the page…</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagen como fondo de la página…</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -1193,11 +1193,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Image as background of the page</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagen como fondo de la página</translation>
     </message>
     <message>
         <source>About Qournal</source>
-        <translation type="unfinished"></translation>
+        <translation>Acerca de Qournal</translation>
     </message>
     <message>
         <source>Zoom slider</source>
@@ -1205,11 +1205,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Colour %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Color %1</translation>
     </message>
     <message>
         <source>%1 (not available)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (no disponible)</translation>
     </message>
     <message>
         <source>Manage toolbars…</source>
@@ -1221,11 +1221,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Layer below</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa inferior</translation>
     </message>
     <message>
         <source>Layer above</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa superior</translation>
     </message>
     <message>
         <source>Top layer</source>
@@ -1237,23 +1237,23 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Selection tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Herramientas de selección</translation>
     </message>
     <message>
         <source>Select text of the PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar texto del PDF</translation>
     </message>
     <message>
         <source>Select rectangle on all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar rectángulo en todas las capas</translation>
     </message>
     <message>
         <source>Select region on all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar región en todas las capas</translation>
     </message>
     <message>
         <source>Choose a colour…</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir un color…</translation>
     </message>
     <message>
         <source>Very fine</source>
@@ -1277,7 +1277,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>My toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Mi barra de herramientas</translation>
     </message>
     <message>
         <source>Toolbars</source>
@@ -1285,11 +1285,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>The clipboard could not be pasted</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo pegar el portapapeles</translation>
     </message>
     <message>
         <source>Input details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detalles de entrada</translation>
     </message>
     <message>
         <source>Previous annotated page</source>
@@ -1301,51 +1301,51 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Opacity of the filling</source>
-        <translation type="unfinished"></translation>
+        <translation>Opacidad del relleno</translation>
     </message>
     <message>
         <source>Opacity of the PDF text marker…</source>
-        <translation type="unfinished"></translation>
+        <translation>Opacidad del marcador de texto PDF…</translation>
     </message>
     <message>
         <source>Opacity of the marker of PDF text</source>
-        <translation type="unfinished"></translation>
+        <translation>Opacidad del marcador de texto PDF</translation>
     </message>
     <message>
         <source>Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar todas las capas</translation>
     </message>
     <message>
         <source>Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar todas las capas</translation>
     </message>
     <message>
         <source>New layer above the current one</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva capa encima de la actual</translation>
     </message>
     <message>
         <source>New layer below the current one</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva capa debajo de la actual</translation>
     </message>
     <message>
         <source>Recordings of the document…</source>
-        <translation type="unfinished"></translation>
+        <translation>Grabaciones del documento…</translation>
     </message>
     <message>
         <source>The application crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>La aplicación ha fallado</translation>
     </message>
     <message>
         <source>The last session ended with a crash. A document with unsaved changes was saved and is offered for recovery when it is opened. What happened is written in:</source>
-        <translation type="unfinished"></translation>
+        <translation>La última sesión terminó con un fallo. Se guardó un documento con cambios sin guardar, que se ofrecerá para recuperarlo al abrirlo. Lo ocurrido está escrito en:</translation>
     </message>
     <message>
         <source>Please report the crash, with this log, to the developers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Informe del fallo a los desarrolladores, con este registro.</translation>
     </message>
     <message>
         <source>Open the folder of the log</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir la carpeta del registro</translation>
     </message>
     <message>
         <source>%F-Note-%H-%M</source>
@@ -1357,49 +1357,49 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Página %1 de %2</translation>
     </message>
     <message>
         <source>Save for Xournal++ 1.3…</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar para Xournal++ 1.3…</translation>
     </message>
     <message>
         <source>Save for Xournal++ 1.3</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar para Xournal++ 1.3</translation>
     </message>
     <message>
         <source>Xournal++ 1.3.8 and earlier cannot open files with links or turned texts and images. In the copy for them:</source>
-        <translation type="unfinished"></translation>
+        <translation>Xournal++ 1.3.8 y anteriores no pueden abrir archivos con enlaces ni con textos e imágenes girados. En la copia para ellos:</translation>
     </message>
     <message>
         <source>This document stays as it is.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este documento queda como está.</translation>
     </message>
 </context>
 <context>
     <name>OutlineSidebar</name>
     <message>
         <source>The PDF has no outline</source>
-        <translation type="unfinished"></translation>
+        <translation>El PDF no tiene índice</translation>
     </message>
     <message>
         <source>The document has no PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>El documento no tiene PDF</translation>
     </message>
 </context>
 <context>
     <name>PageCanvas</name>
     <message>
         <source>&quot;%1&quot; could not be read as a PDF file</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» no se pudo leer como archivo PDF</translation>
     </message>
     <message>
         <source>This build cannot open PDF files: it was built without Qt PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede abrir archivos PDF: se compiló sin Qt PDF</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin título</translation>
     </message>
     <message>
         <source>Plain</source>
@@ -1447,59 +1447,59 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>pressure %1</source>
-        <translation type="unfinished"></translation>
+        <translation>presión %1</translation>
     </message>
     <message>
         <source>no pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>sin presión</translation>
     </message>
     <message>
         <source>%1 events/s</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 eventos/s</translation>
     </message>
     <message>
         <source>– events/s</source>
-        <translation type="unfinished"></translation>
+        <translation>– eventos/s</translation>
     </message>
     <message>
         <source>tile %1 ms</source>
-        <translation type="unfinished"></translation>
+        <translation>mosaico %1 ms</translation>
     </message>
     <message>
         <source>Could not open &quot;%1&quot;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo abrir «%1»: %2</translation>
     </message>
     <message>
         <source>Recovered document</source>
-        <translation type="unfinished"></translation>
+        <translation>Documento recuperado</translation>
     </message>
     <message>
         <source>Pages: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Páginas: %1</translation>
     </message>
     <message>
         <source>Layers: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Capas: %1</translation>
     </message>
     <message>
         <source>No printer is available</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay ninguna impresora disponible</translation>
     </message>
     <message>
         <source>Could not start printing</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo iniciar la impresión</translation>
     </message>
     <message>
         <source>This build cannot print: it was built without Qt Print Support</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede imprimir: se compiló sin Qt Print Support</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is not an image that can be read</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» no es una imagen que se pueda leer</translation>
     </message>
     <message>
         <source>The formula that LaTeX produced could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo leer la fórmula producida por LaTeX</translation>
     </message>
     <message>
         <source>Layer %1</source>
@@ -1511,7 +1511,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source> (eraser tip)</source>
-        <translation type="unfinished"></translation>
+        <translation> (punta de borrador)</translation>
     </message>
     <message>
         <source>Mouse</source>
@@ -1519,9 +1519,9 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message numerus="yes">
         <source>Touch (%n finger(s))</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Toque (%n dedo)</numerusform>
+            <numerusform>Toque (%n dedos)</numerusform>
         </translation>
     </message>
     <message>
@@ -1541,19 +1541,19 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     <name>PageSettingsDialog</name>
     <message>
         <source>US Letter</source>
-        <translation type="unfinished"></translation>
+        <translation>US Letter</translation>
     </message>
     <message>
         <source>US Legal</source>
-        <translation type="unfinished"></translation>
+        <translation>US Legal</translation>
     </message>
     <message>
         <source>Current (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Actual (%1)</translation>
     </message>
     <message>
         <source>Page %1: format and background</source>
-        <translation type="unfinished"></translation>
+        <translation>Página %1: formato y fondo</translation>
     </message>
     <message>
         <source>Paper format</source>
@@ -1565,7 +1565,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Swap width and height</source>
-        <translation type="unfinished"></translation>
+        <translation>Intercambiar ancho y alto</translation>
     </message>
     <message>
         <source>Background</source>
@@ -1573,31 +1573,31 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Keep the PDF page</source>
-        <translation type="unfinished"></translation>
+        <translation>Conservar la página PDF</translation>
     </message>
     <message>
         <source>Keep the image</source>
-        <translation type="unfinished"></translation>
+        <translation>Conservar la imagen</translation>
     </message>
     <message>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papel</translation>
     </message>
     <message>
         <source>Page of the PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Página del PDF</translation>
     </message>
     <message>
         <source>PDF page</source>
-        <translation type="unfinished"></translation>
+        <translation>Página PDF</translation>
     </message>
     <message>
         <source>Ruling</source>
-        <translation type="unfinished"></translation>
+        <translation>Pauta</translation>
     </message>
     <message>
         <source>Paper colour</source>
-        <translation type="unfinished"></translation>
+        <translation>Color del papel</translation>
     </message>
     <message>
         <source>Apply to all pages</source>
@@ -1605,7 +1605,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Size (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño (%1)</translation>
     </message>
 </context>
 <context>
@@ -1635,255 +1635,255 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     <name>Palette</name>
     <message>
         <source>A palette file has to start with the line &quot;GIMP Palette&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Un archivo de paleta debe empezar con la línea «GIMP Palette»</translation>
     </message>
     <message>
         <source>Line %1: the values of a colour have to be between 0 and 255</source>
-        <translation type="unfinished"></translation>
+        <translation>Línea %1: los valores de un color deben estar entre 0 y 255</translation>
     </message>
     <message>
         <source>Line %1 is neither a colour nor a header: &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>La línea %1 no es ni un color ni una cabecera: «%2»</translation>
     </message>
     <message>
         <source>The palette does not contain any colour</source>
-        <translation type="unfinished"></translation>
+        <translation>La paleta no contiene ningún color</translation>
     </message>
     <message>
         <source>Could not read &quot;%1&quot;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo leer «%1»: %2</translation>
     </message>
 </context>
 <context>
     <name>Pdf::Crypt</name>
     <message>
         <source>The encryption of the PDF file is damaged</source>
-        <translation type="unfinished"></translation>
+        <translation>El cifrado del archivo PDF está dañado</translation>
     </message>
     <message>
         <source>The PDF file is protected by a password</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo PDF está protegido con contraseña</translation>
     </message>
     <message>
         <source>The PDF file is encrypted in a way that is not understood</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo PDF está cifrado de una forma no admitida</translation>
     </message>
 </context>
 <context>
     <name>Pdf::Reader</name>
     <message>
         <source>Not a PDF file</source>
-        <translation type="unfinished"></translation>
+        <translation>No es un archivo PDF</translation>
     </message>
     <message>
         <source>The PDF file has no table of its objects</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo PDF no tiene tabla de objetos</translation>
     </message>
     <message>
         <source>The table of the objects of the PDF file cannot be read</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede leer la tabla de objetos del archivo PDF</translation>
     </message>
     <message>
         <source>The PDF file has no document catalog</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo PDF no tiene catálogo de documento</translation>
     </message>
     <message>
         <source>The encryption of the PDF file is damaged</source>
-        <translation type="unfinished"></translation>
+        <translation>El cifrado del archivo PDF está dañado</translation>
     </message>
     <message>
         <source>The PDF file is encrypted in a way that is not understood</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo PDF está cifrado de una forma no admitida</translation>
     </message>
     <message>
         <source>The PDF file is protected by a password</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo PDF está protegido con contraseña</translation>
     </message>
     <message>
         <source>The PDF file has no pages</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo PDF no tiene páginas</translation>
     </message>
     <message>
         <source>No objects were found in the PDF file</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontraron objetos en el archivo PDF</translation>
     </message>
 </context>
 <context>
     <name>PluginApi</name>
     <message>
         <source>There is no document</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay ningún documento</translation>
     </message>
     <message>
         <source>registerUi needs to be called within initUi()</source>
-        <translation type="unfinished"></translation>
+        <translation>registerUi debe llamarse dentro de initUi()</translation>
     </message>
     <message>
         <source>The option &quot;callback&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «callback»</translation>
     </message>
     <message>
         <source>The option &quot;action&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «action»</translation>
     </message>
     <message>
         <source>Unknown action &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Acción desconocida «%1»</translation>
     </message>
     <message>
         <source>There is no tool %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No existe la herramienta %1</translation>
     </message>
     <message>
         <source>The option &quot;color&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «color»</translation>
     </message>
     <message>
         <source>The tool &quot;%1&quot; has no colour</source>
-        <translation type="unfinished"></translation>
+        <translation>La herramienta «%1» no tiene color</translation>
     </message>
     <message>
         <source>There is no selection</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay ninguna selección</translation>
     </message>
     <message>
         <source>Unknown tool &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Herramienta desconocida «%1»</translation>
     </message>
     <message>
         <source>The font &quot;%1&quot; is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>El tipo de letra «%1» no está disponible</translation>
     </message>
     <message>
         <source>Page number %1 is out of range</source>
-        <translation type="unfinished"></translation>
+        <translation>El número de página %1 está fuera del intervalo</translation>
     </message>
     <message>
         <source>Unknown page type &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de página desconocido «%1»</translation>
     </message>
     <message>
         <source>The current page has no page of a PDF as background</source>
-        <translation type="unfinished"></translation>
+        <translation>La página actual no tiene una página de un PDF como fondo</translation>
     </message>
     <message>
         <source>The PDF has no page %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El PDF no tiene la página %1</translation>
     </message>
     <message>
         <source>The page cannot have the size %1 × %2</source>
-        <translation type="unfinished"></translation>
+        <translation>La página no puede tener el tamaño %1 × %2</translation>
     </message>
     <message>
         <source>There is no layer %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No existe la capa %1</translation>
     </message>
     <message>
         <source>The option &quot;outputFile&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «outputFile»</translation>
     </message>
     <message>
         <source>Unknown kind of folder &quot;%1&quot;: it is &quot;config&quot;, &quot;data&quot; or &quot;state&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de carpeta desconocido «%1»: es «config», «data» o «state»</translation>
     </message>
     <message>
         <source>Could not create the folder &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo crear la carpeta «%1»</translation>
     </message>
     <message>
         <source>&quot;%1&quot; does not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» no existe</translation>
     </message>
     <message>
         <source>Could not rename &quot;%1&quot; to &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo renombrar «%1» a «%2»</translation>
     </message>
     <message>
         <source>Unknown scope &quot;%1&quot;: it is &quot;selection&quot;, &quot;layer&quot;, &quot;page&quot; or &quot;all&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ámbito desconocido «%1»: es «selection», «layer», «page» o «all»</translation>
     </message>
     <message>
         <source>The option &quot;strokes&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «strokes»</translation>
     </message>
     <message>
         <source>The tables x, y and pressure of a stroke have to be of the same length and not empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Las tablas x, y y pressure de un trazo deben tener la misma longitud y no estar vacías</translation>
     </message>
     <message>
         <source>The option &quot;splines&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «splines»</translation>
     </message>
     <message>
         <source>The coordinates of a spline come in groups of eight: two knots and two control points</source>
-        <translation type="unfinished"></translation>
+        <translation>Las coordenadas de un spline van en grupos de ocho: dos nodos y dos puntos de control</translation>
     </message>
     <message>
         <source>The option &quot;texts&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «texts»</translation>
     </message>
     <message>
         <source>A text needs &quot;text&quot;, &quot;x&quot; and &quot;y&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Un texto necesita «text», «x» e «y»</translation>
     </message>
     <message>
         <source>The option &quot;links&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «links»</translation>
     </message>
     <message>
         <source>A link needs &quot;text&quot;, &quot;url&quot;, &quot;x&quot; and &quot;y&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Un enlace necesita «text», «url», «x» e «y»</translation>
     </message>
     <message>
         <source>The option &quot;images&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta la opción «images»</translation>
     </message>
     <message>
         <source>An image needs either &quot;path&quot; or &quot;data&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Una imagen necesita «path» o «data»</translation>
     </message>
     <message>
         <source>Could not open &quot;%1&quot;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo abrir «%1»: %2</translation>
     </message>
     <message>
         <source>The image could not be read</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo leer la imagen</translation>
     </message>
     <message>
         <source>The image would have no size</source>
-        <translation type="unfinished"></translation>
+        <translation>La imagen no tendría tamaño</translation>
     </message>
     <message>
         <source>A reference is not one of an element. References are valid until the plugin returns</source>
-        <translation type="unfinished"></translation>
+        <translation>Una referencia no corresponde a ningún elemento. Las referencias son válidas hasta que el complemento retorna</translation>
     </message>
     <message>
         <source>Only elements of the current layer can be selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Solo se pueden seleccionar elementos de la capa actual</translation>
     </message>
 </context>
 <context>
     <name>PluginController</name>
     <message>
         <source>plugin.ini does not name the Lua file of the plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>plugin.ini no indica el archivo Lua del complemento</translation>
     </message>
     <message>
         <source>The path &quot;%1&quot; is not allowed</source>
-        <translation type="unfinished"></translation>
+        <translation>La ruta «%1» no está permitida</translation>
     </message>
     <message>
         <source>The file &quot;%1&quot; is missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta el archivo «%1»</translation>
     </message>
     <message>
         <source>The plugin has no function &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>El complemento no tiene la función «%1»</translation>
     </message>
     <message>
         <source>The plugin &quot;%1&quot; is not running</source>
-        <translation type="unfinished"></translation>
+        <translation>El complemento «%1» no está en ejecución</translation>
     </message>
 </context>
 <context>
@@ -1894,39 +1894,40 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>This build cannot run plugins: it was built without Lua.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede ejecutar complementos: se compiló sin Lua.</translation>
     </message>
     <message>
         <source>No plugins were found.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontraron complementos.</translation>
     </message>
     <message>
         <source>%1 (version %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (versión %2)</translation>
     </message>
     <message>
         <source>By %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Por %1</translation>
     </message>
     <message>
         <source>Plugins are folders with a plugin.ini and a Lua file. They are looked for next to the application and in:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Los complementos son carpetas con un plugin.ini y un archivo Lua. Se buscan junto a la aplicación y en:
+%1</translation>
     </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
     <message>
         <source>Eraser end of the pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Extremo borrador del lápiz</translation>
     </message>
     <message>
         <source>First button of the pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Primer botón del lápiz</translation>
     </message>
     <message>
         <source>Second button of the pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Segundo botón del lápiz</translation>
     </message>
     <message>
         <source>Middle mouse button</source>
@@ -1938,15 +1939,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>The selected tool</source>
-        <translation type="unfinished"></translation>
+        <translation>La herramienta seleccionada</translation>
     </message>
     <message>
         <source>A4, plain</source>
-        <translation type="unfinished"></translation>
+        <translation>A4, simple</translation>
     </message>
     <message>
         <source>%1 × %2 mm, %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 × %2 mm, %3</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -1954,11 +1955,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada</translation>
     </message>
     <message>
         <source>Touch</source>
-        <translation type="unfinished"></translation>
+        <translation>Táctil</translation>
     </message>
     <message>
         <source>View</source>
@@ -1966,7 +1967,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Valores predeterminados</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -1974,11 +1975,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Botones</translation>
     </message>
     <message>
         <source>The tool that is used as long as a button is pressed.</source>
-        <translation type="unfinished"></translation>
+        <translation>La herramienta que se usa mientras se mantiene pulsado un botón.</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -1986,91 +1987,91 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>The pen draws wider with more pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>El lápiz dibuja más ancho con más presión</translation>
     </message>
     <message>
         <source>Pressure curve and stabilizer…</source>
-        <translation type="unfinished"></translation>
+        <translation>Curva de presión y estabilizador…</translation>
     </message>
     <message>
         <source>Fingers</source>
-        <translation type="unfinished"></translation>
+        <translation>Dedos</translation>
     </message>
     <message>
         <source>One finger draws with the selected tool instead of moving the view</source>
-        <translation type="unfinished"></translation>
+        <translation>Un dedo dibuja con la herramienta seleccionada en lugar de mover la vista</translation>
     </message>
     <message>
         <source>Two fingers zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Dos dedos cambian la escala</translation>
     </message>
     <message>
         <source>Palm rejection</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechazo de la palma</translation>
     </message>
     <message>
         <source>Ignore touches for a moment after the pen was used</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorar los toques un momento después de usar el lápiz</translation>
     </message>
     <message>
         <source>Milliseconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Milisegundos</translation>
     </message>
     <message>
         <source>Touches are always ignored while the pen is on the screen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Los toques se ignoran siempre mientras el lápiz está sobre la pantalla.</translation>
     </message>
     <message>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Apariencia</translation>
     </message>
     <message>
         <source>Colours</source>
-        <translation type="unfinished"></translation>
+        <translation>Colores</translation>
     </message>
     <message>
         <source>As the system</source>
-        <translation type="unfinished"></translation>
+        <translation>Como el sistema</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Claro</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Oscuro</translation>
     </message>
     <message>
         <source>Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Iconos</translation>
     </message>
     <message>
         <source>Lucide</source>
-        <translation type="unfinished"></translation>
+        <translation>Lucide</translation>
     </message>
     <message>
         <source>Colourful</source>
-        <translation type="unfinished"></translation>
+        <translation>En color</translation>
     </message>
     <message>
         <source>Text instead of icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto en lugar de iconos</translation>
     </message>
     <message>
         <source>This build cannot show icons: the SVG plugin of Qt is missing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede mostrar iconos: falta el complemento SVG de Qt.</translation>
     </message>
     <message>
         <source>Size of the icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de los iconos</translation>
     </message>
     <message>
         <source>Around the pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Alrededor de las páginas</translation>
     </message>
     <message>
         <source>Other…</source>
-        <translation type="unfinished"></translation>
+        <translation>Otro…</translation>
     </message>
     <message>
         <source>Language</source>
@@ -2078,7 +2079,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>The language changes when the application is started the next time.</source>
-        <translation type="unfinished"></translation>
+        <translation>El idioma cambia la próxima vez que se inicie la aplicación.</translation>
     </message>
     <message>
         <source>Zoom</source>
@@ -2086,31 +2087,31 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Step of zooming in and out (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Paso al ampliar y reducir (%)</translation>
     </message>
     <message>
         <source>Step of Control and the wheel (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Paso con Control y la rueda (%)</translation>
     </message>
     <message>
         <source>Page of new documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Página de los documentos nuevos</translation>
     </message>
     <message>
         <source>Use the current page</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar la página actual</translation>
     </message>
     <message>
         <source>Autosave</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardado automático</translation>
     </message>
     <message>
         <source>Save unsaved changes to a separate file from time to time</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar de vez en cuando los cambios no guardados en un archivo aparte</translation>
     </message>
     <message>
         <source>Minutes between two saves</source>
-        <translation type="unfinished"></translation>
+        <translation>Minutos entre dos guardados</translation>
     </message>
     <message>
         <source>LaTeX</source>
@@ -2118,71 +2119,71 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Comando</translation>
     </message>
     <message>
         <source>{} stands for the .tex file. An empty field restores the default.</source>
-        <translation type="unfinished"></translation>
+        <translation>{} representa el archivo .tex. Un campo vacío restaura el valor predeterminado.</translation>
     </message>
     <message>
         <source>All settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos los ajustes</translation>
     </message>
     <message>
         <source>Reset to the defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Restablecer los valores predeterminados</translation>
     </message>
     <message>
         <source>This build cannot record or play audio: it was built without Qt Multimedia.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede grabar ni reproducir audio: se compiló sin Qt Multimedia.</translation>
     </message>
     <message>
         <source>Recordings</source>
-        <translation type="unfinished"></translation>
+        <translation>Grabaciones</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Carpeta</translation>
     </message>
     <message>
         <source>Choose…</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir…</translation>
     </message>
     <message>
         <source>The document only notes the names of the recordings. They are looked for in this folder and next to the document. An empty field restores the default.</source>
-        <translation type="unfinished"></translation>
+        <translation>El documento solo anota los nombres de las grabaciones. Se buscan en esta carpeta y junto al documento. Un campo vacío restaura el valor predeterminado.</translation>
     </message>
     <message>
         <source>Prefer small files to files Xournal++ can play</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferir archivos pequeños a archivos que Xournal++ pueda reproducir</translation>
     </message>
     <message>
         <source>Xournal++ records Ogg Vorbis. Where Qt cannot write that, the recordings are WAV files, which Xournal++ plays but which are large, or AAC files, which are small.</source>
-        <translation type="unfinished"></translation>
+        <translation>Xournal++ graba en Ogg Vorbis. Donde Qt no puede escribirlo, las grabaciones son archivos WAV, que Xournal++ reproduce pero son grandes, o archivos AAC, que son pequeños.</translation>
     </message>
     <message>
         <source>Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivos</translation>
     </message>
     <message>
         <source>Microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Micrófono</translation>
     </message>
     <message>
         <source>Level of the recording</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel de la grabación</translation>
     </message>
     <message>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproducción</translation>
     </message>
     <message>
         <source>Folder of the audio recordings</source>
-        <translation type="unfinished"></translation>
+        <translation>Carpeta de las grabaciones de audio</translation>
     </message>
     <message>
         <source>Colour around the pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Color alrededor de las páginas</translation>
     </message>
     <message>
         <source>Show Floating Toolbox</source>
@@ -2194,35 +2195,35 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Arrangement</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposición</translation>
     </message>
     <message>
         <source>As the device</source>
-        <translation type="unfinished"></translation>
+        <translation>Como el dispositivo</translation>
     </message>
     <message>
         <source>For mouse and keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Para ratón y teclado</translation>
     </message>
     <message>
         <source>For fingers and a pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Para dedos y lápiz</translation>
     </message>
     <message>
         <source>Fourth mouse button (back)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuarto botón del ratón (atrás)</translation>
     </message>
     <message>
         <source>Fifth mouse button (forward)</source>
-        <translation type="unfinished"></translation>
+        <translation>Quinto botón del ratón (adelante)</translation>
     </message>
     <message>
         <source>Drawing type of the tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de dibujo de la herramienta</translation>
     </message>
     <message>
         <source>Size of the tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de la herramienta</translation>
     </message>
     <message>
         <source>Very fine</source>
@@ -2246,59 +2247,59 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Colour of the button; none for the colour of the tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Color del botón; ninguno para el color de la herramienta</translation>
     </message>
     <message>
         <source>The colour of the tool</source>
-        <translation type="unfinished"></translation>
+        <translation>El color de la herramienta</translation>
     </message>
     <message>
         <source>Guess the pressure from the speed, for devices without pressure</source>
-        <translation type="unfinished"></translation>
+        <translation>Estimar la presión a partir de la velocidad, para dispositivos sin presión</translation>
     </message>
     <message>
         <source>Square of the eraser</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuadrado del borrador</translation>
     </message>
     <message>
         <source>Never shown</source>
-        <translation type="unfinished"></translation>
+        <translation>No mostrar nunca</translation>
     </message>
     <message>
         <source>Always shown</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar siempre</translation>
     </message>
     <message>
         <source>While it hovers</source>
-        <translation type="unfinished"></translation>
+        <translation>Mientras sobrevuela</translation>
     </message>
     <message>
         <source>While it erases</source>
-        <translation type="unfinished"></translation>
+        <translation>Mientras borra</translation>
     </message>
     <message>
         <source>Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujo</translation>
     </message>
     <message>
         <source>A tap is not a stroke: it selects what is under it</source>
-        <translation type="unfinished"></translation>
+        <translation>Un toque no es un trazo: selecciona lo que hay debajo</translation>
     </message>
     <message>
         <source>A tap is shorter than (ms)</source>
-        <translation type="unfinished"></translation>
+        <translation>Un toque dura menos de (ms)</translation>
     </message>
     <message>
         <source>Dots right after a stroke are kept for (ms)</source>
-        <translation type="unfinished"></translation>
+        <translation>Los puntos justo tras un trazo se conservan durante (ms)</translation>
     </message>
     <message>
         <source>Drawing a shape to the left acts like Shift, drawing it upwards like Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar una forma hacia la izquierda actúa como Mayús; hacia arriba, como Control</translation>
     </message>
     <message>
         <source>Recognized shapes snap to the grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Las formas reconocidas se acoplan a la retícula</translation>
     </message>
     <message>
         <source>Template</source>
@@ -2306,31 +2307,31 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>The template of Xournal++</source>
-        <translation type="unfinished"></translation>
+        <translation>La plantilla de Xournal++</translation>
     </message>
     <message>
         <source>Recordings are Ogg Vorbis files, as those of Xournal++.</source>
-        <translation type="unfinished"></translation>
+        <translation>Las grabaciones son archivos Ogg Vorbis, como las de Xournal++.</translation>
     </message>
     <message>
         <source>LaTeX template</source>
-        <translation type="unfinished"></translation>
+        <translation>Plantilla LaTeX</translation>
     </message>
     <message>
         <source>LaTeX files (*.tex)</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos LaTeX (*.tex)</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos los archivos (*)</translation>
     </message>
     <message>
         <source>Colour of the button</source>
-        <translation type="unfinished"></translation>
+        <translation>Color del botón</translation>
     </message>
     <message>
         <source>What each input device is used as. Devices that were not used yet may be missing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para qué se usa cada dispositivo de entrada. Pueden faltar los dispositivos que aún no se han usado.</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -2350,11 +2351,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Automatic (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Automático (%1)</translation>
     </message>
     <message>
         <source>Pointer of the pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntero del lápiz</translation>
     </message>
     <message>
         <source>None</source>
@@ -2362,71 +2363,71 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Dot</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <source>Big dot</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto grande</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation type="unfinished"></translation>
+        <translation>Flecha</translation>
     </message>
     <message>
         <source>Events left out at the start of a stroke</source>
-        <translation type="unfinished"></translation>
+        <translation>Eventos omitidos al inicio de un trazo</translation>
     </message>
     <message>
         <source>Tolerance of snapping to the grid (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerancia del acople a la retícula (%)</translation>
     </message>
     <message>
         <source>Tolerance of snapping to angles (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerancia del acople a ángulos (%)</translation>
     </message>
     <message>
         <source>Moving a selection to the edge of the view</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover una selección al borde de la vista</translation>
     </message>
     <message>
         <source>Speed of the view (% of it per second)</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidad de la vista (% de ella por segundo)</translation>
     </message>
     <message>
         <source>Faster deep in the edge, up to (times)</source>
-        <translation type="unfinished"></translation>
+        <translation>Más rápido al fondo del borde, hasta (veces)</translation>
     </message>
     <message>
         <source>They zoom once their distance changed by (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambian la escala cuando su distancia varía en (%)</translation>
     </message>
     <message>
         <source>Electronic paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papel electrónico</translation>
     </message>
     <message>
         <source>Electronic paper: black on white without grays, and no pointer of the pen. A device with such a screen has it by itself. On Android and iOS the controls change their look when the application is started the next time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Papel electrónico: negro sobre blanco sin grises y sin puntero del lápiz. Un dispositivo con una pantalla así lo activa por sí mismo. En Android e iOS los controles cambian de aspecto la próxima vez que se inicie la aplicación.</translation>
     </message>
     <message>
         <source>Smooth edges of strokes on electronic paper (they look fainter there)</source>
-        <translation type="unfinished"></translation>
+        <translation>Suavizar los bordes de los trazos en papel electrónico (allí se ven más tenues)</translation>
     </message>
     <message>
         <source>Fills as a pattern of dots on electronic paper (tones look uneven there)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rellenos como trama de puntos en papel electrónico (allí los tonos se ven desiguales)</translation>
     </message>
     <message>
         <source>Resolution of the screen (dpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>Resolución de la pantalla (ppp)</translation>
     </message>
     <message>
         <source>From the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>De la pantalla</translation>
     </message>
     <message>
         <source>At a zoom of 100 % the pages have their real size when this is right: the bar below is 5 cm long then. 72 makes a point of the page a pixel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Con una escala del 100 % las páginas tienen su tamaño real si este valor es correcto: la barra de abajo mide entonces 5 cm. Con 72, un punto de la página es un píxel.</translation>
     </message>
     <message>
         <source>Pages</source>
@@ -2434,7 +2435,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Scroll bars</source>
-        <translation type="unfinished"></translation>
+        <translation>Barras de desplazamiento</translation>
     </message>
     <message>
         <source>Right</source>
@@ -2446,27 +2447,27 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Right, none in the arrangement for fingers</source>
-        <translation type="unfinished"></translation>
+        <translation>Derecha; ninguna en la disposición para dedos</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultas</translation>
     </message>
     <message>
         <source>The pages can be scrolled beyond their edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Las páginas se pueden desplazar más allá de sus bordes</translation>
     </message>
     <message>
         <source>Space above and below the pages (pt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Espacio encima y debajo de las páginas (pt)</translation>
     </message>
     <message>
         <source>Space left and right of the pages (pt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Espacio a izquierda y derecha de las páginas (pt)</translation>
     </message>
     <message>
         <source>Colour of selections</source>
-        <translation type="unfinished"></translation>
+        <translation>Color de las selecciones</translation>
     </message>
     <message>
         <source>Sidebar</source>
@@ -2474,55 +2475,55 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>On the right side</source>
-        <translation type="unfinished"></translation>
+        <translation>En el lado derecho</translation>
     </message>
     <message>
         <source>Numbers of the pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Números de página</translation>
     </message>
     <message>
         <source>Below the preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Debajo de la vista previa</translation>
     </message>
     <message>
         <source>In a circle on the preview</source>
-        <translation type="unfinished"></translation>
+        <translation>En un círculo sobre la vista previa</translation>
     </message>
     <message>
         <source>In a square on the preview</source>
-        <translation type="unfinished"></translation>
+        <translation>En un cuadrado sobre la vista previa</translation>
     </message>
     <message>
         <source>Title of the window</source>
-        <translation type="unfinished"></translation>
+        <translation>Título de la ventana</translation>
     </message>
     <message>
         <source>The whole path of the file</source>
-        <translation type="unfinished"></translation>
+        <translation>La ruta completa del archivo</translation>
     </message>
     <message>
         <source>The number of the current page</source>
-        <translation type="unfinished"></translation>
+        <translation>El número de la página actual</translation>
     </message>
     <message>
         <source>Full screen and presentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pantalla completa y presentación</translation>
     </message>
     <message>
         <source>Shown</source>
-        <translation type="unfinished"></translation>
+        <translation>Visible</translation>
     </message>
     <message>
         <source>Full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pantalla completa</translation>
     </message>
     <message>
         <source>Presentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Presentación</translation>
     </message>
     <message>
         <source>Menu bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barra de menús</translation>
     </message>
     <message>
         <source>Toolbars</source>
@@ -2530,63 +2531,63 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Highlighted position of the pointer</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición resaltada del puntero</translation>
     </message>
     <message>
         <source>Colour and border</source>
-        <translation type="unfinished"></translation>
+        <translation>Color y borde</translation>
     </message>
     <message>
         <source>Radius (px)</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio (px)</translation>
     </message>
     <message>
         <source>Width of the border (px)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ancho del borde (px)</translation>
     </message>
     <message>
         <source>Unit of the page size</source>
-        <translation type="unfinished"></translation>
+        <translation>Unidad del tamaño de página</translation>
     </message>
     <message>
         <source>Centimetres</source>
-        <translation type="unfinished"></translation>
+        <translation>Centímetros</translation>
     </message>
     <message>
         <source>Millimetres</source>
-        <translation type="unfinished"></translation>
+        <translation>Milímetros</translation>
     </message>
     <message>
         <source>Inches</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulgadas</translation>
     </message>
     <message>
         <source>Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntos</translation>
     </message>
     <message>
         <source>A new page is appended</source>
-        <translation type="unfinished"></translation>
+        <translation>Se añade una página nueva</translation>
     </message>
     <message>
         <source>Never by itself</source>
-        <translation type="unfinished"></translation>
+        <translation>Nunca automáticamente</translation>
     </message>
     <message>
         <source>When the last page is written on</source>
-        <translation type="unfinished"></translation>
+        <translation>Al escribir en la última página</translation>
     </message>
     <message>
         <source>When the view is scrolled to the end</source>
-        <translation type="unfinished"></translation>
+        <translation>Al desplazar la vista hasta el final</translation>
     </message>
     <message>
         <source>Spaces of the Tab key in texts</source>
-        <translation type="unfinished"></translation>
+        <translation>Espacios de la tecla Tab en los textos</translation>
     </message>
     <message>
         <source>0 puts a tab character into the text.</source>
-        <translation type="unfinished"></translation>
+        <translation>0 inserta un carácter de tabulación en el texto.</translation>
     </message>
     <message>
         <source>Files</source>
@@ -2594,27 +2595,27 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Name of new documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de los documentos nuevos</translation>
     </message>
     <message>
         <source>Name of exported files</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de los archivos exportados</translation>
     </message>
     <message>
         <source>%{name} stands for the name of the document or of its PDF, %F for the date, %H and %M for the hour and minute; the codes of strftime are understood.</source>
-        <translation type="unfinished"></translation>
+        <translation>%{name} representa el nombre del documento o de su PDF, %F la fecha, %H y %M la hora y el minuto; se admiten los códigos de strftime.</translation>
     </message>
     <message>
         <source>A PDF file opens the document that annotates it, if there is one next to it</source>
-        <translation type="unfinished"></translation>
+        <translation>Un archivo PDF abre el documento que lo anota, si hay uno junto a él</translation>
     </message>
     <message>
         <source>Open the last document at the start</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir el último documento al iniciar</translation>
     </message>
     <message>
         <source>The laser pointer starts to fade after (ms)</source>
-        <translation type="unfinished"></translation>
+        <translation>El puntero láser empieza a desvanecerse tras (ms)</translation>
     </message>
 </context>
 <context>
@@ -2625,15 +2626,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>No printer was found. The document can be exported as PDF instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró ninguna impresora. En su lugar, el documento se puede exportar como PDF.</translation>
     </message>
     <message>
         <source>This build cannot print. The document can be exported as PDF instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta versión no puede imprimir. En su lugar, el documento se puede exportar como PDF.</translation>
     </message>
     <message>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Impresora</translation>
     </message>
     <message>
         <source>Pages</source>
@@ -2641,7 +2642,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>All; or e.g. 1-3,5,7-</source>
-        <translation type="unfinished"></translation>
+        <translation>Todas; o p. ej. 1-3,5,7-</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2649,99 +2650,99 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Copias</translation>
     </message>
     <message>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papel</translation>
     </message>
     <message>
         <source>Of the size of the pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Del tamaño de las páginas</translation>
     </message>
     <message>
         <source>That of the printer; the pages are fitted</source>
-        <translation type="unfinished"></translation>
+        <translation>El de la impresora; las páginas se ajustan</translation>
     </message>
     <message>
         <source>Both sides</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambas caras</translation>
     </message>
     <message>
         <source>One side only</source>
-        <translation type="unfinished"></translation>
+        <translation>Una sola cara</translation>
     </message>
     <message>
         <source>Turned over the long side</source>
-        <translation type="unfinished"></translation>
+        <translation>Volteo por el lado largo</translation>
     </message>
     <message>
         <source>Turned over the short side</source>
-        <translation type="unfinished"></translation>
+        <translation>Volteo por el lado corto</translation>
     </message>
     <message>
         <source>In shades of grey</source>
-        <translation type="unfinished"></translation>
+        <translation>En escala de grises</translation>
     </message>
 </context>
 <context>
     <name>RecordingsDialog</name>
     <message>
         <source>Recordings of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Grabaciones del documento</translation>
     </message>
     <message>
         <source>Nothing in this document refers to a recording.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nada en este documento hace referencia a una grabación.</translation>
     </message>
     <message numerus="yes">
         <source>%n element(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n elemento</numerusform>
+            <numerusform>%n elementos</numerusform>
         </translation>
     </message>
     <message>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproducir</translation>
     </message>
     <message>
         <source>The file of the recording was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró el archivo de la grabación.</translation>
     </message>
     <message>
         <source>Page %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Página %1 en %2</translation>
     </message>
 </context>
 <context>
     <name>Renderer</name>
     <message>
         <source>PDF background (page %1) not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Fondo PDF (página %1) no disponible</translation>
     </message>
 </context>
 <context>
     <name>ScreenCapture</name>
     <message>
         <source>Select a region of the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar una región de la pantalla</translation>
     </message>
     <message>
         <source>Drag over the region that goes onto the page. Esc cancels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrastre sobre la región que irá a la página. Esc cancela.</translation>
     </message>
     <message>
         <source>Capture a region of the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Capturar una región de la pantalla</translation>
     </message>
     <message>
         <source>Bring to the front what you want to capture.</source>
-        <translation type="unfinished"></translation>
+        <translation>Traiga al frente lo que quiera capturar.</translation>
     </message>
     <message>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Capturar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2749,15 +2750,15 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>The screen could not be captured</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo capturar la pantalla</translation>
     </message>
     <message>
         <source>The desktop did not capture the screen: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El escritorio no capturó la pantalla: %1</translation>
     </message>
     <message>
         <source>The desktop did not answer the request to capture the screen</source>
-        <translation type="unfinished"></translation>
+        <translation>El escritorio no respondió a la solicitud de capturar la pantalla</translation>
     </message>
 </context>
 <context>
@@ -2768,39 +2769,39 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Floating toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuadro de herramientas flotante</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Disponibles</translation>
     </message>
     <message>
         <source>Add →</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir →</translation>
     </message>
     <message>
         <source>← Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>← Quitar</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Subir</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Bajar</translation>
     </message>
     <message>
         <source>The floating toolbox opens at the pointer. A button of the pen or of the mouse can be given this task in the preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>El cuadro de herramientas flotante se abre junto al puntero. En las preferencias se puede asignar esta función a un botón del lápiz o del ratón.</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <source>Top, second row</source>
-        <translation type="unfinished"></translation>
+        <translation>Arriba, segunda fila</translation>
     </message>
     <message>
         <source>Left</source>
@@ -2808,7 +2809,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Left, second column</source>
-        <translation type="unfinished"></translation>
+        <translation>Izquierda, segunda columna</translation>
     </message>
     <message>
         <source>Right</source>
@@ -2816,19 +2817,19 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Right, second column</source>
-        <translation type="unfinished"></translation>
+        <translation>Derecha, segunda columna</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <source>Bottom, second row</source>
-        <translation type="unfinished"></translation>
+        <translation>Abajo, segunda fila</translation>
     </message>
     <message>
         <source>Toolbar configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración de barras de herramientas</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2836,7 +2837,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Rename…</source>
-        <translation type="unfinished"></translation>
+        <translation>Renombrar…</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -2844,46 +2845,46 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar…</translation>
     </message>
     <message>
         <source>Take over the configurations of a toolbar.ini of Xournal++</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar las configuraciones de un toolbar.ini de Xournal++</translation>
     </message>
     <message>
         <source>This configuration comes with the application. Changing it makes a copy that is yours.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta configuración viene con la aplicación. Al modificarla se crea una copia propia.</translation>
     </message>
     <message>
         <source>In this toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>En esta barra</translation>
     </message>
     <message>
         <source>Name of the configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de la configuración</translation>
     </message>
     <message>
         <source>Toolbar configurations of Xournal++</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuraciones de barras de herramientas de Xournal++</translation>
     </message>
     <message>
         <source>Toolbar configurations (toolbar.ini *.ini)</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuraciones de barras de herramientas (toolbar.ini *.ini)</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos los archivos (*)</translation>
     </message>
     <message numerus="yes">
         <source>%n configuration(s) taken over.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n configuración importada.</numerusform>
+            <numerusform>%n configuraciones importadas.</numerusform>
         </translation>
     </message>
     <message>
         <source>The file has no configurations that are not here already.</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo no tiene configuraciones que no estén ya aquí.</translation>
     </message>
 </context>
 <context>
@@ -2910,23 +2911,23 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Size of the tool: %1 pt</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de la herramienta: %1 pt</translation>
     </message>
     <message>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <source>Bold</source>
-        <translation type="unfinished"></translation>
+        <translation>Negrita</translation>
     </message>
     <message>
         <source>I</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>Cursiva</translation>
     </message>
     <message>
         <source>Left</source>
@@ -2934,7 +2935,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Centre</source>
-        <translation type="unfinished"></translation>
+        <translation>Centro</translation>
     </message>
     <message>
         <source>Right</source>
@@ -2942,7 +2943,7 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>Alignment of the lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Alineación de las líneas</translation>
     </message>
     <message>
         <source>Layer %1</source>
@@ -2950,11 +2951,11 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     </message>
     <message>
         <source>The layer that is drawn on</source>
-        <translation type="unfinished"></translation>
+        <translation>La capa sobre la que se dibuja</translation>
     </message>
     <message>
         <source>Justified: wrapped lines fill the width</source>
-        <translation type="unfinished"></translation>
+        <translation>Justificado: las líneas ajustadas ocupan todo el ancho</translation>
     </message>
     <message>
         <source>Font</source>
@@ -2973,106 +2974,106 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
     <name>ToolbarModel</name>
     <message>
         <source>Qournal</source>
-        <translation type="unfinished"></translation>
+        <translation>Qournal</translation>
     </message>
     <message>
         <source>Tablet</source>
-        <translation type="unfinished"></translation>
+        <translation>Tableta</translation>
     </message>
     <message>
         <source>%1 Copy</source>
         <extracomment>The name of a copy of a toolbar configuration; %1 is the name of the original</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (copia)</translation>
     </message>
 </context>
 <context>
     <name>ToolbarStrip</name>
     <message>
         <source>More</source>
-        <translation type="unfinished"></translation>
+        <translation>Más</translation>
     </message>
     <message>
         <source>What does not fit into the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Lo que no cabe en la barra de herramientas</translation>
     </message>
 </context>
 <context>
     <name>VorbisWriter</name>
     <message>
         <source>The microphone delivers a format that cannot be recorded</source>
-        <translation type="unfinished"></translation>
+        <translation>El micrófono entrega un formato que no se puede grabar</translation>
     </message>
     <message>
         <source>The encoder does not accept the sample rate %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El codificador no acepta la frecuencia de muestreo %1</translation>
     </message>
 </context>
 <context>
     <name>XoppCompat</name>
     <message>
         <source>Links become texts without their address.</source>
-        <translation type="unfinished"></translation>
+        <translation>Los enlaces se convierten en textos sin su dirección.</translation>
     </message>
     <message>
         <source>Turned texts become images and cannot be edited as texts any more.</source>
-        <translation type="unfinished"></translation>
+        <translation>Los textos girados se convierten en imágenes y ya no se pueden editar como texto.</translation>
     </message>
     <message>
         <source>Turned images are drawn turned into new images.</source>
-        <translation type="unfinished"></translation>
+        <translation>Las imágenes giradas se dibujan giradas en imágenes nuevas.</translation>
     </message>
     <message>
         <source>Turned formulas become images and cannot be edited any more.</source>
-        <translation type="unfinished"></translation>
+        <translation>Las fórmulas giradas se convierten en imágenes y ya no se pueden editar.</translation>
     </message>
 </context>
 <context>
     <name>XoppLoader</name>
     <message>
         <source>Could not open &quot;%1&quot;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo abrir «%1»: %2</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is damaged: decompression failed</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» está dañado: falló la descompresión</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is not a valid Xournal++ file: %2 (line %3)</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» no es un archivo válido de Xournal++: %2 (línea %3)</translation>
     </message>
     <message>
         <source>&quot;%1&quot; contains no pages</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1» no contiene páginas</translation>
     </message>
 </context>
 <context>
     <name>XoppWriter</name>
     <message>
         <source>Could not compress the document</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo comprimir el documento</translation>
     </message>
     <message>
         <source>Could not write &quot;%1&quot;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo escribir «%1»: %2</translation>
     </message>
     <message>
         <source>The document was saved, but its attached background files could not be copied next to &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>El documento se guardó, pero sus archivos de fondo adjuntos no se pudieron copiar junto a «%1»</translation>
     </message>
     <message>
         <source>Could not write &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo escribir «%1»</translation>
     </message>
 </context>
 <context>
     <name>XournalClipboard</name>
     <message>
         <source>The clipboard was filled by &quot;%1&quot;. Only selections of Xournal++ 1.3 can be pasted.</source>
-        <translation type="unfinished"></translation>
+        <translation>El portapapeles lo llenó «%1». Solo se pueden pegar selecciones de Xournal++ 1.3.</translation>
     </message>
     <message>
         <source>The selection of Xournal++ on the clipboard cannot be read: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede leer la selección de Xournal++ del portapapeles: %1</translation>
     </message>
 </context>
 </TS>
