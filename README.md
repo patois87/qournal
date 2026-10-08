@@ -1,6 +1,6 @@
 # Qournal
 
-Handwritten notes and PDF annotation for Linux, Windows and Android, on Qt 6.
+Handwritten notes and PDF annotation for Linux, Windows, macOS and Android, on Qt 6.
 [vereo.ch/software/qournal](https://vereo.ch/software/qournal)
 
 Qournal has the tools and the file format of [Xournal++](https://github.com/xournalpp/xournalpp), written anew on
@@ -66,8 +66,8 @@ Xournal++ is built on GTK 3. That serves it well on the Linux desktop, and it is
 has no Android and no iOS, and on Windows a GTK application is a guest. Qournal started from the question what
 the same application would be on a toolkit that is at home on all of these.
 
-- **One code base for desktop and tablets.** The same sources build for Linux, Windows and Android (and are kept
-  building for macOS and iOS). Tablets are where handwriting belongs, and they are where Xournal++ is not.
+- **One code base for desktop and tablets.** The same sources build for Linux, Windows, macOS and Android (and are
+  kept building for iOS). Tablets are where handwriting belongs, and they are where Xournal++ is not.
 - **The pen.** Qt hands on the events of a pen with their pressure as the system delivers them, on every platform
   in the same form. A first trial on Windows wrote smoothly at 266 events a second, with pressure and with the
   palm ignored; that trial is why the work went on.
@@ -91,6 +91,25 @@ icons, plugins, translations and toolbar configurations, with thanks to those wh
 The sources are here. Packages for Linux (AppImage, `.deb`, `.rpm`) and an installer for Windows are offered with
 the [releases](https://github.com/patois87/qournal/releases) of this repository. For Android and for the Microsoft
 Store, Qournal is offered in the stores.
+
+### macOS
+
+The releases also have a disk image (`.dmg`) for Macs with Apple silicon and macOS 14.4 or newer. Open it and drag
+Qournal into the folder "Applications". It is not signed with a certificate of Apple and not notarized, so macOS
+refuses to open it the first time ("Apple could not verify..."). To allow it:
+
+1. Open Qournal once and close the message with "Done" (not "Move to Trash").
+2. Open the System Settings, "Privacy & Security", and scroll down to "Security": it says there that Qournal was
+   blocked. Click "Open Anyway" and confirm with your password or Touch ID.
+3. Open Qournal again and choose "Open Anyway". macOS remembers this; it is asked once for each version.
+
+Or, in the Terminal, take the mark off that macOS puts on what was downloaded:
+
+```sh
+xattr -dr com.apple.quarantine /Applications/qournal.app
+```
+
+On macOS 14, a click on the application with the Control key held and "Open" does the same as steps 2 and 3.
 
 ## Donations
 
@@ -127,6 +146,13 @@ sources, run `windeployqt --release --no-translations --qmldir app\qml package\q
 
 - the installer, with Inno Setup: `iscc /DAppVersion=1.0.0 /DArch=x64 packaging\windows\qournal.iss`
 - the package for the Microsoft Store, with the Windows SDK: `packaging\windows\msix.ps1 -Version 1.0.0 -Arch x64`
+
+### macOS
+
+Build with the Qt for macOS as above; the application is `build/app/qournal.app`. Add
+`-DCMAKE_OSX_DEPLOYMENT_TARGET=14.4` (what Qt 6.12 asks for), or it runs on the macOS of the machine that built it
+only. `~/Qt/6.12.0/macos/bin/macdeployqt build/app/qournal.app -qmldir=app/qml -dmg` puts Qt into the application
+and makes the disk image.
 
 ### Android
 

@@ -220,6 +220,8 @@ QStringList PluginController::searchPaths() const {
     const QString appDir = QCoreApplication::applicationDirPath();
     // The last one is in the application itself: on Android and iOS the plugins are built into it
     paths += {appDir + QStringLiteral("/plugins"), appDir + QStringLiteral("/../share/qournal/plugins")};
+    // In the bundle of macOS they are resources
+    paths += appDir + QStringLiteral("/../Resources/plugins");
     // In an AppImage the program is started from the top folder of the image, which is its folder then, and the
     // plugins are in usr/share below it: they were not found there
     paths += appDir + QStringLiteral("/usr/share/qournal/plugins");

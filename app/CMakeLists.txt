@@ -142,6 +142,14 @@ if (TARGET xoj-lua AND (ANDROID OR IOS))
     # There is no folder next to the program there: the plugins are resources of the application
     file(GLOB_RECURSE PLUGIN_FILES CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/plugins/*/*)
     qt_add_resources(qournal "plugins" PREFIX "/plugins" BASE ${PROJECT_SOURCE_DIR}/plugins FILES ${PLUGIN_FILES})
+elseif (TARGET xoj-lua AND APPLE)
+    # In the bundle the plugins are resources: files that are not programs next to the program make its signature
+    # invalid ("code object is not signed at all")
+    add_custom_command(TARGET qournal POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/plugins
+                $<TARGET_BUNDLE_CONTENT_DIR:qournal>/Resources/plugins
+        VERBATIM
+    )
 elseif (TARGET xoj-lua)
     # The plugins of Xournal++ come along: next to the program, where it looks for them, and installed
     add_custom_command(TARGET qournal POST_BUILD
