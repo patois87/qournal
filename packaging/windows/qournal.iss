@@ -2,13 +2,13 @@
 ;
 ; Expects the folder "package" at the root of the repository, with qournal.exe, the files windeployqt put
 ; next to it and the folder "plugins". Build with:
-;   iscc /DAppVersion=1.0.0 /DArch=x64 packaging\windows\qournal.iss
+;   iscc /DAppVersion=1.0.1 /DArch=x64 packaging\windows\qournal.iss
 ; Arch is x64 (the default) or arm64, as the program in "package" was built.
 ; Written for Inno Setup 7 (6.3 and newer work too).
 ; The installer is written to the root of the repository.
 
 #ifndef AppVersion
-  #define AppVersion "1.0.0"
+  #define AppVersion "1.0.1"
 #endif
 #ifndef Arch
   #define Arch "x64"

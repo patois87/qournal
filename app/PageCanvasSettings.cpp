@@ -144,6 +144,7 @@ void PageCanvas::saveSettings() const {
     for (const char* name: CANVAS_PROPERTIES) {
         writeProperty(settings, this, meta->property(meta->indexOfProperty(name)));
     }
+    settings.setValue(QStringLiteral("fingerDrawsAuto"), m_fingerDrawsAuto);
     settings.setValue(QStringLiteral("tool"), toolName(m_tool));
     settings.setValue(QStringLiteral("textFont"), m_textFont);
     // Either the number of columns or the number of rows is fixed
@@ -204,6 +205,9 @@ void PageCanvas::loadSettings() {
     for (const char* name: CANVAS_PROPERTIES) {
         readProperty(settings, this, meta->property(meta->indexOfProperty(name)));
     }
+    // Settings of a version that did not know this: fingers that draw were switched on by the user
+    m_fingerDrawsAuto = settings.value(QStringLiteral("fingerDrawsAuto"), !m_fingerDraws).toBool();
+    applyFingerDrawsDefault();
     m_textFont = settings.value(QStringLiteral("textFont"), m_textFont).toString();
     const int rows = settings.value(QStringLiteral("layoutRows"), layoutRows()).toInt();
     if (rows > 0) {
@@ -302,6 +306,8 @@ void PageCanvas::resetSettings() {
         const QMetaProperty property = meta->property(meta->indexOfProperty(name));
         property.write(this, property.read(&fresh));
     }
+    m_fingerDrawsAuto = true;
+    applyFingerDrawsDefault();
     m_textFont = fresh.m_textFont;
     setLayoutColumns(1);
     m_toolStates = fresh.m_toolStates;

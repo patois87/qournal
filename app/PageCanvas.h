@@ -1291,6 +1291,11 @@ private:
     InputSettings m_input;
     bool m_usePressure = true;
     bool m_fingerDraws = false;
+    /// Nobody has said yet whether fingers draw: on a phone they do, until a pen is used (it is the pen that draws
+    /// then, and the hand that lies on the screen must not) or the setting is changed
+    bool m_fingerDrawsAuto = true;
+    /// Lets fingers draw on a phone, as long as nobody has said whether they do
+    void applyFingerDrawsDefault();
 
     // What the pointer is doing
     Action m_action = Action::None;

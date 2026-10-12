@@ -1,7 +1,7 @@
 # Builds the MSIX package for the Microsoft Store from the folder "package" at the root of the repository (the
 # same folder the Inno Setup script uses: qournal.exe, what windeployqt put next to it, and "plugins").
 #
-#   packaging\windows\msix.ps1 -Version 1.0.0 -Arch x64
+#   packaging\windows\msix.ps1 -Version 1.0.1 -Arch x64
 #
 # The package is not signed. The Store signs what is submitted to it; to install the package on a machine
 # directly, sign it with signtool and a certificate whose subject is the Publisher below.
@@ -21,10 +21,15 @@ if (-not (Test-Path (Join-Path $package "qournal.exe"))) {
     throw "No qournal.exe in $package"
 }
 
-# The folder is copied: the manifest and the logos must not end up in the installer of Inno Setup
-$stage = Join-Path $root "package-msix"
+# The folder is copied: the manifest and the logos must not end up in the installer of Inno Setup. To the disk of
+# this machine and with robocopy: where the sources are in a folder shared with a virtual machine, Copy-Item
+# failed to make folders there ("Invalid signature")
+$stage = Join-Path ([System.IO.Path]::GetTempPath()) "qournal-msix"
 if (Test-Path $stage) { Remove-Item -Recurse -Force $stage }
-Copy-Item -Recurse $package $stage
+robocopy $package $stage /E /NFL /NDL /NJH /NJS /NP | Out-Null
+if ($LASTEXITCODE -ge 8) {
+    throw "Copying $package to $stage failed (robocopy: $LASTEXITCODE)"
+}
 New-Item -ItemType Directory (Join-Path $stage "Assets") | Out-Null
 Copy-Item "$PSScriptRoot\msix\*.png" (Join-Path $stage "Assets")
 
@@ -46,4 +51,5 @@ $output = Join-Path $root "qournal-$Version-windows-$Arch.msix"
 if ($LASTEXITCODE -ne 0) {
     throw "makeappx failed"
 }
+Remove-Item -Recurse -Force $stage
 Write-Host "Written: $output"

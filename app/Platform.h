@@ -33,6 +33,12 @@ QUrl startupDocument();
 bool isMobile();
 
 /**
+ * Whether this is a phone: a mobile device whose screen is narrower than 600 units on its shorter side, which is
+ * where tablets begin. QOURNAL_PHONE=1 or =0 in the environment says it, for trying
+ */
+bool isPhone();
+
+/**
  * Tells the system whether the window is light behind its status bar and navigation bar, so that it draws the
  * clock and the icons there dark, or light on a dark window (Android; nothing elsewhere)
  */

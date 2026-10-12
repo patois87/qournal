@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls.Material as MaterialStyle
 import QtQuick.Layouts
 import Qournal
 
@@ -167,6 +168,9 @@ ToolBar {
     implicitWidth: vertical ? Math.max(48, layout.implicitWidth + 12) + safeLeft + safeRight : 0
     // The colours of the theme in every style: the icons are drawn for them
     background: Rectangle { color: strip.theme.colors.window }
+    // The style of Android writes white in a toolbar, for its own background: the names in the controls (size of the
+    // tool, font) could hardly be read on the light one of the theme
+    MaterialStyle.Material.foreground: strip.theme.colors.buttonText
 
     onWidthChanged: scheduleRelayout()
     onHeightChanged: scheduleRelayout()

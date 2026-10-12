@@ -1,5 +1,9 @@
 #include "Platform.h"
 
+#include <QGuiApplication>
+#include <QScreen>
+#include <algorithm>
+
 #ifdef Q_OS_ANDROID
 #include <QCoreApplication>
 #include <QJniEnvironment>
@@ -256,6 +260,14 @@ bool Platform::isMobile() {
 #else
     return false;
 #endif
+}
+
+bool Platform::isPhone() {
+    if (qEnvironmentVariableIsSet("QOURNAL_PHONE")) {
+        return qEnvironmentVariableIntValue("QOURNAL_PHONE") != 0;
+    }
+    const QScreen* screen = QGuiApplication::primaryScreen();
+    return isMobile() && screen && std::min(screen->size().width(), screen->size().height()) < 600;
 }
 
 #ifndef Q_OS_IOS

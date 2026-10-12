@@ -376,8 +376,27 @@ Loader {
                 y: loader.vertical ? 0 : fontButton.height
                 x: loader.vertical ? fontButton.width : 0
                 padding: 6
+                onAboutToShow: sizeBox.showSize()
 
-                Row {
+                // Back of Android closes the controls: the key went to the window, and the application was left
+                Shortcut {
+                    sequence: "Back"
+                    enabled: fontPopup.visible
+                    onActivated: fontPopup.close()
+                }
+
+                // In a row, and below each other where the window is too narrow for that (a phone)
+                Flow {
+                    readonly property real rowWidth: {
+                        let sum = -spacing
+                        for (const child of children) {
+                            sum += child.width + spacing
+                        }
+                        return sum
+                    }
+
+                    width: Math.min(rowWidth, loader.app.width - loader.app.safeMargin("left")
+                                              - loader.app.safeMargin("right") - 2 * fontPopup.padding)
                     spacing: 4
 
                     FitComboBox {
@@ -388,10 +407,22 @@ Loader {
                         onActivated: index => loader.canvas.textFamily = model[index]
                     }
                     FitComboBox {
+                        id: sizeBox
+
+                        readonly property string sizeText: Number(loader.canvas.textSize.toFixed(2)).toString()
+
+                        // The box writes the first size of its list into the field when it gets the list, which a
+                        // binding does not undo: the field showed 8 for a text of 12
+                        function showSize() {
+                            currentIndex = loader.app.textSizes.indexOf(Number(sizeText))
+                            editText = sizeText
+                        }
+
                         width: 80
                         editable: true
                         model: loader.app.textSizes
-                        editText: Number(loader.canvas.textSize.toFixed(2)).toString()
+                        onSizeTextChanged: showSize()
+                        Component.onCompleted: showSize()
                         validator: DoubleValidator { bottom: 1; top: 500; decimals: 2 }
                         onActivated: index => loader.canvas.textSize = loader.app.textSizes[index]
                         onAccepted: loader.canvas.textSize = Number.fromLocaleString(Qt.locale(), editText)

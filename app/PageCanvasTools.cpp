@@ -413,6 +413,14 @@ void PageCanvas::handleTablet(QTabletEvent* event, const QPointF& pos) {
     const int deviceClass = deviceClassOf(device);
     const bool hasPressure = device->hasCapability(QInputDevice::Capability::Pressure);
     const bool eraserTip = event->pointerType() == QPointingDevice::PointerType::Eraser || deviceClass == DeviceEraser;
+    // A pen is there: fingers do not draw any more where they did because nobody had said otherwise (a phone)
+    if (m_fingerDrawsAuto && deviceClass != DeviceTouchscreen && deviceClass != DeviceDisabled) {
+        m_fingerDrawsAuto = false;
+        if (m_fingerDraws) {
+            m_fingerDraws = false;
+            emit fingerDrawsChanged();
+        }
+    }
     // A stylus used as a touchscreen moves the view, unless fingers draw
     if (deviceClass == DeviceTouchscreen && !m_fingerDraws) {
         if (event->type() == QEvent::TabletPress) {

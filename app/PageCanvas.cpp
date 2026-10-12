@@ -202,8 +202,16 @@ void PageCanvas::setUsePressure(bool use) {
 }
 
 void PageCanvas::setFingerDraws(bool draws) {
+    m_fingerDrawsAuto = false;  // said by the user
     if (m_fingerDraws != draws) {
         m_fingerDraws = draws;
+        emit fingerDrawsChanged();
+    }
+}
+
+void PageCanvas::applyFingerDrawsDefault() {
+    if (m_fingerDrawsAuto && !m_fingerDraws && Platform::isPhone()) {
+        m_fingerDraws = true;
         emit fingerDrawsChanged();
     }
 }

@@ -761,6 +761,49 @@ private slots:
         QCOMPARE(f.strokes().size(), 1);
     }
 
+    void fingersDrawOnAPhone() {
+        // On a phone fingers draw, as long as nobody has said whether they do
+        qputenv("QOURNAL_PHONE", "1");
+        {
+            Fixture f;
+            PageCanvas* c = f.canvas;
+            QVERIFY(!c->fingerDraws());
+            c->loadSettings();
+            QVERIFY(c->fingerDraws());
+            // A pen is used: it draws, and fingers do not any more. That is kept
+            f.stroke(QPointF(100, 100), QPointF(200, 100));
+            QVERIFY(!c->fingerDraws());
+            c->saveSettings();
+            c->loadSettings();
+            QVERIFY(!c->fingerDraws());
+            // Starting anew, they draw again; switched off by the user, they stay off
+            c->resetSettings();
+            QVERIFY(c->fingerDraws());
+            c->setFingerDraws(false);
+            c->saveSettings();
+            c->loadSettings();
+            QVERIFY(!c->fingerDraws());
+            // Switched on by the user, a pen does not switch them off
+            c->setFingerDraws(true);
+            f.stroke(QPointF(100, 200), QPointF(200, 200));
+            QVERIFY(c->fingerDraws());
+        }
+        // Not on a tablet or a desktop; what settings of an earlier version say stays
+        qputenv("QOURNAL_PHONE", "0");
+        {
+            QSettings().clear();
+            Fixture f;
+            f.canvas->loadSettings();
+            QVERIFY(!f.canvas->fingerDraws());
+            QSettings().setValue(QStringLiteral("canvas/fingerDraws"), true);
+            f.canvas->loadSettings();
+            QVERIFY(f.canvas->fingerDraws());
+            f.stroke(QPointF(100, 100), QPointF(200, 100));
+            QVERIFY(f.canvas->fingerDraws());
+        }
+        qunsetenv("QOURNAL_PHONE");
+    }
+
     void theme() {
         Theme theme;
         QSignalSpy changed(&theme, &Theme::changed);

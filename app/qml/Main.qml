@@ -14,6 +14,11 @@ ApplicationWindow {
     // The style of Android has a light and a dark look of its own, which does not follow the palette: it gets
     // the one of the theme, also for the menus and dialogs. Without this they stayed light in the dark mode
     MaterialStyle.Material.theme: theme.dark ? MaterialStyle.Material.Dark : MaterialStyle.Material.Light
+    // What it marks (the chosen entry of a list, the tab that is shown) has the colour that marks elsewhere, not
+    // its pink
+    MaterialStyle.Material.accent: theme.colors.highlight
+    // Also where no toolbar is: behind the navigation bar of Android the window had the colour of the style
+    color: theme.colors.window
 
     property url initialFile
     property string trackedFile: ""  // the document whose current page is remembered
