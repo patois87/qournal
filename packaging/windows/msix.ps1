@@ -1,7 +1,7 @@
 # Builds the MSIX package for the Microsoft Store from the folder "package" at the root of the repository (the
 # same folder the Inno Setup script uses: qournal.exe, what windeployqt put next to it, and "plugins").
 #
-#   packaging\windows\msix.ps1 -Version 1.0.1 -Arch x64
+#   packaging\windows\msix.ps1 -Version 1.1.0 -Arch x64
 #
 # The package is not signed. The Store signs what is submitted to it; to install the package on a machine
 # directly, sign it with signtool and a certificate whose subject is the Publisher below.
