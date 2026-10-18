@@ -264,6 +264,69 @@ private slots:
         QCOMPARE(elements(f).size(), size_t(1));
     }
 
+    void codeTool() {
+        Fixture f;
+        PageCanvas* c = f.canvas;
+        QCOMPARE(c->codeLanguages().size(), 24);
+        QCOMPARE(c->textCode(), QStringLiteral("python"));  // the language of the code tool at first
+
+        // The text tool writes ordinary text, also after a language was chosen
+        c->setTextCode(QStringLiteral("cpp"));
+        c->setTool(PageCanvas::Text);
+        f.tap(f.onPage(0, QPointF(100, 300)));
+        QVERIFY(c->textCode().isEmpty());
+        c->setTextEditText(QStringLiteral("SELECT 1"));
+        c->finishTextEdit();
+        QVERIFY(std::get<TextElement>(elements(f)[0]).code.isEmpty());
+        QCOMPARE(std::get<TextElement>(elements(f)[0]).font, QStringLiteral("Sans"));
+
+        // The code tool writes code in the language used last, in the font of fixed width
+        c->setTool(PageCanvas::Code);
+        c->setTextBold(true);
+        f.tap(f.onPage(0, QPointF(100, 100)));
+        QVERIFY(c->textEditing());
+        QCOMPARE(c->textCode(), QStringLiteral("cpp"));
+        QCOMPARE(c->textEditCode().value(QStringLiteral("language")).toString(), QStringLiteral("cpp"));
+        c->setTextEditText(QStringLiteral("int main() {\n    return 0;\n}"));
+        c->setTextEditWrap(500);
+        QCOMPARE(c->textEditWrap(), -1.0);  // code is not wrapped
+        // The choice at the box changes the language, which the tool keeps
+        c->setTextCode(QStringLiteral("c"));
+        c->finishTextEdit();
+        QCOMPARE(c->textCode(), QStringLiteral("c"));
+        const auto& code = std::get<TextElement>(elements(f)[1]);
+        QCOMPARE(code.code, QStringLiteral("c"));
+        QCOMPARE(code.font, QStringLiteral("Monospace Bold"));
+        QCOMPARE(c->textFamily(), QStringLiteral("Sans"));  // the font of ordinary texts stays
+
+        // Tapped with the code tool, an ordinary text becomes code, in a step that can be undone
+        f.tap(f.onPage(0, Renderer::elementBounds(elements(f)[0]).center()));
+        QVERIFY(c->textEditing());
+        QCOMPARE(c->textCode(), QStringLiteral("c"));
+        c->finishTextEdit();
+        QCOMPARE(std::get<TextElement>(elements(f)[0]).code, QStringLiteral("c"));
+        c->undo();
+        QVERIFY(std::get<TextElement>(elements(f)[0]).code.isEmpty());
+
+        // The text tool edits code as code; "No code" makes it ordinary text, and the tool keeps its language
+        c->setTool(PageCanvas::Text);
+        f.tap(f.onPage(0, Renderer::elementBounds(elements(f)[1]).center()));
+        QCOMPARE(c->textCode(), QStringLiteral("c"));
+        c->setTextCode(QString());
+        c->finishTextEdit();
+        QVERIFY(std::get<TextElement>(elements(f)[1]).code.isEmpty());
+        QCOMPARE(c->textCode(), QStringLiteral("c"));
+
+        // Selected texts, in a step that can be undone
+        c->setTool(PageCanvas::SelectRect);
+        f.tap(f.onPage(0, Renderer::elementBounds(elements(f)[0]).center()));
+        QVERIFY(c->hasSelection());
+        c->setTextCode(QStringLiteral("sql"));
+        QCOMPARE(std::get<TextElement>(elements(f)[0]).code, QStringLiteral("sql"));
+        c->undo();
+        QVERIFY(std::get<TextElement>(elements(f)[0]).code.isEmpty());
+    }
+
     void editTransformedText() {
         Fixture f;
         PageCanvas* c = f.canvas;

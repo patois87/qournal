@@ -116,6 +116,13 @@ void PageCanvas::emergencySave() {
     saveXopp(path, copy, nullptr);
 }
 
+void PageCanvas::keepChangesForRecovery() {
+    if (m_modified) {
+        emergencySave();
+        m_keepAutosave = true;
+    }
+}
+
 void PageCanvas::removeAutosave() {
     if (!m_autosaveFile.isEmpty()) {
         QFile::remove(m_autosaveFile);

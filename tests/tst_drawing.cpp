@@ -15,6 +15,7 @@
 #include "CanvasFixture.h"
 #include "ColorPalette.h"
 #include "GeometryTool.h"
+#include "MindMap.h"
 #include "Renderer.h"
 #include "XoppLoader.h"
 #include "XoppWriter.h"
@@ -445,6 +446,150 @@ private slots:
         f.strokeOnPage(0, wave);
         QCOMPARE(f.strokes().size(), 2);
         QCOMPARE(f.strokes()[1].points.size(), 81);
+    }
+
+    void mindMapTool() {
+        Fixture f;
+        PageCanvas* c = f.canvas;
+        c->setTool(PageCanvas::MindMap);
+
+        // A word: it stays as it is written
+        for (int i = 0; i < 3; ++i) {
+            const double x = 100 + 25 * i;
+            f.strokeOnPage(0, handDrawn({{x, 130}, {x + 8, 100}, {x + 16, 130}}, 2, 0.3));
+        }
+        QCOMPARE(f.strokes().size(), 3);
+
+        // A loop around it becomes an ellipse around the writing, in the colour of the tool
+        QList<QPointF> loop;
+        for (int i = 0; i <= 80; ++i) {
+            const double t = -2.0 + 2 * M_PI * i / 80;
+            loop.append(QPointF(133 + 70 * std::cos(t), 115 + 35 * std::sin(t)));
+        }
+        f.strokeOnPage(0, loop);
+        QCOMPARE(f.strokes().size(), 4);
+        const Stroke node = f.strokes()[3];
+        QCOMPARE(node.points.first(), node.points.last());
+        QCOMPARE(node.color, PEN_COLOR);
+        QVERIFY(QPolygonF(node.points).boundingRect().width() < 2 * 70);
+
+        // Undo brings back the loop as it was drawn, then removes it
+        c->undo();
+        QCOMPARE(f.strokes().size(), 4);
+        QCOMPARE(f.strokes()[3].points.size(), loop.size());
+        c->undo();
+        QCOMPARE(f.strokes().size(), 3);
+        c->redo();
+        c->redo();
+        QCOMPARE(f.strokes()[3].points, node.points);
+
+        // A stroke from the node into empty space becomes a branch from its outline
+        f.strokeOnPage(0, handDrawn({{150, 125}, {250, 220}, {320, 300}}, 3, 1.0));
+        QCOMPARE(f.strokes().size(), 5);
+        const Stroke branch = f.strokes()[4];
+        QVERIFY(branch.hasPressure());
+        double fromOutline = 1e9;
+        for (qsizetype i = 0; i + 1 < node.points.size(); ++i) {
+            const QPointF a = node.points[i];
+            const QPointF d = node.points[i + 1] - a;
+            const double t = std::clamp(QPointF::dotProduct(branch.points[0] - a, d) / QPointF::dotProduct(d, d), 0.0,
+                                        1.0);
+            fromOutline = std::min(fromOutline, QLineF(branch.points[0], a + d * t).length());
+        }
+        QVERIFY(fromOutline < 0.5);
+        QVERIFY(QLineF(branch.points.last(), QPointF(320, 300)).length() < 2);
+
+        // A "V" at its end puts a head on it, and goes itself
+        const QPointF end = branch.points.last();
+        const QPointF back = branch.points[branch.points.size() - 4];
+        const double angle = std::atan2(end.y() - back.y(), end.x() - back.x());
+        auto leg = [&](double sign) {
+            return end - 12 * QPointF(std::cos(angle + sign * M_PI / 6), std::sin(angle + sign * M_PI / 6));
+        };
+        f.strokeOnPage(0, handDrawn({leg(1), end, leg(-1)}, 1.5, 0.3));
+        QCOMPARE(f.strokes().size(), 5);
+        QVERIFY(MindMap::hasArrowHead(f.strokes()[4].points));
+
+        // Undo brings back the "V" and the branch without its head, then removes the "V"
+        c->undo();
+        QCOMPARE(f.strokes().size(), 6);
+        QCOMPARE(f.strokes()[4].points, branch.points);
+        c->undo();
+        QCOMPARE(f.strokes().size(), 5);
+        c->redo();
+        c->redo();
+        QCOMPARE(f.strokes().size(), 5);
+        QVERIFY(MindMap::hasArrowHead(f.strokes()[4].points));
+    }
+
+    void mindMapNodesMove() {
+        Fixture f;
+        PageCanvas* c = f.canvas;
+        c->setTool(PageCanvas::MindMap);
+        for (int i = 0; i < 3; ++i) {
+            const double x = 100 + 25 * i;
+            f.strokeOnPage(0, handDrawn({{x, 130}, {x + 8, 100}, {x + 16, 130}}, 2, 0.3));
+        }
+        QList<QPointF> loop;
+        for (int i = 0; i <= 80; ++i) {
+            const double t = -2.0 + 2 * M_PI * i / 80;
+            loop.append(QPointF(133 + 70 * std::cos(t), 115 + 35 * std::sin(t)));
+        }
+        f.strokeOnPage(0, loop);
+        f.strokeOnPage(0, handDrawn({{150, 125}, {250, 220}, {320, 300}}, 3, 1.0));
+        QCOMPARE(f.strokes().size(), 5);
+        const QList<Stroke> before = f.strokes();
+
+        // Pressed on its outline and dragged, the node moves with its writing, and the branch follows
+        c->setTool(PageCanvas::SelectObject);
+        const QPointF onOutline = before[3].points[before[3].points.size() / 4];
+        f.stroke(f.onPage(0, onOutline), f.onPage(0, onOutline + QPointF(-40, 60)));
+        QVERIFY(c->hasSelection());
+        const QList<Stroke> after = f.strokes();
+        for (int i = 0; i < 4; ++i) {
+            COMPARE_POINT(after[i].points.first(), before[i].points.first() + QPointF(-40, 60));
+        }
+        const QPolygonF outline(after[3].points);
+        COMPARE_POINT(after[4].points.last(), before[4].points.last());
+        double fromOutline = 1e9;
+        for (qsizetype i = 0; i + 1 < outline.size(); ++i) {
+            const QPointF a = outline[i];
+            const QPointF d = outline[i + 1] - a;
+            const double t = std::clamp(QPointF::dotProduct(after[4].points.first() - a, d) / QPointF::dotProduct(d, d),
+                                        0.0, 1.0);
+            fromOutline = std::min(fromOutline, QLineF(after[4].points.first(), a + d * t).length());
+        }
+        QVERIFY(fromOutline < 0.5);
+
+        // One step to undo
+        c->undo();
+        for (int i = 0; i < 5; ++i) {
+            QCOMPARE(f.strokes()[i].points, before[i].points);
+        }
+
+        // Without the setting, the outline moves by itself
+        c->input()->mindMapSelection = false;
+        f.stroke(f.onPage(0, onOutline), f.onPage(0, onOutline + QPointF(-40, 60)));
+        COMPARE_POINT(f.strokes()[3].points.first(), before[3].points.first() + QPointF(-40, 60));
+        COMPARE_POINT(f.strokes()[0].points.first(), before[0].points.first());
+        COMPARE_POINT(f.strokes()[4].points.first(), before[4].points.first());
+        c->undo();
+
+        // Scribbling over the branch with the mind map tool deletes it, and the scribble goes too
+        c->clearSelection();
+        c->setTool(PageCanvas::MindMap);
+        QList<QPointF> zigzag;
+        for (int i = 0; i <= 8; ++i) {
+            zigzag.append(QPointF(i % 2 == 0 ? 230 : 290, 200 + 4 * i));
+        }
+        f.strokeOnPage(0, handDrawn(zigzag, 3, 0.5));
+        QCOMPARE(f.strokes().size(), 4);
+        // Undo brings back the branch and the scribble, then removes the scribble
+        c->undo();
+        QCOMPARE(f.strokes().size(), 6);
+        QCOMPARE(f.strokes()[4].points, before[4].points);
+        c->undo();
+        QCOMPARE(f.strokes().size(), 5);
     }
 
     void eraserSplitsStrokes() {

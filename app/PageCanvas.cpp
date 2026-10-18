@@ -170,6 +170,7 @@ PageCanvas::PageCanvas(QQuickItem* parent): QQuickItem(parent) {
 
     // The colours the tools start with; every tool keeps its own
     m_toolStates[Pen].color = QColor(0x00, 0x2e, 0x99);
+    m_toolStates[MindMap].color = QColor(0x00, 0x2e, 0x99);
     m_toolStates[Highlighter].color = QColor(0xff, 0xe1, 0x6b);
     m_toolStates[LaserPen].color = QColor(0xff, 0x00, 0x00);
     m_toolStates[LaserHighlighter].color = QColor(0xff, 0x00, 0x00);
@@ -188,7 +189,9 @@ PageCanvas::PageCanvas(QQuickItem* parent): QQuickItem(parent) {
 PageCanvas::~PageCanvas() {
     CrashHandler::setEmergencySave(nullptr);
     // A regular end: the user has saved or decided not to. After a crash the autosave is still there
-    removeAutosave();
+    if (!m_keepAutosave) {
+        removeAutosave();
+    }
     // The worker threads use the PDF document and report to this object
     cancelPending();
     m_pool.waitForDone();

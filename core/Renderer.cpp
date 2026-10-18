@@ -7,6 +7,7 @@
 #include <cmath>
 
 #include "BackgroundConfig.h"
+#include "Code.h"
 #include "PdfFile.h"
 #include "PdfPage.h"
 #include "TextBlock.h"
@@ -335,7 +336,32 @@ void renderTextBlock(QPainter& p, const TextBlock& block, const QTransform& tran
     p.restore();
 }
 
-void renderText(QPainter& p, const TextElement& text) {
+/// Code is drawn in the colours of its theme, in a box with the numbers of its lines
+void renderCode(QPainter& p, const TextElement& text, const QColor& paper) {
+    const Code::Look look = Code::look();
+    const Code::Colors colors = Code::colors(text.text, text.code, paper);
+    const TextBlock block(text.text, styleOf(text), colors.formats);
+    const Code::Frame frame =
+            Code::frame(block.size(), block.lineHeight(), block.digitWidth(), block.paragraphCount(), look);
+    p.save();
+    p.setTransform(textTransform(text), true);
+    if (look.box) {
+        p.setPen(Qt::NoPen);
+        p.setBrush(colors.background);
+        p.drawRoundedRect(frame.box, frame.radius, frame.radius);
+    }
+    if (look.lineNumbers) {
+        block.drawLineNumbers(p, frame.numbersRight, colors.lineNumbers);
+    }
+    block.draw(p, colors.text);
+    p.restore();
+}
+
+void renderText(QPainter& p, const TextElement& text, const QColor& paper) {
+    if (!text.code.isEmpty()) {
+        renderCode(p, text, paper);
+        return;
+    }
     renderTextBlock(p, TextBlock(text.text, styleOf(text)), textTransform(text), text.color);
 }
 
@@ -540,8 +566,14 @@ QRectF Renderer::elementBounds(const Element& element) {
         return stroke->bounds;
     }
     if (const auto* text = std::get_if<TextElement>(&element)) {
-        const QSizeF size = TextBlock(text->text, styleOf(*text)).size();
-        return textTransform(*text).mapRect(QRectF(QPointF(0, 0), size));
+        const TextBlock block(text->text, styleOf(*text));
+        if (!text->code.isEmpty()) {
+            // With the box and the numbers of the lines
+            const Code::Frame frame = Code::frame(block.size(), block.lineHeight(), block.digitWidth(),
+                                                  block.paragraphCount(), Code::look());
+            return textTransform(*text).mapRect(frame.box);
+        }
+        return textTransform(*text).mapRect(QRectF(QPointF(0, 0), block.size()));
     }
     if (const auto* image = std::get_if<ImageElement>(&element)) {
         if (image->matrix && image->naturalSize.isValid()) {
@@ -554,7 +586,13 @@ QRectF Renderer::elementBounds(const Element& element) {
     return toTransform(link.matrix).mapRect(QRectF(QPointF(0, 0), size));
 }
 
+QColor Renderer::paperColor(const Page& page) {
+    return page.background.type == Background::Type::Solid ? page.background.color : QColor(Qt::white);
+}
+
 void Renderer::renderLayers(QPainter& p, const Page& page, const QRectF& exposed, bool vectorFormulas) {
+    // Code is drawn with the theme for light or for dark paper
+    const QColor paper = paperColor(page);
     for (const Layer& layer: page.layers) {
         if (!layer.visible) {
             continue;
@@ -565,7 +603,7 @@ void Renderer::renderLayers(QPainter& p, const Page& page, const QRectF& exposed
                     renderStroke(p, *stroke);
                 }
             } else if (const auto* text = std::get_if<TextElement>(&element)) {
-                renderText(p, *text);
+                renderText(p, *text, paper);
             } else if (const auto* image = std::get_if<ImageElement>(&element)) {
                 // The rectangle of a turned image is not where it is drawn
                 if (elementBounds(element).intersects(exposed)) {

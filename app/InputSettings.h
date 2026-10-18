@@ -1,7 +1,7 @@
 /*
  * Qournal
  *
- * Settings of the input: pressure curve, stroke stabilizer, snapping, shape recognizer, touch and zoom.
+ * Settings of the input: pressure curve, stroke stabilizer, snapping, shape recognizer, mind maps, touch and zoom.
  * The defaults are those of Xournal++.
  *
  * @license GNU GPLv2 or later
@@ -10,10 +10,12 @@
 #pragma once
 
 #include <QObject>
+#include <algorithm>
 #include <QVariantMap>
 
 #include <QtQml/qqmlregistration.h>
 
+#include "MindMap.h"
 #include "Snapping.h"
 #include "StrokeStabilizer.h"
 
@@ -98,6 +100,18 @@ class InputSettings: public QObject {
     /// here are used as what they report themselves to be
     Q_PROPERTY(QVariantMap deviceClasses MEMBER deviceClasses NOTIFY changed)
 
+    /// The mind map tool, see MindMap::Options: the shape of its nodes (as drawn, ellipse, rectangle), the space
+    /// around their writing and how far from a node a branch may start, in points
+    Q_PROPERTY(int mindMapNodeShape MEMBER mindMapNodeShape NOTIFY changed)
+    Q_PROPERTY(double mindMapMargin MEMBER mindMapMargin NOTIFY changed)
+    Q_PROPERTY(double mindMapAttachTolerance MEMBER mindMapAttachTolerance NOTIFY changed)
+    Q_PROPERTY(bool mindMapCurved MEMBER mindMapCurved NOTIFY changed)
+    Q_PROPERTY(bool mindMapTaper MEMBER mindMapTaper NOTIFY changed)
+    Q_PROPERTY(bool mindMapBranchColors MEMBER mindMapBranchColors NOTIFY changed)
+    Q_PROPERTY(bool mindMapScribbleErases MEMBER mindMapScribbleErases NOTIFY changed)
+    /// Selected nodes and groups of mind maps bring their writing, and what joins them follows when they are moved
+    Q_PROPERTY(bool mindMapSelection MEMBER mindMapSelection NOTIFY changed)
+
 public:
     enum Averaging { NoAveraging, Arithmetic, VelocityGaussian };
     Q_ENUM(Averaging)
@@ -123,6 +137,18 @@ public:
         s.mass = stabilizerMass;
         s.finalizeStroke = stabilizerFinalizeStroke;
         return s;
+    }
+
+    MindMap::Options mindMap() const {
+        MindMap::Options o;
+        o.nodeShape = static_cast<MindMap::Options::NodeShape>(std::clamp(mindMapNodeShape, 0, 2));
+        o.margin = mindMapMargin;
+        o.attachTolerance = mindMapAttachTolerance;
+        o.curved = mindMapCurved;
+        o.taper = mindMapTaper;
+        o.branchColors = mindMapBranchColors;
+        o.scribbleErases = mindMapScribbleErases;
+        return o;
     }
 
     SnapSettings snapping() const {
@@ -176,6 +202,15 @@ public:
     double edgePanSpeed = 20;
     double edgePanMaxMult = 5;
     EraserVisibility eraserVisibility = EraserAlways;
+
+    int mindMapNodeShape = 0;
+    double mindMapMargin = 6;
+    double mindMapAttachTolerance = 10;
+    bool mindMapCurved = true;
+    bool mindMapTaper = true;
+    bool mindMapBranchColors = false;
+    bool mindMapScribbleErases = true;
+    bool mindMapSelection = true;
 
     bool zoomGestures = true;
     bool palmRejection = true;

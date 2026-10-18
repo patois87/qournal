@@ -19,6 +19,10 @@ ApplicationWindow {
     MaterialStyle.Material.accent: theme.colors.highlight
     // Also where no toolbar is: behind the navigation bar of Android the window had the colour of the style
     color: theme.colors.window
+    // Tooltips have a palette of their own from the system, which wins over the one of the application unless the
+    // window sets these: on macOS in the dark mode they were light gray with black text on the dark toolbar
+    palette.toolTipBase: theme.colors.toolTipBase
+    palette.toolTipText: theme.colors.toolTipText
 
     property url initialFile
     property string trackedFile: ""  // the document whose current page is remembered
@@ -175,6 +179,7 @@ ApplicationWindow {
         "size": qsTr("Size of the tool"),
         "lineStyle": qsTr("Line style"),
         "font": qsTr("Font"),
+        "codeLanguage": qsTr("Language of the code"),
         "zoomLabel": qsTr("Zoom level"),
         "zoomSlider": qsTr("Zoom slider"),
         "layer": qsTr("Layer"),
@@ -363,6 +368,8 @@ ApplicationWindow {
         "pdfTextRect": toolAction(PageCanvas.SelectPdfTextRect, "select-pdf-text-area"),
         "playObject": toolAction(PageCanvas.PlayObject, "object-play"),
         "imageTool": toolAction(PageCanvas.Image, "tool-image"),
+        "mindMap": toolAction(PageCanvas.MindMap, "tool-mind-map"),
+        "codeTool": toolAction(PageCanvas.Code, "tool-code"),
         "record": {
             text: qsTr("Record / Stop"), icon: "audio-record",
             checked: () => audio.recording,
@@ -660,7 +667,7 @@ ApplicationWindow {
                                        || canvas.tool === PageCanvas.SelectRegion
                                        || canvas.tool === PageCanvas.SelectObject
     readonly property bool textTool: canvas.tool === PageCanvas.Text || canvas.tool === PageCanvas.Link
-                                     || canvas.textEditing
+                                     || canvas.tool === PageCanvas.Code || canvas.textEditing
     readonly property bool insertTool: textTool || canvas.tool === PageCanvas.Latex
     readonly property var textSizes: [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 36, 48, 72]
     // Colour and size also apply to the selected elements
@@ -678,7 +685,8 @@ ApplicationWindow {
                                       qsTr("Laser Pointer - Highlighter"), qsTr("Select rectangle"),
                                       qsTr("Select region"), qsTr("Select object"), qsTr("Text"), qsTr("Link"),
                                       qsTr("LaTeX formula"), qsTr("Select Linear PDF Text"),
-                                      qsTr("Select PDF Text In Rectangle"), qsTr("Play object"), qsTr("Image")]
+                                      qsTr("Select PDF Text In Rectangle"), qsTr("Play object"), qsTr("Image"),
+                                      qsTr("Mind map"), qsTr("Code")]
     readonly property var drawingTypes: [qsTr("Freehand"), qsTr("Draw Line"), qsTr("Draw Rectangle"),
                                          qsTr("Draw Ellipse"), qsTr("Draw Arrow"), qsTr("Draw Double Arrow"),
                                          qsTr("Draw coordinate system"), qsTr("Draw Spline"),
@@ -747,7 +755,13 @@ ApplicationWindow {
            + " – Qournal"
 
     onClosing: close => {
-        if (canvas.modified && !closeConfirmed) {
+        if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+            // There only the system closes the window, when it ends the application (after a long time in the
+            // background), and waits for its end. Nobody can be asked then: the question kept Android waiting,
+            // and the application stayed black when it was opened again. The changes are offered at the next start
+            canvas.keepChangesForRecovery()
+            canvas.saveSettings()
+        } else if (canvas.modified && !closeConfirmed) {
             close.accepted = false
             guarded(() => {
                 closeConfirmed = true
@@ -758,13 +772,17 @@ ApplicationWindow {
         }
     }
 
-    // On mobile platforms the application may not come back once it is in the background
+    // On mobile platforms the application may not come back once it is in the background: the system may end it
+    // without a word. The changes are in the autosave file then
     Connections {
         target: Application
 
         function onStateChanged() {
             if (Application.state !== Qt.ApplicationActive) {
                 canvas.saveSettings()
+                if (Qt.platform.os === "android" || Qt.platform.os === "ios") {
+                    canvas.autosaveNow()
+                }
             }
         }
     }
@@ -808,6 +826,8 @@ ApplicationWindow {
         property alias windowHeight: root.height
         /// The id of the toolbar configuration, empty for the one of the layout
         property string toolbarConfig: ""
+        /// Which default of the toolbars the settings know of: empty before "Qournal" became the one of desktops
+        property string toolbarDefault: ""
         // Earlier versions had one toolbar and kept its items here; see Component.onCompleted
         property string toolbar: ""
         property string toolbox: ""
@@ -816,8 +836,8 @@ ApplicationWindow {
     ToolbarModel {
         id: toolbars
 
-        // As in Xournal++, whose default is "Portrait"
-        fallback: root.touchUi ? "Qournal Tablet" : "Portrait"
+        // The toolbars of this application, which have its tools (Xournal++ starts with "Portrait")
+        fallback: root.touchUi ? "Qournal Tablet" : "Qournal"
     }
 
     Theme {
@@ -895,6 +915,14 @@ ApplicationWindow {
             })
             uiSettings.toolbar = ""
             uiSettings.toolbox = ""
+        }
+        if (uiSettings.toolbarDefault === "") {
+            // "Qournal" is the toolbar of new users on desktops; who has used the application with "Portrait", the
+            // default before, keeps it. A user is new if the settings have no toolbar at all
+            if (!root.touchUi && uiSettings.value("toolbarConfig", null) === "") {
+                uiSettings.toolbarConfig = "Portrait"
+            }
+            uiSettings.toolbarDefault = "Qournal"
         }
         toolbars.current = uiSettings.toolbarConfig
         toolbars.currentChanged.connect(() => uiSettings.toolbarConfig = toolbars.current)

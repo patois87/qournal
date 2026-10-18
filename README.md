@@ -33,6 +33,13 @@ Most of Qournal is what Xournal++ has. These are its own:
 - **Formulas without a LaTeX installation.** Where LaTeX is not installed, which is always the case on Android,
   Qournal sets the formula itself. The result is stored with its source, so that Xournal++ shows it and can set
   it again with LaTeX.
+- **Mind maps drawn by hand.** With the mind map tool, a loop around writing becomes a clean ellipse or rectangle
+  around it, a stroke from it a smooth branch that gets thinner towards the outside, a line under a word an
+  underlined node, and a hook at the end of a stroke an arrow. Nodes keep their writing when they are moved, and
+  the branches follow them. It is all ordinary strokes, which Xournal++ shows as they are.
+- **Code in texts.** The code tool writes code in one of 24 languages, highlighted while it is typed, in a box with
+  the numbers of its lines, as code blocks look in Markdown; on the screen and in exports, in colours of one of 30
+  themes. The file keeps the code as an ordinary text, which Xournal++ shows as it is.
 - **Android, and a user interface for fingers.** Toolbars that keep out of the bars of the system, menus with
   "Back" and "Close", dialogs that become one column on a phone.
 - **Electronic paper**, see the next section.

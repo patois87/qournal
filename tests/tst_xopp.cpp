@@ -70,6 +70,7 @@ bool same(const Stroke& a, const Stroke& b) {
 bool same(const TextElement& a, const TextElement& b) {
     return a.text == b.text && a.font == b.font && near(a.size, b.size) && near(a.pos, b.pos) &&
            near(a.matrix, b.matrix) && a.color == b.color && near(a.wrap, b.wrap) && a.justify == b.justify &&
+           a.code == b.code &&
            (a.align.isEmpty() ? QStringLiteral("left") : a.align) ==
                    (b.align.isEmpty() ? QStringLiteral("left") : b.align) &&
            same(a.audio, b.audio);
@@ -320,6 +321,55 @@ private slots:
         QVERIFY(!images[0]->image.isNull());
         QVERIFY(images[0]->naturalSize.isValid());
 #endif
+    }
+
+    void codeInTexts() {
+        Document doc = Document::createEmpty();
+        auto& elements = doc.pages.front().layers.front().elements;
+        TextElement code;
+        code.text = QStringLiteral("def f(x):\n    return x  # <&>");
+        code.font = QStringLiteral("Monospace");
+        code.size = 11;
+        code.pos = QPointF(40, 60);
+        code.code = QStringLiteral("python");
+        elements.emplace_back(code);
+        TextElement plain = code;
+        plain.code.clear();
+        plain.pos = QPointF(40, 200);
+        elements.emplace_back(plain);
+        TextElement unknown = code;
+        unknown.code = QStringLiteral("a-language-from-later");
+        unknown.matrix = Matrix{2, 0, 0, 2, 40, 300};
+        elements.emplace_back(unknown);
+
+        // Written as an attribute, only where there is a language, and read again
+        const QByteArray xml = writeXoppXml(doc);
+        QCOMPARE(xml.count("code=\""), 2);
+        QVERIFY(xml.contains("code=\"python\""));
+        QTemporaryDir dir;
+        const QString file = dir.filePath(QStringLiteral("code.xopp"));
+        QString error;
+        QVERIFY2(saveXopp(file, doc, &error), qPrintable(error));
+        Document reloaded;
+        QVERIFY2(loadXopp(file, reloaded, &error), qPrintable(error));
+        const auto texts = elementsOf<TextElement>(reloaded);
+        QCOMPARE(texts.size(), size_t(3));
+        QCOMPARE(texts[0]->code, QStringLiteral("python"));
+        QCOMPARE(texts[0]->text, code.text);
+        QVERIFY(texts[1]->code.isEmpty());
+        QCOMPARE(texts[2]->code, QStringLiteral("a-language-from-later"));
+
+        // Not a reason for format 5, and kept in the copy for Xournal++ 1.3
+        doc.pages.front().layers.front().elements.pop_back();
+        QVERIFY(!XoppCompat::needsFormat5(doc));
+        TextElement scaled = code;
+        scaled.matrix = Matrix{2, 0, 0, 2, 40, 300};
+        doc.pages.front().layers.front().elements.emplace_back(scaled);
+        const Document old = XoppCompat::toFormat4(doc);
+        const auto oldTexts = elementsOf<TextElement>(old);
+        QCOMPARE(oldTexts[0]->code, QStringLiteral("python"));
+        QCOMPARE(oldTexts[2]->code, QStringLiteral("python"));
+        QVERIFY(!oldTexts[2]->matrix.has_value());
     }
 
     void layers() {

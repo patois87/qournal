@@ -220,6 +220,50 @@ else ()
     message(STATUS "Qt PDF not found: PDF backgrounds and LaTeX formulas are shown as placeholders")
 endif ()
 
+# Highlighting of code in texts: KSyntaxHighlighting of KDE (MIT). Only downloaded and unpacked: its files are
+# compiled here, without ECM, which its own build needs, and without Qt Network, which only its downloader of
+# definitions uses. The definitions of the languages offered are built in as resources it reads without the index
+# its build makes with a program of its own, which would have to run on the build machine when cross compiling
+include(FetchContent)
+FetchContent_Declare(ksyntaxhighlighting
+    URL https://github.com/KDE/syntax-highlighting/archive/refs/tags/v6.30.0.tar.gz
+    URL_HASH SHA256=d5c1b218a4a576caabb44daf5d1cdd871a44b88518093ed3617af77bec86d5f0
+    SOURCE_SUBDIR not-built-with-its-cmake
+)
+FetchContent_MakeAvailable(ksyntaxhighlighting)
+set(KSH_DIR ${ksyntaxhighlighting_SOURCE_DIR})
+set(KSH_SOURCES)
+foreach (name abstracthighlighter context contextswitch definition foldingregion format highlightingdata
+              keywordlist repository rule state syntaxhighlighter theme themedata themepreviewicon
+              wildcardmatcher worddelimiters)
+    list(APPEND KSH_SOURCES ${KSH_DIR}/src/lib/${name}.cpp)
+endforeach ()
+add_library(xoj-ksyntaxhighlighting STATIC ${KSH_SOURCES} core/ksyntaxhighlighting/ksyntaxhighlighting_logging.cpp)
+target_include_directories(xoj-ksyntaxhighlighting
+    PUBLIC ${KSH_DIR}/src/lib ${CMAKE_CURRENT_SOURCE_DIR}/core/ksyntaxhighlighting)
+target_link_libraries(xoj-ksyntaxhighlighting PUBLIC Qt6::Gui)
+set_target_properties(xoj-ksyntaxhighlighting PROPERTIES POSITION_INDEPENDENT_CODE ON)
+# As the settings of the build of KDE have it: "QChar + QChar" makes a QString
+target_compile_definitions(xoj-ksyntaxhighlighting PRIVATE QT_USE_QSTRINGBUILDER)
+if (MSVC)
+    target_compile_options(xoj-ksyntaxhighlighting PRIVATE /w /utf-8)
+else ()
+    target_compile_options(xoj-ksyntaxhighlighting PRIVATE -w)  # not our code
+endif ()
+# The colour themes, and the languages offered with the ones they include (not the many that the code blocks of
+# Markdown and LaTeX include). Not R: its definition is under "GPL v2" without "or later", see THIRD-PARTY.md
+file(GLOB KSH_THEMES ${KSH_DIR}/data/themes/*.theme)
+qt_add_resources(xoj-ksyntaxhighlighting "theme_data" PREFIX "/org.kde.syntax-highlighting/themes"
+    BASE ${KSH_DIR}/data/themes FILES ${KSH_THEMES})
+set(KSH_SYNTAX)
+foreach (name python c isocpp cs java javascript typescript kotlin swift go rust php ruby sql bash powershell html
+              xml css json yaml matlab markdown latex
+              alert comments modelines spdx-comments doxygen gcc javadoc javascript-react mustache sql-mysql rest)
+    list(APPEND KSH_SYNTAX ${KSH_DIR}/data/syntax/${name}.xml)
+endforeach ()
+qt_add_resources(xoj-ksyntaxhighlighting "syntax_addons" PREFIX "/org.kde.syntax-highlighting/syntax-addons"
+    BASE ${KSH_DIR}/data/syntax FILES ${KSH_SYNTAX})
+
 add_subdirectory(core)
 add_subdirectory(app)
 

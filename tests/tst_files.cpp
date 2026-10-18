@@ -323,6 +323,29 @@ private slots:
         QVERIFY(autosavesIn(cacheAutosaves()).isEmpty());
     }
 
+    void keptWhenTheSystemEndsTheApplication() {
+        // A phone ends the application without asking: changes that were never autosaved are offered at the start
+        {
+            Fixture f;
+            f.canvas->keepChangesForRecovery();  // nothing to keep
+            QVERIFY(autosavesIn(cacheAutosaves()).isEmpty());
+            f.strokeOnPage(0, {QPointF(100, 100), QPointF(300, 100)});
+            f.canvas->keepChangesForRecovery();
+        }
+        const QStringList kept = autosavesIn(cacheAutosaves());
+        QCOMPARE(kept.size(), 1);
+
+        Fixture f;
+        PageCanvas* c = f.canvas;
+        const QStringList orphans = c->orphanAutosaves();
+        QCOMPARE(orphans.size(), 1);
+        QVERIFY(c->recoverAutosave(orphans[0], QUrl()));
+        QCOMPARE(f.strokes().size(), 1);
+        QVERIFY(c->modified());
+        c->discardAutosave(orphans[0]);
+        QVERIFY(autosavesIn(cacheAutosaves()).isEmpty());
+    }
+
     void recoverAfterCrash() {
         QTemporaryDir dir;
         const QString path = dir.filePath(QStringLiteral("doc.xopp"));

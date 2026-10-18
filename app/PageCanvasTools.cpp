@@ -28,6 +28,7 @@
 #include "PageCanvas.h"
 #include "Platform.h"
 #include "Renderer.h"
+#include "MindMap.h"
 #include "ShapeRecognizer.h"
 
 namespace {
@@ -81,6 +82,8 @@ constexpr double THICKNESS[PageCanvas::TOOL_COUNT][5] = {
         {0, 0, 0, 0, 0},                 // select PDF text in a rectangle
         {0, 0, 0, 0, 0},                 // play object
         {0, 0, 0, 0, 0},                 // image
+        {0.42, 0.85, 1.41, 2.26, 5.67},  // mind map: as the pen
+        {0, 0, 0, 0, 0},                 // code
 };
 
 constexpr int PEN_HOVER_MS = 500;
@@ -98,7 +101,7 @@ void PageCanvas::setTool(Tool tool) {
         finishInput();
         // The tools that work on what is under the pointer do not keep a selection, as in Xournal++
         if (tool == Pen || tool == Highlighter || tool == Eraser || tool == Text || tool == Link || tool == Latex ||
-            tool == VerticalSpace || tool == Image) {
+            tool == VerticalSpace || tool == Image || tool == MindMap || tool == Code) {
             clearSelection();
         }
         m_previousTool = m_tool;
@@ -511,7 +514,7 @@ void PageCanvas::showStylusCursor() {
     // As in Xournal++: a dot as large as the stroke will be wide, in the colour of the tool, so that it shows
     // where and how the pen will draw. It was a dot of a fixed size with a border, much larger than a fine
     // stroke. "Big" adds a pencil to it, for those who lose sight of the dot
-    const bool draws = m_tool == Pen || m_tool == Highlighter;
+    const bool draws = m_tool == Pen || m_tool == Highlighter || m_tool == MindMap;
     const double diameter = draws ? std::clamp(thickness(m_tool) * m_scale, 2.0, 90.0) : 4.0;
     QColor color = m_toolStates[static_cast<size_t>(m_tool)].color;
     if (m_tool == Highlighter && color.alpha() == 255) {
@@ -1138,6 +1141,7 @@ void PageCanvas::pointerPress(const PointerInput& rawInput, std::optional<Tool> 
             pdfSelectPress(input);
             break;
         case Text:
+        case Code:
             textPress(input);
             break;
         case PlayObject:
@@ -1151,6 +1155,10 @@ void PageCanvas::pointerPress(const PointerInput& rawInput, std::optional<Tool> 
             break;
         case Latex:
             latexPress(input);
+            break;
+        case MindMap:
+            m_drawingType = Freehand;
+            startDrawing(input, strokeStyle(tool));
             break;
         case Pen:
         case Highlighter:
@@ -1284,7 +1292,8 @@ void PageCanvas::edgePanStep() {
 void PageCanvas::pointerRelease(const PointerInput& rawInput) {
     const PointerInput input = withGuessedPressure(rawInput, false);
     // A tap is not a stroke: nothing is drawn, and what is under it is selected
-    const bool penStroke = m_action == Action::Draw && (m_pressTool == Pen || m_pressTool == Highlighter);
+    const bool penStroke =
+            m_action == Action::Draw && (m_pressTool == Pen || m_pressTool == Highlighter || m_pressTool == MindMap);
     if (penStroke && isFilteredTap(input)) {
         const int page = m_curPage;
         cancelInput();
@@ -1384,6 +1393,10 @@ void PageCanvas::endAction(double pressure) {
             m_stabilizer->finalizeStroke();
             m_stabilizer.reset();
             const Stroke stroke = m_builder.finish(pressure);
+            if (m_pressTool == MindMap) {
+                addMindMapStroke(m_curPage, stroke);
+                break;
+            }
             addStroke(m_curPage, stroke);
             if (m_drawingType == ShapeRecognizer) {
                 if (auto shape = ShapeRecognizer::recognize(stroke, m_input.recognizerMinSize)) {
@@ -1546,6 +1559,42 @@ void PageCanvas::playObjectPress(const PointerInput& input) {
             }
         }
     }
+}
+
+void PageCanvas::addMindMapStroke(int pageIndex, const Stroke& stroke) {
+    // What the stroke is depends on what is on the layer already
+    const int layer = activeLayer(pageIndex);
+    const Layer& target = m_doc.pages[static_cast<size_t>(pageIndex)].layers[static_cast<size_t>(layer)];
+    MindMap::Result result = MindMap::recognize(stroke, target, m_input.mindMap());
+    addStroke(pageIndex, stroke);
+    if (result.kind == MindMap::Result::Kind::Ink && result.changes.empty()) {
+        return;
+    }
+
+    // A step of its own, as with the shape recogniser: undoing it brings back the stroke as it was drawn, and the
+    // strokes it changed as they were
+    EditGroup group;
+    if (!result.changes.empty()) {
+        ElementReplaceEdit replace{pageIndex, {}};
+        for (const auto& [index, changed]: result.changes) {
+            replace.items.push_back({layer, index, target.elements[index], changed});
+        }
+        group.emplace_back(std::move(replace));
+    }
+    if (result.kind != MindMap::Result::Kind::Ink) {
+        const size_t index = target.elements.size() - 1;
+        const Stroke added = std::get<Stroke>(target.elements[index]);
+        group.emplace_back(ElementEdit{false, pageIndex, layer, index, added});
+        if (result.keep) {
+            result.stroke.audio = added.audio;
+            group.emplace_back(ElementEdit{true, pageIndex, layer, index, result.stroke});
+        }
+    }
+    // What a scribble deletes, from the back so that the indices stay valid
+    for (auto it = result.removed.rbegin(); it != result.removed.rend(); ++it) {
+        group.emplace_back(ElementEdit{false, pageIndex, layer, *it, target.elements[*it]});
+    }
+    perform(std::move(group));
 }
 
 void PageCanvas::addStroke(int pageIndex, const Stroke& newStroke) {

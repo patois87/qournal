@@ -1,6 +1,8 @@
 # Document model, file format and rendering: no dependency on Qt Quick
 add_library(xoj-core STATIC
     BackgroundConfig.h
+    Code.cpp
+    Code.h
     Document.cpp
     Document.h
     Eraser.cpp
@@ -11,6 +13,8 @@ add_library(xoj-core STATIC
     GeometryTool.h
     LatexTemplate.cpp
     LatexTemplate.h
+    MindMap.cpp
+    MindMap.h
     Palette.cpp
     PdfCrypt.cpp
     PdfCrypt.h
@@ -55,7 +59,7 @@ add_library(xoj-core STATIC
 )
 
 target_include_directories(xoj-core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(xoj-core PUBLIC Qt6::Gui PRIVATE ZLIB::ZLIB)
+target_link_libraries(xoj-core PUBLIC Qt6::Gui xoj-ksyntaxhighlighting PRIVATE ZLIB::ZLIB)
 
 if (TARGET Qt6::Pdf)
     target_link_libraries(xoj-core PUBLIC Qt6::Pdf)

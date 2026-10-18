@@ -14,6 +14,7 @@
 #include <QTemporaryDir>
 
 #include "CanvasFixture.h"
+#include "Code.h"
 #include "InputSettings.h"
 #include "Localization.h"
 #include "Theme.h"
@@ -725,6 +726,37 @@ private slots:
         QCOMPARE(input->stabilizerBufferSize, 20);
         QVERIFY(input->snapGrid);
         QCOMPARE(input->zoomStep, 25.0);
+    }
+
+    void codeLook() {
+        {
+            Fixture f;
+            PageCanvas* c = f.canvas;
+            QVERIFY(c->codeThemes().contains(QStringLiteral("Dracula")));
+            QCOMPARE(c->codeLightTheme(), QStringLiteral("GitHub Light"));
+            QSignalSpy codeLookChanged(c, &PageCanvas::codeLookChanged);
+            c->setCodeLightTheme(QStringLiteral("Solarized Light"));
+            c->setCodeDarkTheme(QStringLiteral("Dracula"));
+            c->setCodeLineNumbers(false);
+            c->setCodeBox(false);
+            c->setCodeBox(false);  // no change
+            QCOMPARE(codeLookChanged.count(), 4);
+            // For the whole application, also the drawing and the exports
+            QCOMPARE(Code::look().lightTheme, QStringLiteral("Solarized Light"));
+            QVERIFY(!Code::look().box);
+            c->saveSettings();
+        }
+        Code::setLook(Code::Look());
+
+        Fixture f;
+        PageCanvas* c = f.canvas;
+        c->loadSettings();
+        QCOMPARE(c->codeLightTheme(), QStringLiteral("Solarized Light"));
+        QCOMPARE(c->codeDarkTheme(), QStringLiteral("Dracula"));
+        QVERIFY(!c->codeLineNumbers());
+        QVERIFY(!c->codeBox());
+        QCOMPARE(Code::look().darkTheme, QStringLiteral("Dracula"));
+        Code::setLook(Code::Look());
     }
 
     void unusableSettingsAreIgnored() {

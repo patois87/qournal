@@ -47,7 +47,8 @@ bool isItalic(const QString& description);
 
 class TextBlock {
 public:
-    TextBlock(const QString& text, const TextStyle& style);
+    /// @param formats colours and styles of parts of the text, by their positions in it (code)
+    TextBlock(const QString& text, const TextStyle& style, const QList<QTextLayout::FormatRange>& formats = {});
 
     /// Width and height of the block in page units, as Pango reports the logical extents
     QSizeF size() const { return m_size; }
@@ -61,11 +62,22 @@ public:
     /// Paints the block with its top left corner at the origin
     void draw(QPainter& p, const QColor& color) const;
 
+    /// The width of a digit, in page units
+    double digitWidth() const;
+    /// The number of lines of the text, as separated by '\n', not as broken
+    int paragraphCount() const { return m_paragraphCount; }
+    /**
+     * Paints the numbers of the lines of the text, as separated by '\n', at the first line each is broken into,
+     * with their right edge at right (page units, from the left of the block)
+     */
+    void drawLineNumbers(QPainter& p, double right, const QColor& color) const;
+
 private:
     std::unique_ptr<QTextLayout> m_layout;
     double m_scale = 0;  ///< from the size the text is laid out at to page units
     double m_lineHeight = 0;
     QSizeF m_size;
+    int m_paragraphCount = 1;
     /// Lines that are broken within a word: Pango shows a hyphen at their end, and so is it done here
     QList<int> m_hyphenated;
     QFont m_font;

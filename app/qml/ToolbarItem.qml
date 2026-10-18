@@ -36,6 +36,7 @@ Loader {
         "size": sizeComponent,
         "lineStyle": lineStyleComponent,
         "font": fontComponent,
+        "codeLanguage": codeLanguageComponent,
         "zoomLabel": zoomLabelComponent,
         "zoomSlider": zoomSliderComponent,
         "layer": layerComponent,
@@ -342,6 +343,30 @@ Loader {
                 loader.canvas.lineStyle = styles[index].style
                 loader.triggered()
             }
+        }
+    }
+
+    // The language of the code new texts are, the text that is being edited or the selected texts: a text that is
+    // code is highlighted, in a box with the numbers of its lines
+    Component {
+        id: codeLanguageComponent
+
+        FitComboBox {
+            readonly property bool shown: true
+            readonly property var languages: loader.canvas.codeLanguages
+
+            width: 130
+            enabled: loader.app.textTool || loader.canvas.hasSelection
+            model: [qsTr("No code")].concat(languages.map(language => language.name))
+            currentIndex: languages.findIndex(language => language.id === loader.canvas.textCode) + 1
+            onActivated: index => {
+                loader.canvas.textCode = index === 0 ? "" : languages[index - 1].id
+                loader.triggered()
+            }
+
+            ToolTip.visible: hovered
+            ToolTip.delay: 600
+            ToolTip.text: qsTr("Language of the code")
         }
     }
 

@@ -91,6 +91,16 @@ private slots:
         QCOMPARE(font.stretch(), int(QFont::SemiCondensed));
     }
 
+    void monospaceHasAFixedWidth() {
+        // Pango's name for the font of fixed width, which fontconfig knows on Linux only: every system takes its own
+        const QFont font = TextFont::fromDescription(QStringLiteral("Monospace Bold"));
+        QCOMPARE(TextFont::family(QStringLiteral("Monospace Bold")), QStringLiteral("Monospace"));
+        QVERIFY(QFontInfo(font).fixedPitch());
+        QCOMPARE(font.weight(), QFont::Bold);
+        const QFontMetricsF metrics(font);
+        QCOMPARE(metrics.horizontalAdvance(QStringLiteral("iiii")), metrics.horizontalAdvance(QStringLiteral("MMMM")));
+    }
+
     void linesAndTheirHeight() {
         const TextBlock one(QStringLiteral("Text"), style());
         QCOMPARE(one.lineCount(), 1);

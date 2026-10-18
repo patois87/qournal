@@ -41,6 +41,7 @@
 #include <QPdfDocument>
 #endif
 
+#include "Code.h"
 #include "Document.h"
 #include "Export.h"
 #include "GeometryTool.h"
@@ -84,6 +85,11 @@ class PageCanvas: public QQuickItem {
     Q_PROPERTY(QString textAlign READ textAlign WRITE setTextAlign NOTIFY textStyleChanged)
     /// Wrapped lines are stretched to the full width
     Q_PROPERTY(bool textJustify READ textJustify WRITE setTextJustify NOTIFY textStyleChanged)
+    /// The language of the code of the text that is edited (empty for ordinary text), or else the one the code
+    /// tool writes in, the one used last
+    Q_PROPERTY(QString textCode READ textCode WRITE setTextCode NOTIFY textStyleChanged)
+    /// The languages offered for code: maps with id and name
+    Q_PROPERTY(QVariantList codeLanguages READ codeLanguages CONSTANT)
     // The text that is being edited: an editor on top of the canvas shows it, see TextEditor.qml
     Q_PROPERTY(bool textEditing READ textEditing NOTIFY textEditChanged)
     Q_PROPERTY(QString textEditText READ textEditText WRITE setTextEditText NOTIFY textEditChanged)
@@ -93,6 +99,9 @@ class PageCanvas: public QQuickItem {
     Q_PROPERTY(bool textEditJustify READ textEditJustify NOTIFY textEditChanged)
     Q_PROPERTY(double textEditWrap READ textEditWrap NOTIFY textEditChanged)
     Q_PROPERTY(double textEditLineHeight READ textEditLineHeight NOTIFY textEditChanged)
+    /// For a text that is code: its colours and the measures of its box in the units of the editor (language, text,
+    /// background, lineNumbers, box, numbers, padding, digitWidth, gap, radius); empty for other texts
+    Q_PROPERTY(QVariantMap textEditCode READ textEditCode NOTIFY textEditChanged)
     Q_PROPERTY(QMatrix4x4 textEditMatrix READ textEditMatrix NOTIFY textEditMatrixChanged)
     // The layers of the current page. The list has an entry with "name" and "visible" for each layer, from the
     // bottom one up
@@ -147,6 +156,14 @@ class PageCanvas: public QQuickItem {
     Q_PROPERTY(QString audioRecording READ audioRecording WRITE setAudioRecording NOTIFY audioRecordingChanged)
     /// The colour around the pages
     Q_PROPERTY(QColor canvasColor READ canvasColor WRITE setCanvasColor NOTIFY canvasColorChanged)
+    /// How code looks (Code::Look): the colour theme on light paper and on dark paper, the numbers of the lines,
+    /// the box; on the screen and in exports
+    Q_PROPERTY(QString codeLightTheme READ codeLightTheme WRITE setCodeLightTheme NOTIFY codeLookChanged)
+    Q_PROPERTY(QString codeDarkTheme READ codeDarkTheme WRITE setCodeDarkTheme NOTIFY codeLookChanged)
+    Q_PROPERTY(bool codeLineNumbers READ codeLineNumbers WRITE setCodeLineNumbers NOTIFY codeLookChanged)
+    Q_PROPERTY(bool codeBox READ codeBox WRITE setCodeBox NOTIFY codeLookChanged)
+    /// The names of the colour themes for code
+    Q_PROPERTY(QStringList codeThemes READ codeThemes CONSTANT)
     /// For electronic paper: white around the pages with a thin frame around each, and no pointer of the stylus
     /// (gray areas are dithered there, and what moves leaves traces)
     Q_PROPERTY(bool einkMode READ einkMode WRITE setEinkMode NOTIFY canvasColorChanged)
@@ -199,7 +216,9 @@ public:
         SelectPdfTextLinear,
         SelectPdfTextRect,
         PlayObject,  ///< plays the recording of the stroke or text that is tapped
-        Image        ///< asks for an image where the page is tapped, see imageRequested()
+        Image,       ///< asks for an image where the page is tapped, see imageRequested()
+        MindMap,     ///< a pen for mind maps: a loop around writing becomes a node, a stroke from it a branch
+        Code         ///< writes code: a text in the language used last, or makes the text that is tapped code
     };
     Q_ENUM(Tool)
     /// What the pen and the highlighter draw
@@ -258,7 +277,7 @@ public:
     };
     Q_ENUM(ButtonAction)
     static constexpr int BUTTON_COUNT = 7;
-    static constexpr int TOOL_COUNT = 17;
+    static constexpr int TOOL_COUNT = 19;
 
     explicit PageCanvas(QQuickItem* parent = nullptr);
     ~PageCanvas() override;
@@ -304,6 +323,13 @@ public:
     /// "left", "center" or "right"
     QString textAlign() const { return m_textAlign; }
     bool textJustify() const { return m_textJustify; }
+    QString textCode() const { return m_textEdit.active ? m_textEdit.element.code : m_textCode; }
+    /**
+     * Makes the text that is edited and the selected texts code of the language (set in the font of fixed width,
+     * not wrapped), or ordinary text again with an empty one. A language is the one of the code tool from then on
+     */
+    void setTextCode(const QString& code);
+    static QVariantList codeLanguages();
     void setTextJustify(bool justify);
     void setTextAlign(const QString& align);
 
@@ -330,7 +356,16 @@ public:
     /// Sets the width at which the edited text wraps, in the units of the editor; negative for no wrapping
     Q_INVOKABLE void setTextEditWrap(double width);
     /// Gives the lines of the editor's document the distance the text will have on the page
-    Q_INVOKABLE void prepareTextDocument(QQuickTextDocument* document) const;
+    /// @param highlight code is highlighted in it (not in the numbers of its lines)
+    Q_INVOKABLE void prepareTextDocument(QQuickTextDocument* document, bool highlight = true) const;
+    QVariantMap textEditCode() const;
+    /**
+     * For the editor of code: how the lines from start to end are indented by one unit (out: less), as a map with
+     * from, to, replacement, selectionStart and selectionEnd. The unit is a tab or the spaces of the settings
+     */
+    Q_INVOKABLE QVariantMap codeIndent(const QString& text, int start, int end, bool out) const;
+    /// For the editor of code: a line break and the indentation of the line at the position
+    Q_INVOKABLE QString codeNewLine(const QString& text, int position) const;
 
     /// Inserts an image file into the current page, in the middle of the view or at a position of the item
     Q_INVOKABLE bool insertImage(const QUrl& url);
@@ -471,6 +506,11 @@ public:
     QString autosavePath() const;
     /// Writes the autosave file whatever the state: for the moment the application crashes
     void emergencySave();
+    /**
+     * For the end of the application that nobody can be asked about (the system of a phone ends it): the changes
+     * are written to the autosave file, which is kept, so that they are offered for recovery at the next start
+     */
+    Q_INVOKABLE void keepChangesForRecovery();
     /// Writes the autosave file if there are changes since the last one
     Q_INVOKABLE void autosaveNow();
     /// @return the autosave file of a document if it is newer than the document, else nothing
@@ -521,6 +561,15 @@ public:
     bool einkMode() const { return m_einkMode; }
     void setEinkMode(bool eink);
     void setCanvasColor(const QColor& color);
+    QString codeLightTheme() const;
+    void setCodeLightTheme(const QString& theme);
+    QString codeDarkTheme() const;
+    void setCodeDarkTheme(const QString& theme);
+    bool codeLineNumbers() const;
+    void setCodeLineNumbers(bool numbers);
+    bool codeBox() const;
+    void setCodeBox(bool box);
+    static QStringList codeThemes();
 
     /// When a page is appended by itself, as in Xournal++ ("emptyLastPageAppend")
     enum AppendPage { AppendNever, AppendWhenWritten, AppendWhenScrolledToEnd };
@@ -733,6 +782,7 @@ signals:
     void imageRequested(const QPointF& pos);
     /// The play tool was used on a stroke or text with a recording
     void audioPlayRequested(const QString& filename, qint64 timestamp);
+    void codeLookChanged();
     void canvasColorChanged();
     void scrollChanged();
     void viewSettingsChanged();
@@ -1091,6 +1141,9 @@ private:
     StrokeStabilizer::Event stabilizerEvent(const PointerInput& input) const;
     /// Adds a stroke to the top layer of a page, undoable
     void addStroke(int page, const Stroke& newStroke);
+    /// Adds a stroke of the mind map tool and replaces it with the node or branch it is
+    void setCodeLook(const std::function<void(Code::Look&)>& modify);
+    void addMindMapStroke(int page, const Stroke& stroke);
     void updateShape();
     void eraseAt(const QPointF& pagePos);
 
@@ -1183,6 +1236,7 @@ private:
     QString m_autosaveId;          ///< names the autosave file of a document without file
     QString m_autosaveFile;        ///< the autosave file that was written for this document, if any
     bool m_autosaveDirty = false;  ///< changes since the last autosave
+    bool m_keepAutosave = false;   ///< see keepChangesForRecovery()
     bool m_modified = false;
     LayoutSettings m_layoutSettings;
     bool m_presentationMode = false;
@@ -1284,6 +1338,7 @@ private:
     double m_textSize = 12.0;
     QString m_textAlign = QStringLiteral("left");
     bool m_textJustify = false;
+    QString m_textCode = QStringLiteral("python");  ///< the language of the code tool
     TextEditState m_textEdit;
     InsertTarget m_insertTarget;
     QPointF m_handPressPos;  ///< where the hand tool was pressed: a tap on a link opens it

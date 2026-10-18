@@ -496,6 +496,10 @@ Bonvolu agordi la sondosierujon ĉe «Agordoj &gt; Sonregistrado»</translation>
         <translation>Tiparo</translation>
     </message>
     <message>
+        <source>Language of the code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Zoom level</source>
         <translation type="unfinished"></translation>
     </message>
@@ -690,6 +694,14 @@ Bonvolu agordi la sondosierujon ĉe «Agordoj &gt; Sonregistrado»</translation>
     <message>
         <source>Play object</source>
         <translation>Ludi objekton</translation>
+    </message>
+    <message>
+        <source>Mind map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Freehand</source>
@@ -2093,6 +2105,30 @@ Bonvolu agordi la sondosierujon ĉe «Agordoj &gt; Sonregistrado»</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colours on light paper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colours on dark paper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Numbers of the lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A box around the code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code is drawn so on the screen and in exports. Xournal++ shows it as an ordinary text.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Page of new documents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2130,6 +2166,66 @@ Bonvolu agordi la sondosierujon ĉe «Agordoj &gt; Sonregistrado»</translation>
     </message>
     <message>
         <source>Reset to the defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shape of the nodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>As drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Space around the writing (points)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Branches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Branches follow the curve that was drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Branches get thinner towards the outside</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Each main branch has a colour of its own, which what grows from it takes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A branch joins a node it starts this close to (points)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scribbling over something deletes it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected nodes and groups bring their writing, and what joins them follows them</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2354,6 +2450,10 @@ Bonvolu agordi la sondosierujon ĉe «Agordoj &gt; Sonregistrado»</translation>
     </message>
     <message>
         <source>Pointer of the pen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mind maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2761,6 +2861,17 @@ Bonvolu agordi la sondosierujon ĉe «Agordoj &gt; Sonregistrado»</translation>
     </message>
 </context>
 <context>
+    <name>TextEditor</name>
+    <message>
+        <source>No code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language of the code</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ToolbarDialog</name>
     <message>
         <source>Customize toolbars</source>
@@ -2910,6 +3021,14 @@ Bonvolu agordi la sondosierujon ĉe «Agordoj &gt; Sonregistrado»</translation>
     </message>
     <message>
         <source>Size of the tool: %1 pt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language of the code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

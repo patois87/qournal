@@ -496,6 +496,10 @@ Impostare la cartella di registrazione in “Preferenze &gt; Registrazione audio
         <translation>Carattere</translation>
     </message>
     <message>
+        <source>Language of the code</source>
+        <translation>Linguaggio del codice</translation>
+    </message>
+    <message>
         <source>Zoom level</source>
         <translation>Livello di zoom</translation>
     </message>
@@ -690,6 +694,14 @@ Impostare la cartella di registrazione in “Preferenze &gt; Registrazione audio
     <message>
         <source>Play object</source>
         <translation>Riproduci Oggetto</translation>
+    </message>
+    <message>
+        <source>Mind map</source>
+        <translation>Mappa mentale</translation>
+    </message>
+    <message>
+        <source>Code</source>
+        <translation>Codice</translation>
     </message>
     <message>
         <source>Freehand</source>
@@ -2094,6 +2106,30 @@ Impostare la cartella di registrazione in “Preferenze &gt; Registrazione audio
         <translation>Passo con Ctrl e rotellina (%)</translation>
     </message>
     <message>
+        <source>Code</source>
+        <translation>Codice</translation>
+    </message>
+    <message>
+        <source>Colours on light paper</source>
+        <translation>Colori su carta chiara</translation>
+    </message>
+    <message>
+        <source>Colours on dark paper</source>
+        <translation>Colori su carta scura</translation>
+    </message>
+    <message>
+        <source>Numbers of the lines</source>
+        <translation>Numeri di riga</translation>
+    </message>
+    <message>
+        <source>A box around the code</source>
+        <translation>Un riquadro attorno al codice</translation>
+    </message>
+    <message>
+        <source>Code is drawn so on the screen and in exports. Xournal++ shows it as an ordinary text.</source>
+        <translation>Il codice viene disegnato così sullo schermo e nelle esportazioni. Xournal++ lo mostra come un testo normale.</translation>
+    </message>
+    <message>
         <source>Page of new documents</source>
         <translation>Pagina dei nuovi documenti</translation>
     </message>
@@ -2132,6 +2168,66 @@ Impostare la cartella di registrazione in “Preferenze &gt; Registrazione audio
     <message>
         <source>Reset to the defaults</source>
         <translation>Ripristina i valori predefiniti</translation>
+    </message>
+    <message>
+        <source>Nodes</source>
+        <translation>Nodi</translation>
+    </message>
+    <message>
+        <source>Shape of the nodes</source>
+        <translation>Forma dei nodi</translation>
+    </message>
+    <message>
+        <source>As drawn</source>
+        <translation>Come disegnata</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation>Ellisse</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation>Rettangolo</translation>
+    </message>
+    <message>
+        <source>Space around the writing (points)</source>
+        <translation>Spazio intorno alla scrittura (punti)</translation>
+    </message>
+    <message>
+        <source>Branches</source>
+        <translation>Rami</translation>
+    </message>
+    <message>
+        <source>Branches follow the curve that was drawn</source>
+        <translation>I rami seguono la curva disegnata</translation>
+    </message>
+    <message>
+        <source>Branches get thinner towards the outside</source>
+        <translation>I rami si assottigliano verso l&apos;esterno</translation>
+    </message>
+    <message>
+        <source>Each main branch has a colour of its own, which what grows from it takes</source>
+        <translation>Ogni ramo principale ha un colore proprio, che riprende tutto ciò che ne deriva</translation>
+    </message>
+    <message>
+        <source>A branch joins a node it starts this close to (points)</source>
+        <translation>Un ramo si collega a un nodo se inizia a questa distanza da esso (punti)</translation>
+    </message>
+    <message>
+        <source>Editing</source>
+        <translation>Modifica</translation>
+    </message>
+    <message>
+        <source>Scribbling over something deletes it</source>
+        <translation>Scarabocchiare su qualcosa lo cancella</translation>
+    </message>
+    <message>
+        <source>Selected nodes and groups bring their writing, and what joins them follows them</source>
+        <translation>I nodi e i gruppi selezionati portano con sé la loro scrittura, e ciò che è collegato a loro li segue</translation>
+    </message>
+    <message>
+        <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
+        <translation>Le mappe mentali sono fatte di tratti normali, che Xournal++ mostra così come sono. Quali di essi sono nodi e rami si deduce dalla loro posizione.</translation>
     </message>
     <message>
         <source>This build cannot record or play audio: it was built without Qt Multimedia.</source>
@@ -2356,6 +2452,10 @@ Impostare la cartella di registrazione in “Preferenze &gt; Registrazione audio
     <message>
         <source>Pointer of the pen</source>
         <translation>Puntatore della penna</translation>
+    </message>
+    <message>
+        <source>Mind maps</source>
+        <translation>Mappe mentali</translation>
     </message>
     <message>
         <source>None</source>
@@ -2762,6 +2862,17 @@ Impostare la cartella di registrazione in “Preferenze &gt; Registrazione audio
     </message>
 </context>
 <context>
+    <name>TextEditor</name>
+    <message>
+        <source>No code</source>
+        <translation>Nessun codice</translation>
+    </message>
+    <message>
+        <source>Language of the code</source>
+        <translation>Linguaggio del codice</translation>
+    </message>
+</context>
+<context>
     <name>ToolbarDialog</name>
     <message>
         <source>Customize toolbars</source>
@@ -2912,6 +3023,14 @@ Impostare la cartella di registrazione in “Preferenze &gt; Registrazione audio
     <message>
         <source>Size of the tool: %1 pt</source>
         <translation>Dimensione dello strumento: %1 pt</translation>
+    </message>
+    <message>
+        <source>No code</source>
+        <translation>Nessun codice</translation>
+    </message>
+    <message>
+        <source>Language of the code</source>
+        <translation>Linguaggio del codice</translation>
     </message>
     <message>
         <source>B</source>

@@ -111,6 +111,9 @@ void writeText(QXmlStreamWriter& xml, const TextElement& t) {
     if (t.justify) {
         xml.writeAttribute("justify"_L1, "true"_L1);
     }
+    if (!t.code.isEmpty()) {
+        xml.writeAttribute("code"_L1, t.code);
+    }
     writeAudio(xml, t.audio);
     xml.writeCharacters(t.text);
     xml.writeEndElement();

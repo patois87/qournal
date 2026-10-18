@@ -67,6 +67,9 @@ struct TextElement {
     double wrap = -1;  ///< wrap width, negative for no wrapping
     QString align;     ///< "left" (also if empty), "center" or "right"
     bool justify = false;
+    /// The language of the code the text is ("python", "cpp", ...), empty for ordinary text. Stored as the attribute
+    /// "code", which Xournal++ does not know: it shows the text as it is, and drops the attribute when it saves
+    QString code;
     AudioRef audio;
 };
 

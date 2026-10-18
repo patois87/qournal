@@ -227,6 +227,7 @@ TextElement parseText(const QXmlStreamAttributes& a, const QString& content) {
     }
     t.align = a.value("align"_L1).toString();
     t.justify = a.value("justify"_L1) == u"true";
+    t.code = a.value("code"_L1).toString();
     t.audio = parseAudio(a);
     return t;
 }

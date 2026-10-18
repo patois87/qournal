@@ -9,12 +9,14 @@
 #include <QBuffer>
 #include <QFile>
 #include <QFileInfo>
+#include <QFontMetricsF>
 #include <QQuickTextDocument>
 #include <QTextBlockFormat>
 #include <QTextCursor>
 #include <QTextDocument>
 #include <algorithm>
 
+#include "Code.h"
 #include "PageCanvas.h"
 #include "Renderer.h"
 #include "TextBlock.h"
@@ -27,6 +29,7 @@ constexpr double EDITOR_FONT_SIZE = 100;
 
 // Indices of the kinds of elements in the variant
 constexpr int KIND_TEXT = 1;
+constexpr double JUSTIFY_MIN_WIDTH = 1.0 / 3;  // of the page: the width a justified text gets at least
 constexpr int KIND_IMAGE = 2;
 constexpr int KIND_LINK = 3;
 
@@ -36,9 +39,19 @@ TextStyle styleOf(const TextElement& text) {
     return TextStyle{text.font, text.size, text.align, text.wrap, text.justify, false};
 }
 
+/// Code is set in the font of fixed width, keeping bold and italic, and is not wrapped
+void makeCode(TextElement& text, const QString& code) {
+    text.code = code;
+    if (!code.isEmpty()) {
+        text.font = TextFont::toDescription(QStringLiteral("Monospace"), TextFont::isBold(text.font),
+                                            TextFont::isItalic(text.font));
+        text.wrap = -1;
+    }
+}
+
 bool sameText(const TextElement& a, const TextElement& b) {
     return a.text == b.text && a.font == b.font && a.size == b.size && a.color == b.color && a.align == b.align &&
-           a.wrap == b.wrap;
+           a.wrap == b.wrap && a.code == b.code;
 }
 
 }  // namespace
@@ -82,7 +95,43 @@ void PageCanvas::setTextAlign(const QString& align) {
 void PageCanvas::setTextJustify(bool justify) {
     m_textJustify = justify;
     emit textStyleChanged();
-    setTextEditElement([&](TextElement& text) { text.justify = justify; });
+    // Justified lines fill the width at which they are wrapped: a text without one gets one, or the setting
+    // would do nothing
+    auto apply = [&](TextElement& text, const Page& page) {
+        text.justify = justify;
+        if (justify && text.wrap < 0 && text.code.isEmpty()) {
+            const double width = TextBlock(text.text, styleOf(text)).size().width();
+            text.wrap = std::max(width, page.width * JUSTIFY_MIN_WIDTH);
+        }
+    };
+    if (m_textEdit.active) {
+        const Page& page = m_doc.pages[static_cast<size_t>(m_textEdit.page)];
+        setTextEditElement([&](TextElement& text) { apply(text, page); });
+    }
+    if (m_selection.active) {
+        const auto& elements = m_doc.pages[static_cast<size_t>(m_selection.page)]
+                                       .layers[static_cast<size_t>(m_selection.layer)]
+                                       .elements;
+        const bool hasText = std::any_of(m_selection.indices.begin(), m_selection.indices.end(),
+                                         [&](size_t index) { return elements[index].index() == KIND_TEXT; });
+        if (hasText) {
+            const Page& page = m_doc.pages[static_cast<size_t>(m_selection.page)];
+            modifySelection([&](Element& element) {
+                if (auto* text = std::get_if<TextElement>(&element)) {
+                    apply(*text, page);
+                }
+            });
+        }
+    }
+}
+
+void PageCanvas::setTextCode(const QString& code) {
+    auto apply = [&](TextElement& text) { makeCode(text, code); };
+    if (!code.isEmpty()) {
+        m_textCode = code;
+    }
+    setTextEditElement(apply);
+    emit textStyleChanged();
     if (m_selection.active) {
         const auto& elements = m_doc.pages[static_cast<size_t>(m_selection.page)]
                                        .layers[static_cast<size_t>(m_selection.layer)]
@@ -92,11 +141,19 @@ void PageCanvas::setTextJustify(bool justify) {
         if (hasText) {
             modifySelection([&](Element& element) {
                 if (auto* text = std::get_if<TextElement>(&element)) {
-                    text->justify = justify;
+                    apply(*text);
                 }
             });
         }
     }
+}
+
+QVariantList PageCanvas::codeLanguages() {
+    QVariantList list;
+    for (const Code::Language& language: Code::languages()) {
+        list.append(QVariantMap{{QStringLiteral("id"), language.id}, {QStringLiteral("name"), language.name}});
+    }
+    return list;
 }
 
 /// Changes the style of new texts, of the text that is being edited and of the selected texts and links
@@ -135,7 +192,8 @@ QFont PageCanvas::textEditFont() const {
 
 double PageCanvas::textEditWrap() const {
     const TextElement& text = m_textEdit.element;
-    return text.wrap < 0 || text.size <= 0 ? -1 : text.wrap * EDITOR_FONT_SIZE / text.size;
+    // Code is not wrapped
+    return text.wrap < 0 || text.size <= 0 || !text.code.isEmpty() ? -1 : text.wrap * EDITOR_FONT_SIZE / text.size;
 }
 
 double PageCanvas::textEditLineHeight() const {
@@ -165,11 +223,21 @@ QRectF PageCanvas::textEditViewRect() const {
         return {};
     }
     const TextElement& text = m_textEdit.element;
-    const QSizeF size = TextBlock(text.text, styleOf(text)).size();
-    const QRectF local(0, 0, std::max(size.width(), 40 * text.size / EDITOR_FONT_SIZE) * EDITOR_FONT_SIZE / text.size,
-                       size.height() * EDITOR_FONT_SIZE / text.size);
-    constexpr double MARGIN_PX = 12;  // the frame and the handle for the width
-    return textEditMatrix().toTransform().mapRect(local).adjusted(-MARGIN_PX, -MARGIN_PX, MARGIN_PX, MARGIN_PX);
+    const TextBlock block(text.text, styleOf(text));
+    const QSizeF size = block.size();
+    QRectF local(0, 0, std::max(size.width(), 40 * text.size / EDITOR_FONT_SIZE) * EDITOR_FONT_SIZE / text.size,
+                 size.height() * EDITOR_FONT_SIZE / text.size);
+    if (!text.code.isEmpty()) {
+        // With the box and the numbers of the lines
+        const Code::Frame frame = Code::frame(size, block.lineHeight(), block.digitWidth(), block.paragraphCount(),
+                                              Code::look());
+        const double k = EDITOR_FONT_SIZE / text.size;
+        local |= QRectF(frame.box.topLeft() * k, frame.box.size() * k);
+    }
+    constexpr double MARGIN_PX = 12;      // the frame and the handle for the width
+    constexpr double LANGUAGE_PX = 56;  // code: the choice of its language above the box
+    const double top = text.code.isEmpty() ? MARGIN_PX : LANGUAGE_PX;
+    return textEditMatrix().toTransform().mapRect(local).adjusted(-MARGIN_PX, -top, MARGIN_PX, MARGIN_PX);
 }
 
 void PageCanvas::setTextEditText(const QString& text) {
@@ -189,9 +257,13 @@ void PageCanvas::setTextEditElement(const std::function<void(TextElement&)>& mod
     }
 }
 
-void PageCanvas::prepareTextDocument(QQuickTextDocument* document) const {
+void PageCanvas::prepareTextDocument(QQuickTextDocument* document, bool highlight) const {
     if (!document || !document->textDocument()) {
         return;
+    }
+    if (highlight && m_textEdit.active) {
+        Code::highlight(document->textDocument(), m_textEdit.element.code,
+                        Renderer::paperColor(m_doc.pages[static_cast<size_t>(m_textEdit.page)]));
     }
     // The distance of the lines Pango would use, see TextBlock
     QTextBlockFormat format;
@@ -200,6 +272,42 @@ void PageCanvas::prepareTextDocument(QQuickTextDocument* document) const {
     cursor.select(QTextCursor::Document);
     cursor.mergeBlockFormat(format);
 }
+
+QVariantMap PageCanvas::textEditCode() const {
+    const TextElement& text = m_textEdit.element;
+    if (!m_textEdit.active || text.code.isEmpty()) {
+        return {};
+    }
+    const Code::Colors colors =
+            Code::colors(QString(), text.code, Renderer::paperColor(m_doc.pages[static_cast<size_t>(m_textEdit.page)]));
+    const Code::Look look = Code::look();
+    // The measures of the box for one line, from which the editor makes the box for all of them
+    const double lineHeight = textEditLineHeight();
+    const double digitWidth = QFontMetricsF(textEditFont()).horizontalAdvance(u'0');
+    const Code::Frame frame = Code::frame(QSizeF(0, 0), lineHeight, digitWidth, 1, look);
+    return {{QStringLiteral("language"), text.code},
+            {QStringLiteral("text"), colors.text},
+            {QStringLiteral("background"), colors.background},
+            {QStringLiteral("lineNumbers"), colors.lineNumbers},
+            {QStringLiteral("box"), look.box},
+            {QStringLiteral("numbers"), look.lineNumbers},
+            {QStringLiteral("padding"), look.box ? -frame.box.top() : 0.0},
+            {QStringLiteral("digitWidth"), digitWidth},
+            {QStringLiteral("gap"), -frame.numbersRight},
+            {QStringLiteral("radius"), frame.radius}};
+}
+
+QVariantMap PageCanvas::codeIndent(const QString& text, int start, int end, bool out) const {
+    const QString unit = m_input.tabSpaces > 0 ? QString(m_input.tabSpaces, u' ') : QStringLiteral("\t");
+    const Code::Change change = Code::indent(text, start, end, unit, out);
+    return {{QStringLiteral("from"), change.from},
+            {QStringLiteral("to"), change.to},
+            {QStringLiteral("replacement"), change.replacement},
+            {QStringLiteral("selectionStart"), change.selectionStart},
+            {QStringLiteral("selectionEnd"), change.selectionEnd}};
+}
+
+QString PageCanvas::codeNewLine(const QString& text, int position) const { return Code::newLine(text, position); }
 
 std::optional<std::pair<int, size_t>> PageCanvas::elementOfKindAt(int pageIndex, const QPointF& pagePos,
                                                                   int kind) const {
@@ -225,10 +333,15 @@ void PageCanvas::textPress(const PointerInput& input) {
     const QPointF pagePos = viewToPage(m_curPage, input.pos);
     const Page& page = m_doc.pages[static_cast<size_t>(m_curPage)];
 
-    // On a text: edit it
+    // On a text: edit it. The code tool makes an ordinary text code, which it is when the editing ends
+    const bool code = m_pressTool == Code;
     if (const auto found = elementOfKindAt(m_curPage, pagePos, KIND_TEXT)) {
         const auto& element = page.layers[static_cast<size_t>(found->first)].elements[found->second];
-        startTextEdit(m_curPage, found->first, found->second, std::get<TextElement>(element));
+        TextElement text = std::get<TextElement>(element);
+        if (code && text.code.isEmpty()) {
+            makeCode(text, m_textCode);
+        }
+        startTextEdit(m_curPage, found->first, found->second, text);
         return;
     }
 
@@ -238,6 +351,11 @@ void PageCanvas::textPress(const PointerInput& input) {
     text.size = m_textSize;
     text.align = m_textAlign;
     text.justify = m_textJustify;
+    if (code) {
+        makeCode(text, m_textCode);
+    } else if (m_textJustify) {
+        text.wrap = page.width * JUSTIFY_MIN_WIDTH;  // justified lines fill a width
+    }
     text.color = m_toolStates[Text].color;
     text.audio = currentAudio();
     text.pos = pagePos - QPointF(0, TextBlock(QString(), styleOf(text)).lineHeight() / 2);
@@ -256,6 +374,7 @@ void PageCanvas::startTextEdit(int page, int layer, std::optional<size_t> index,
     }
     emit textEditChanged();
     emit textEditMatrixChanged();
+    emit textStyleChanged();  // the language of the code is that of the text
 }
 
 void PageCanvas::finishTextEdit() {
@@ -265,6 +384,7 @@ void PageCanvas::finishTextEdit() {
     const TextEditState edit = m_textEdit;
     m_textEdit = TextEditState();
     emit textEditChanged();
+    emit textStyleChanged();
     if (edit.page < 0 || edit.page >= pageCount()) {
         return;
     }

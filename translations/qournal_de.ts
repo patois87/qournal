@@ -496,6 +496,10 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
         <translation>Schriftart</translation>
     </message>
     <message>
+        <source>Language of the code</source>
+        <translation>Sprache des Codes</translation>
+    </message>
+    <message>
         <source>Zoom level</source>
         <translation>Zoomstufe</translation>
     </message>
@@ -690,6 +694,14 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
     <message>
         <source>Play object</source>
         <translation>Objekt abspielen</translation>
+    </message>
+    <message>
+        <source>Mind map</source>
+        <translation>Mindmap</translation>
+    </message>
+    <message>
+        <source>Code</source>
+        <translation>Code</translation>
     </message>
     <message>
         <source>Freehand</source>
@@ -2094,6 +2106,30 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
         <translation>Schritt mit Strg und Mausrad (%)</translation>
     </message>
     <message>
+        <source>Code</source>
+        <translation>Code</translation>
+    </message>
+    <message>
+        <source>Colours on light paper</source>
+        <translation>Farben auf hellem Papier</translation>
+    </message>
+    <message>
+        <source>Colours on dark paper</source>
+        <translation>Farben auf dunklem Papier</translation>
+    </message>
+    <message>
+        <source>Numbers of the lines</source>
+        <translation>Zeilennummern</translation>
+    </message>
+    <message>
+        <source>A box around the code</source>
+        <translation>Ein Kasten um den Code</translation>
+    </message>
+    <message>
+        <source>Code is drawn so on the screen and in exports. Xournal++ shows it as an ordinary text.</source>
+        <translation>So wird Code auf dem Bildschirm und in Exporten gezeichnet. Xournal++ zeigt ihn als gewöhnlichen Text.</translation>
+    </message>
+    <message>
         <source>Page of new documents</source>
         <translation>Seite neuer Dokumente</translation>
     </message>
@@ -2132,6 +2168,66 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
     <message>
         <source>Reset to the defaults</source>
         <translation>Auf die Vorgaben zurücksetzen</translation>
+    </message>
+    <message>
+        <source>Nodes</source>
+        <translation>Knoten</translation>
+    </message>
+    <message>
+        <source>Shape of the nodes</source>
+        <translation>Form der Knoten</translation>
+    </message>
+    <message>
+        <source>As drawn</source>
+        <translation>Wie gezeichnet</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation>Ellipse</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation>Rechteck</translation>
+    </message>
+    <message>
+        <source>Space around the writing (points)</source>
+        <translation>Abstand um die Schrift (Punkt)</translation>
+    </message>
+    <message>
+        <source>Branches</source>
+        <translation>Äste</translation>
+    </message>
+    <message>
+        <source>Branches follow the curve that was drawn</source>
+        <translation>Äste folgen der gezeichneten Kurve</translation>
+    </message>
+    <message>
+        <source>Branches get thinner towards the outside</source>
+        <translation>Äste werden nach außen dünner</translation>
+    </message>
+    <message>
+        <source>Each main branch has a colour of its own, which what grows from it takes</source>
+        <translation>Jeder Hauptast hat eine eigene Farbe, die alles übernimmt, was aus ihm wächst</translation>
+    </message>
+    <message>
+        <source>A branch joins a node it starts this close to (points)</source>
+        <translation>Ein Ast schließt an einen Knoten an, wenn er so nahe daran beginnt (Punkt)</translation>
+    </message>
+    <message>
+        <source>Editing</source>
+        <translation>Bearbeiten</translation>
+    </message>
+    <message>
+        <source>Scribbling over something deletes it</source>
+        <translation>Kritzeln über etwas löscht es</translation>
+    </message>
+    <message>
+        <source>Selected nodes and groups bring their writing, and what joins them follows them</source>
+        <translation>Ausgewählte Knoten und Gruppen nehmen ihre Schrift mit, und was an ihnen hängt, folgt ihnen</translation>
+    </message>
+    <message>
+        <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
+        <translation>Die Mindmaps bestehen aus gewöhnlichen Strichen, die Xournal++ so anzeigt, wie sie sind. Welche davon Knoten und Äste sind, ergibt sich aus ihrer Lage.</translation>
     </message>
     <message>
         <source>This build cannot record or play audio: it was built without Qt Multimedia.</source>
@@ -2356,6 +2452,10 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
     <message>
         <source>Pointer of the pen</source>
         <translation>Zeiger des Stifts</translation>
+    </message>
+    <message>
+        <source>Mind maps</source>
+        <translation>Mindmaps</translation>
     </message>
     <message>
         <source>None</source>
@@ -2762,6 +2862,17 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
     </message>
 </context>
 <context>
+    <name>TextEditor</name>
+    <message>
+        <source>No code</source>
+        <translation>Kein Code</translation>
+    </message>
+    <message>
+        <source>Language of the code</source>
+        <translation>Sprache des Codes</translation>
+    </message>
+</context>
+<context>
     <name>ToolbarDialog</name>
     <message>
         <source>Customize toolbars</source>
@@ -2912,6 +3023,14 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
     <message>
         <source>Size of the tool: %1 pt</source>
         <translation>Größe des Werkzeugs: %1 pt</translation>
+    </message>
+    <message>
+        <source>No code</source>
+        <translation>Kein Code</translation>
+    </message>
+    <message>
+        <source>Language of the code</source>
+        <translation>Sprache des Codes</translation>
     </message>
     <message>
         <source>B</source>

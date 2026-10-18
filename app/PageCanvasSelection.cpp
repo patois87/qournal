@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <cmath>
 
+#include "MindMap.h"
 #include "PageCanvas.h"
 #include "Renderer.h"
 #include "XoppLoader.h"
@@ -149,9 +150,11 @@ void PageCanvas::setSelection(int page, int layer, std::vector<size_t> indices) 
     m_selection.active = true;
     m_selection.page = page;
     m_selection.layer = layer;
-    m_selection.indices = std::move(indices);
+    // A node of a mind map comes with its writing, a group with all that is in it
+    const Layer& selected = m_doc.pages[static_cast<size_t>(page)].layers[static_cast<size_t>(layer)];
+    m_selection.indices = m_input.mindMapSelection ? MindMap::withContents(selected, indices) : std::move(indices);
 
-    const auto& elements = m_doc.pages[static_cast<size_t>(page)].layers[static_cast<size_t>(layer)].elements;
+    const auto& elements = selected.elements;
     for (size_t index: m_selection.indices) {
         m_selection.rect |= Renderer::elementBounds(elements[index]);
     }
@@ -574,6 +577,25 @@ void PageCanvas::transformSelection(const QTransform& transformation, double wid
         Element after = elements[index];
         Selection::transform(after, transformation, widthFactor);
         edit.items.push_back({m_selection.layer, index, elements[index], std::move(after)});
+    }
+    // What joins nodes of a mind map follows them
+    const Layer& before =
+            m_doc.pages[static_cast<size_t>(m_selection.page)].layers[static_cast<size_t>(m_selection.layer)];
+    Layer after = before;
+    for (const auto& item: edit.items) {
+        after.elements[item.index] = item.after;
+    }
+    const auto changes = m_input.mindMapSelection ? MindMap::follow(before, after, m_selection.indices)
+                                                  : std::vector<std::pair<size_t, Stroke>>();
+    for (auto change: changes) {
+        const size_t index = change.first;
+        const auto item = std::find_if(edit.items.begin(), edit.items.end(),
+                                       [index](const auto& item) { return item.index == index; });
+        if (item != edit.items.end()) {
+            item->after = std::move(change.second);
+        } else {
+            edit.items.push_back({m_selection.layer, index, elements[index], std::move(change.second)});
+        }
     }
     perform({std::move(edit)});
 

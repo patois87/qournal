@@ -37,6 +37,9 @@ private:
 /// The area an element covers on its page. Texts are measured with the fonts of this system
 QRectF elementBounds(const Element& element);
 
+/// The colour of the paper of a page, which code is drawn for: white for PDF pages and images
+QColor paperColor(const Page& page);
+
 /**
  * While one of these exists, renderBackground() in its thread draws the lines of a ruling in black (white on dark
  * paper) and at least one pixel of the device wide: for electronic paper, where the thin, light lines had gaps

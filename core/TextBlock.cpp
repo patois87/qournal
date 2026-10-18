@@ -1,5 +1,6 @@
 #include "TextBlock.h"
 
+#include <QFontDatabase>
 #include <QFontMetricsF>
 #include <QTextOption>
 #include <cmath>
@@ -84,6 +85,12 @@ QFont TextFont::fromDescription(const QString& description) {
     QStringList families;
     for (const QString& entry: familyPart.split(u',', Qt::SkipEmptyParts)) {
         families.append(entry.trimmed());
+        // The name Pango has for the font of fixed width, which code is set in: fontconfig knows it on Linux, but
+        // on the other systems there is no family of that name, and a proportional font would be taken
+        if (families.last().compare(u"Monospace", Qt::CaseInsensitive) == 0) {
+            families.append(QFontDatabase::systemFont(QFontDatabase::FixedFont).family());
+            font.setStyleHint(QFont::Monospace);
+        }
     }
     font.setFamilies(families.isEmpty() ? QStringList{QStringLiteral("Sans")} : families);
     for (const StyleWord* style: std::as_const(styles)) {
@@ -123,7 +130,7 @@ bool TextFont::isItalic(const QString& description) {
     return fromDescription(description).style() != QFont::StyleNormal;
 }
 
-TextBlock::TextBlock(const QString& text, const TextStyle& style) {
+TextBlock::TextBlock(const QString& text, const TextStyle& style, const QList<QTextLayout::FormatRange>& formats) {
     m_scale = style.size / LAYOUT_SIZE;
     if (!(m_scale > 0)) {
         m_scale = 0;
@@ -157,6 +164,8 @@ TextBlock::TextBlock(const QString& text, const TextStyle& style) {
     m_layout = std::make_unique<QTextLayout>(paragraph, font);
     m_layout->setTextOption(option);
     m_layout->setCacheEnabled(true);
+    m_layout->setFormats(formats);
+    m_paragraphCount = static_cast<int>(text.count(u'\n')) + 1;
 
     const double lineWidth = wrapped ? style.wrap / m_scale : 1e7;
     double maxWidth = 0;
@@ -244,6 +253,33 @@ void TextBlock::draw(QPainter& p, const QColor& color) const {
             const QTextLine line = m_layout->lineAt(index);
             p.drawText(QPointF(line.x() + line.naturalTextWidth(), line.y() + line.ascent()), QStringLiteral("-"));
         }
+    }
+    p.restore();
+}
+
+double TextBlock::digitWidth() const {
+    return m_layout ? QFontMetricsF(m_font).horizontalAdvance(u'0') * m_scale : 0;
+}
+
+void TextBlock::drawLineNumbers(QPainter& p, double right, const QColor& color) const {
+    if (!m_layout || m_scale <= 0) {
+        return;
+    }
+    const QString& text = m_layout->text();
+    const QFontMetricsF metrics(m_font);
+    p.save();
+    p.scale(m_scale, m_scale);
+    p.setPen(color);
+    p.setFont(m_font);
+    int number = 0;
+    for (int i = 0; i < m_layout->lineCount(); ++i) {
+        const QTextLine line = m_layout->lineAt(i);
+        // A line that starts a paragraph, not one that a long paragraph was broken into
+        if (line.textStart() > 0 && text.at(line.textStart() - 1) != QChar::LineSeparator) {
+            continue;
+        }
+        const QString digits = QString::number(++number);
+        p.drawText(QPointF(right / m_scale - metrics.horizontalAdvance(digits), line.y() + line.ascent()), digits);
     }
     p.restore();
 }

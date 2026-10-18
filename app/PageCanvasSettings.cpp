@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <iterator>
 
+#include "Code.h"
 #include "PageCanvas.h"
 #include "Platform.h"
 
@@ -26,7 +27,8 @@ const char* const CANVAS_PROPERTIES[] = {
         "autosaveInterval",   "pairedPagesOffset", "canvasColor",         "pdfMarkerAlpha",
         "spaceAbove",         "spaceBelow",        "spaceLeft",           "spaceRight",
         "unlimitedScrolling", "displayDpi",        "appendPage",          "selectionColor",
-        "positionColor",      "positionRadius",    "positionBorderColor", "positionBorderWidth"};
+        "positionColor",      "positionRadius",    "positionBorderColor", "positionBorderWidth",
+        "codeLightTheme",     "codeDarkTheme",     "codeLineNumbers",     "codeBox"};
 
 const char* const TEMPLATE_KEYS[] = {"width", "height", "color", "style", "config"};
 
@@ -77,6 +79,51 @@ void PageCanvas::setCanvasColor(const QColor& color) {
     }
 }
 
+QString PageCanvas::codeLightTheme() const { return Code::look().lightTheme; }
+
+QString PageCanvas::codeDarkTheme() const { return Code::look().darkTheme; }
+
+bool PageCanvas::codeLineNumbers() const { return Code::look().lineNumbers; }
+
+bool PageCanvas::codeBox() const { return Code::look().box; }
+
+QStringList PageCanvas::codeThemes() { return Code::themes(); }
+
+void PageCanvas::setCodeLightTheme(const QString& theme) {
+    setCodeLook([&](Code::Look& look) { look.lightTheme = theme; });
+}
+
+void PageCanvas::setCodeDarkTheme(const QString& theme) {
+    setCodeLook([&](Code::Look& look) { look.darkTheme = theme; });
+}
+
+void PageCanvas::setCodeLineNumbers(bool numbers) {
+    setCodeLook([&](Code::Look& look) { look.lineNumbers = numbers; });
+}
+
+void PageCanvas::setCodeBox(bool box) {
+    setCodeLook([&](Code::Look& look) { look.box = box; });
+}
+
+/// Changes how code looks, for this application as a whole: the pages are drawn again, and the editor follows
+void PageCanvas::setCodeLook(const std::function<void(Code::Look&)>& modify) {
+    Code::Look look = Code::look();
+    const Code::Look before = look;
+    modify(look);
+    if (look.lightTheme == before.lightTheme && look.darkTheme == before.darkTheme &&
+        look.lineNumbers == before.lineNumbers && look.box == before.box) {
+        return;
+    }
+    Code::setLook(look);
+    resetTiles();
+    scheduleTiles();
+    updateView();
+    emit codeLookChanged();
+    if (m_textEdit.active) {
+        emit textEditChanged();
+    }
+}
+
 void PageCanvas::setEinkMode(bool eink) {
     if (m_einkMode != eink) {
         m_einkMode = eink;
@@ -99,9 +146,14 @@ void PageCanvas::applyEinkDefaults() {
     // The blue the pen starts with is faint on electronic paper: there it starts black. A colour that was chosen
     // stays
     static const QColor DEFAULT_PEN(0x00, 0x2e, 0x99);
-    if (m_einkMode && m_toolStates[Pen].color == DEFAULT_PEN) {
-        m_toolStates[Pen].color = Qt::black;
-        emit toolChanged();
+    if (!m_einkMode) {
+        return;
+    }
+    for (const Tool tool: {Pen, MindMap}) {
+        if (m_toolStates[tool].color == DEFAULT_PEN) {
+            m_toolStates[tool].color = Qt::black;
+            emit toolChanged();
+        }
     }
 }
 
@@ -147,6 +199,7 @@ void PageCanvas::saveSettings() const {
     settings.setValue(QStringLiteral("fingerDrawsAuto"), m_fingerDrawsAuto);
     settings.setValue(QStringLiteral("tool"), toolName(m_tool));
     settings.setValue(QStringLiteral("textFont"), m_textFont);
+    settings.setValue(QStringLiteral("textCode"), m_textCode);
     // Either the number of columns or the number of rows is fixed
     settings.setValue(QStringLiteral("layoutColumns"), layoutColumns());
     settings.setValue(QStringLiteral("layoutRows"), layoutRows());
@@ -209,6 +262,7 @@ void PageCanvas::loadSettings() {
     m_fingerDrawsAuto = settings.value(QStringLiteral("fingerDrawsAuto"), !m_fingerDraws).toBool();
     applyFingerDrawsDefault();
     m_textFont = settings.value(QStringLiteral("textFont"), m_textFont).toString();
+    m_textCode = settings.value(QStringLiteral("textCode"), m_textCode).toString();
     const int rows = settings.value(QStringLiteral("layoutRows"), layoutRows()).toInt();
     if (rows > 0) {
         setLayoutRows(rows);
@@ -309,6 +363,7 @@ void PageCanvas::resetSettings() {
     m_fingerDrawsAuto = true;
     applyFingerDrawsDefault();
     m_textFont = fresh.m_textFont;
+    m_textCode = fresh.m_textCode;
     setLayoutColumns(1);
     m_toolStates = fresh.m_toolStates;
     m_tool = fresh.m_tool;

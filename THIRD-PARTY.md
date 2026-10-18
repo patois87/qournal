@@ -15,6 +15,8 @@ Which parts are in a package depends on the platform and on how it was built: th
 | [MicroTeX](https://github.com/NanoMichael/MicroTeX) | sets formulas where LaTeX is not installed | all | MIT | `MicroTeX.txt` |
 | Fonts of MicroTeX (Computer Modern, AMS, Euler, RSFS, St Mary Road, dsrom) | the glyphs of these formulas | all | SIL Open Font License 1.1; the license of Knuth for Computer Modern; a license of its own for dsrom | `fonts-OFL.txt`, `fonts-Knuth.txt`, `fonts-dsrom.txt` |
 | [tinyxml2](https://github.com/leethomason/tinyxml2) | MicroTeX reads its tables with it | all | zlib | `tinyxml2.txt` |
+| [KSyntaxHighlighting](https://invent.kde.org/frameworks/syntax-highlighting) of KDE | highlights code in texts: the library and its colour themes | all | MIT | `KSyntaxHighlighting.txt` |
+| Definitions of languages of KSyntaxHighlighting (Python, C, C++, C#, Java, JavaScript, TypeScript, Kotlin, Swift, Go, Rust, PHP, Ruby, SQL, Bash, PowerShell, HTML, XML, CSS, JSON, YAML, MATLAB, Markdown, LaTeX and those they include) | what is a keyword, a string, a comment in each language | all | each its own: MIT; LGPL (2 or later, or without a version); GPL 2 or later, or without a version | `KSyntaxHighlighting.txt`, `LGPL-3.0.txt`, `LICENSE` |
 | [libogg](https://xiph.org/ogg/) and [libvorbis](https://xiph.org/vorbis/) | audio recordings as Ogg Vorbis | all with audio | BSD 3-Clause | `libogg.txt`, `libvorbis.txt` |
 | [zlib](https://zlib.net) | reads and writes `.xopp` files and PDF streams | Windows packages (elsewhere the one of the system or of Qt) | zlib | `zlib.txt` |
 | [AndroidHiddenApiBypass](https://github.com/LSPosed/AndroidHiddenApiBypass) | the fast pen on Onyx Boox tablets | Android package | Apache 2.0 | `HiddenApiBypass-NOTICE.txt`, `Apache-2.0.txt` |
@@ -34,7 +36,13 @@ Which parts are in a package depends on the platform and on how it was built: th
   distributed under version 3 of the GPL, which "version 2 or later" allows. The same holds where Qt is taken
   under the LGPL 3. The text of version 3 is in `licenses/GPL-3.0.txt`.
 - The fonts of MicroTeX for Greek and Cyrillic text are under the GPL 3 only and are not in the packages.
-- Lua, MicroTeX, tinyxml2, libogg, libvorbis, zlib and AndroidHiddenApiBypass are not in this repository: they
-  are downloaded when the application is built (see `CMakeLists.txt` and `app/CMakeLists.txt` for the versions).
+- The definitions of languages of KSyntaxHighlighting name their licenses in their files. Those under the LGPL
+  without a version or "2 or later" are taken under version 3 of the LGPL; those under the GPL without a version
+  or "2 or later" under the GPL of Qournal. The one for R says "GPL v2" without "or later": as it may mean version
+  2 only, which does not go together with version 3 of the GPL (see above), it is not built in, and R is not
+  highlighted.
+- Lua, MicroTeX, tinyxml2, KSyntaxHighlighting, libogg, libvorbis, zlib and AndroidHiddenApiBypass are not in this
+  repository: they are downloaded when the application is built (see `CMakeLists.txt` and `app/CMakeLists.txt` for
+  the versions).
 - The icon of Qournal (`packaging/linux/ch.vereo.qournal.svg`) and the sources that are not named above are made
   for Qournal, under the GPL 2 or later.

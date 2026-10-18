@@ -242,6 +242,50 @@ private slots:
         }
     }
 
+    /// Texts that are code have an attribute Xournal++ does not know: it opens the file, and shows the code as
+    /// it is, as this application does without highlighting
+    void codeTexts() {
+        Document doc = Document::createEmpty();
+        Page& page = doc.pages.front();
+        page.width = 400;
+        page.height = 500;
+        TextElement code;
+        code.text = QStringLiteral("def f(x):\n    return x * 2  # twice");
+        code.font = QStringLiteral("Monospace");
+        code.size = 14;
+        code.pos = QPointF(40, 60);
+        code.code = QStringLiteral("python");
+        page.layers.front().elements.emplace_back(code);
+        TextElement other = code;
+        other.text = QStringLiteral("SELECT name FROM t;");
+        other.pos = QPointF(40, 200);
+        other.code = QStringLiteral("sql");
+        page.layers.front().elements.emplace_back(other);
+
+        QTemporaryDir dir;
+        const QString saved = dir.filePath(QStringLiteral("code.xopp"));
+        QString error;
+        QVERIFY2(saveXopp(saved, doc, &error), qPrintable(error));
+        QVERIFY(writeXoppXml(doc).contains("code=\"python\""));
+        const QList<QImage> theirs = xournalppPages(saved, dir.path(), &error);
+        QVERIFY2(!theirs.isEmpty(), qPrintable(error));
+
+        Document plain = doc;
+        for (Element& element: plain.pages.front().layers.front().elements) {
+            std::get<TextElement>(element).code.clear();
+        }
+        const QList<QImage> ours = ownPages(plain, dir.path());
+        QCOMPARE(ours.size(), theirs.size());
+        const double d = difference(ours[0], theirs[0]);
+        qInfo("difference: %.5f", d);
+        if (qEnvironmentVariableIsSet("XOURNALPP_IMAGES")) {
+            const QString keep = qEnvironmentVariable("XOURNALPP_IMAGES") + QStringLiteral("/code");
+            ours[0].save(keep + QStringLiteral("-ours.png"));
+            theirs[0].save(keep + QStringLiteral("-theirs.png"));
+        }
+        QVERIFY2(d < 0.01, qPrintable(QStringLiteral("differs: %1").arg(d)));
+    }
+
     /// A copy for Xournal++ 1.3 of a document with links and turned texts and images: Xournal++ opens it, and it
     /// looks there as the document looks here
     void copyForXournalpp13() {

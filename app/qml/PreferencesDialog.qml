@@ -137,13 +137,14 @@ Dialog {
             TabButton { text: qsTr("Touch") }
             TabButton { text: qsTr("View") }
             TabButton { text: qsTr("Defaults") }
+            TabButton { text: qsTr("Mind maps") }
             TabButton { text: qsTr("Audio") }
         }
         // On a phone the tabs do not fit next to each other: a list to choose the page from instead
         FitComboBox {
             Layout.fillWidth: true
             visible: dialog.narrow
-            model: [qsTr("Input"), qsTr("Touch"), qsTr("View"), qsTr("Defaults"), qsTr("Audio")]
+            model: [qsTr("Input"), qsTr("Touch"), qsTr("View"), qsTr("Defaults"), qsTr("Mind maps"), qsTr("Audio")]
             currentIndex: tabs.currentIndex
             onActivated: index => tabs.currentIndex = index
         }
@@ -925,6 +926,36 @@ Dialog {
                         value: Math.round(dialog.canvas.positionBorderWidth)
                         onValueModified: dialog.canvas.positionBorderWidth = value
                     }
+
+                    Heading { text: qsTr("Code") }
+                    Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Colours on light paper") }
+                    FitComboBox {
+                        Layout.fillWidth: true
+                        model: dialog.canvas.codeThemes
+                        currentIndex: model.indexOf(dialog.canvas.codeLightTheme)
+                        onActivated: index => dialog.canvas.codeLightTheme = model[index]
+                    }
+                    Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Colours on dark paper") }
+                    FitComboBox {
+                        Layout.fillWidth: true
+                        model: dialog.canvas.codeThemes
+                        currentIndex: model.indexOf(dialog.canvas.codeDarkTheme)
+                        onActivated: index => dialog.canvas.codeDarkTheme = model[index]
+                    }
+                    Option {
+                        text: qsTr("Numbers of the lines")
+                        checked: dialog.canvas.codeLineNumbers
+                        onToggled: dialog.canvas.codeLineNumbers = checked
+                    }
+                    Option {
+                        text: qsTr("A box around the code")
+                        checked: dialog.canvas.codeBox
+                        onToggled: dialog.canvas.codeBox = checked
+                    }
+                    Note {
+                        text: qsTr("Code is drawn so on the screen and in exports. Xournal++ shows it as an "
+                                   + "ordinary text.")
+                    }
                 }
             }
 
@@ -1066,6 +1097,85 @@ Dialog {
                             dialog.canvas.resetSettings()
                             dialog.app.resetInterfaceSettings()
                         }
+                    }
+                }
+            }
+
+            // The mind map tool
+            ScrollView {
+                id: mindMapPage
+
+                contentWidth: availableWidth
+
+                GridLayout {
+                    width: mindMapPage.availableWidth
+                    columns: dialog.narrow ? 1 : 2
+                    columnSpacing: 12
+
+                    Heading { text: qsTr("Nodes") }
+                    Label { Layout.fillWidth: dialog.narrow; wrapMode: Text.Wrap; text: qsTr("Shape of the nodes") }
+                    FitComboBox {
+                        Layout.fillWidth: true
+                        model: [qsTr("As drawn"), qsTr("Ellipse"), qsTr("Rectangle")]
+                        currentIndex: dialog.input.mindMapNodeShape
+                        onActivated: index => dialog.input.mindMapNodeShape = index
+                    }
+                    Label {
+                        Layout.fillWidth: dialog.narrow
+                        wrapMode: Text.Wrap
+                        text: qsTr("Space around the writing (points)")
+                    }
+                    SpinBox {
+                        from: 0
+                        to: 40
+                        editable: true
+                        value: Math.round(dialog.input.mindMapMargin)
+                        onValueModified: dialog.input.mindMapMargin = value
+                    }
+
+                    Heading { text: qsTr("Branches") }
+                    Option {
+                        text: qsTr("Branches follow the curve that was drawn")
+                        checked: dialog.input.mindMapCurved
+                        onToggled: dialog.input.mindMapCurved = checked
+                    }
+                    Option {
+                        text: qsTr("Branches get thinner towards the outside")
+                        checked: dialog.input.mindMapTaper
+                        onToggled: dialog.input.mindMapTaper = checked
+                    }
+                    Option {
+                        text: qsTr("Each main branch has a colour of its own, which what grows from it takes")
+                        checked: dialog.input.mindMapBranchColors
+                        onToggled: dialog.input.mindMapBranchColors = checked
+                    }
+                    Label {
+                        Layout.fillWidth: dialog.narrow
+                        wrapMode: Text.Wrap
+                        text: qsTr("A branch joins a node it starts this close to (points)")
+                    }
+                    SpinBox {
+                        from: 2
+                        to: 40
+                        editable: true
+                        value: Math.round(dialog.input.mindMapAttachTolerance)
+                        onValueModified: dialog.input.mindMapAttachTolerance = value
+                    }
+
+                    Heading { text: qsTr("Editing") }
+                    Option {
+                        text: qsTr("Scribbling over something deletes it")
+                        checked: dialog.input.mindMapScribbleErases
+                        onToggled: dialog.input.mindMapScribbleErases = checked
+                    }
+                    Option {
+                        text: qsTr("Selected nodes and groups bring their writing, and what joins them follows them")
+                        checked: dialog.input.mindMapSelection
+                        onToggled: dialog.input.mindMapSelection = checked
+                    }
+                    Note {
+                        text: qsTr("The mind maps are made of ordinary strokes, which Xournal++ shows as they are. "
+                                   + "Which of them are nodes and branches is seen from where they are.")
                     }
                 }
             }

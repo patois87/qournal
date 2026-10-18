@@ -368,6 +368,38 @@ private slots:
         QVERIFY(!std::get<TextElement>(elements[0]).justify);
         c->undo();
         QVERIFY(std::get<TextElement>(elements[0]).justify);
+
+        // Justified lines fill a width: a new text gets a third of the page
+        const double pageWidth = c->document().pages[0].width;
+        QCOMPARE(std::get<TextElement>(elements[0]).wrap, pageWidth / 3);
+
+        // A text without a width gets the one of its longest line, at least a third of the page
+        c->clearSelection();
+        c->setTextJustify(false);
+        c->setTool(PageCanvas::Text);
+        f.tap(f.onPage(0, QPointF(60, 400)));
+        c->setTextEditText(
+                QStringLiteral("a short line\nand a line that is a good deal longer than a third of the page"));
+        QCOMPARE(c->textEditWrap(), -1.0);
+        c->setTextJustify(true);
+        QVERIFY(c->textEditWrap() > 0);
+        c->finishTextEdit();
+        const auto& wide = std::get<TextElement>(elements[1]);
+        QVERIFY(wide.justify);
+        QVERIFY(wide.wrap > pageWidth / 3);
+        QVERIFY(wide.wrap < pageWidth);
+        f.tap(f.onPage(0, QPointF(300, 300)));
+        c->setTextEditText(QStringLiteral("short"));
+        c->finishTextEdit();
+        QCOMPARE(std::get<TextElement>(elements[2]).wrap, pageWidth / 3);
+
+        // Code is not wrapped, also with this setting
+        c->setTool(PageCanvas::Code);
+        f.tap(f.onPage(0, QPointF(100, 250)));
+        QVERIFY(c->textEditing());
+        c->setTextEditText(QStringLiteral("x = 1"));
+        c->finishTextEdit();
+        QCOMPARE(std::get<TextElement>(elements[3]).wrap, -1.0);
     }
 
     void positionOfThePointer() {

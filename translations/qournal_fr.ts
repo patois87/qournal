@@ -496,6 +496,10 @@ Veuillez définir le dossier d&apos;enregistrement sous &quot;Préférences &gt;
         <translation>Police</translation>
     </message>
     <message>
+        <source>Language of the code</source>
+        <translation>Langage du code</translation>
+    </message>
+    <message>
         <source>Zoom level</source>
         <translation>Niveau de zoom</translation>
     </message>
@@ -690,6 +694,14 @@ Veuillez définir le dossier d&apos;enregistrement sous &quot;Préférences &gt;
     <message>
         <source>Play object</source>
         <translation>Jouer l&apos;objet</translation>
+    </message>
+    <message>
+        <source>Mind map</source>
+        <translation>Carte mentale</translation>
+    </message>
+    <message>
+        <source>Code</source>
+        <translation>Code</translation>
     </message>
     <message>
         <source>Freehand</source>
@@ -2094,6 +2106,30 @@ Veuillez définir le dossier d&apos;enregistrement sous &quot;Préférences &gt;
         <translation>Pas avec Ctrl et la molette (%)</translation>
     </message>
     <message>
+        <source>Code</source>
+        <translation>Code</translation>
+    </message>
+    <message>
+        <source>Colours on light paper</source>
+        <translation>Couleurs sur papier clair</translation>
+    </message>
+    <message>
+        <source>Colours on dark paper</source>
+        <translation>Couleurs sur papier foncé</translation>
+    </message>
+    <message>
+        <source>Numbers of the lines</source>
+        <translation>Numéros de ligne</translation>
+    </message>
+    <message>
+        <source>A box around the code</source>
+        <translation>Un cadre autour du code</translation>
+    </message>
+    <message>
+        <source>Code is drawn so on the screen and in exports. Xournal++ shows it as an ordinary text.</source>
+        <translation>Le code est dessiné ainsi à l&apos;écran et dans les exportations. Xournal++ l&apos;affiche comme un texte ordinaire.</translation>
+    </message>
+    <message>
         <source>Page of new documents</source>
         <translation>Page des nouveaux documents</translation>
     </message>
@@ -2132,6 +2168,66 @@ Veuillez définir le dossier d&apos;enregistrement sous &quot;Préférences &gt;
     <message>
         <source>Reset to the defaults</source>
         <translation>Rétablir les valeurs par défaut</translation>
+    </message>
+    <message>
+        <source>Nodes</source>
+        <translation>Nœuds</translation>
+    </message>
+    <message>
+        <source>Shape of the nodes</source>
+        <translation>Forme des nœuds</translation>
+    </message>
+    <message>
+        <source>As drawn</source>
+        <translation>Comme dessinée</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation>Ellipse</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation>Rectangle</translation>
+    </message>
+    <message>
+        <source>Space around the writing (points)</source>
+        <translation>Espace autour de l&apos;écriture (points)</translation>
+    </message>
+    <message>
+        <source>Branches</source>
+        <translation>Branches</translation>
+    </message>
+    <message>
+        <source>Branches follow the curve that was drawn</source>
+        <translation>Les branches suivent la courbe dessinée</translation>
+    </message>
+    <message>
+        <source>Branches get thinner towards the outside</source>
+        <translation>Les branches s&apos;affinent vers l&apos;extérieur</translation>
+    </message>
+    <message>
+        <source>Each main branch has a colour of its own, which what grows from it takes</source>
+        <translation>Chaque branche principale a sa propre couleur, que reprend tout ce qui en part</translation>
+    </message>
+    <message>
+        <source>A branch joins a node it starts this close to (points)</source>
+        <translation>Une branche se rattache à un nœud si elle commence à cette distance de lui (points)</translation>
+    </message>
+    <message>
+        <source>Editing</source>
+        <translation>Édition</translation>
+    </message>
+    <message>
+        <source>Scribbling over something deletes it</source>
+        <translation>Gribouiller sur quelque chose l&apos;efface</translation>
+    </message>
+    <message>
+        <source>Selected nodes and groups bring their writing, and what joins them follows them</source>
+        <translation>Les nœuds et groupes sélectionnés emportent leur écriture, et ce qui y est rattaché les suit</translation>
+    </message>
+    <message>
+        <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
+        <translation>Les cartes mentales sont faites de traits ordinaires, que Xournal++ affiche tels quels. Lesquels sont des nœuds et des branches se déduit de leur position.</translation>
     </message>
     <message>
         <source>This build cannot record or play audio: it was built without Qt Multimedia.</source>
@@ -2356,6 +2452,10 @@ Veuillez définir le dossier d&apos;enregistrement sous &quot;Préférences &gt;
     <message>
         <source>Pointer of the pen</source>
         <translation>Pointeur du stylet</translation>
+    </message>
+    <message>
+        <source>Mind maps</source>
+        <translation>Cartes mentales</translation>
     </message>
     <message>
         <source>None</source>
@@ -2762,6 +2862,17 @@ Veuillez définir le dossier d&apos;enregistrement sous &quot;Préférences &gt;
     </message>
 </context>
 <context>
+    <name>TextEditor</name>
+    <message>
+        <source>No code</source>
+        <translation>Pas de code</translation>
+    </message>
+    <message>
+        <source>Language of the code</source>
+        <translation>Langage du code</translation>
+    </message>
+</context>
+<context>
     <name>ToolbarDialog</name>
     <message>
         <source>Customize toolbars</source>
@@ -2912,6 +3023,14 @@ Veuillez définir le dossier d&apos;enregistrement sous &quot;Préférences &gt;
     <message>
         <source>Size of the tool: %1 pt</source>
         <translation>Taille de l&apos;outil : %1 pt</translation>
+    </message>
+    <message>
+        <source>No code</source>
+        <translation>Pas de code</translation>
+    </message>
+    <message>
+        <source>Language of the code</source>
+        <translation>Langage du code</translation>
     </message>
     <message>
         <source>B</source>

@@ -24,12 +24,14 @@ QList<ToolbarIni::Config> ownConfigs() {
     desktop.name = ToolbarModel::tr("Qournal");
     desktop.predefined = true;
     desktop.bars[u"top1"_s] = {
-            u"new"_s,          u"open"_s,         u"save"_s,        u"separator"_s, u"undo"_s,      u"redo"_s,
-            u"separator"_s,    u"pen"_s,          u"highlighter"_s, u"eraser"_s,    u"hand"_s,      u"selectRect"_s,
-            u"selectRegion"_s, u"selectObject"_s, u"text"_s,        u"image"_s,     u"separator"_s, u"drawingType"_s,
-            u"eraserType"_s,   u"separator"_s,    u"colors"_s,      u"separator"_s, u"size"_s,      u"lineStyle"_s,
-            u"fill"_s,         u"font"_s,         u"separator"_s,   u"zoomOut"_s,   u"zoomLabel"_s, u"zoomIn"_s,
-            u"zoom100"_s,      u"fitWidth"_s,     u"separator"_s,   u"present"_s,
+            u"new"_s,          u"open"_s,         u"save"_s,          u"separator"_s,    u"undo"_s,
+            u"redo"_s,         u"separator"_s,    u"pen"_s,           u"mindMap"_s,      u"highlighter"_s,
+            u"eraser"_s,       u"hand"_s,         u"selectRect"_s,    u"selectRegion"_s, u"selectObject"_s,
+            u"text"_s,         u"codeTool"_s,     u"image"_s,         u"separator"_s,    u"drawingType"_s,
+            u"eraserType"_s,   u"separator"_s,    u"colors"_s,        u"separator"_s,    u"size"_s,
+            u"lineStyle"_s,    u"fill"_s,         u"font"_s,          u"separator"_s,    u"zoomOut"_s,
+            u"zoomLabel"_s,    u"zoomIn"_s,       u"zoom100"_s,       u"fitWidth"_s,     u"separator"_s,
+            u"present"_s,
     };
     desktop.bars[u"float1"_s] = toolbox;
 
@@ -39,10 +41,11 @@ QList<ToolbarIni::Config> ownConfigs() {
     tablet.name = ToolbarModel::tr("Tablet");
     tablet.predefined = true;
     tablet.bars[u"top1"_s] = {
-            u"undo"_s,      u"redo"_s,        u"separator"_s,    u"pen"_s,         u"highlighter"_s,
-            u"eraser"_s,    u"hand"_s,        u"selectRegion"_s, u"text"_s,        u"image"_s,
-            u"separator"_s, u"drawingType"_s, u"eraserType"_s,   u"size"_s,        u"font"_s,
-            u"separator"_s, u"colors"_s,      u"separator"_s,    u"fingerDraws"_s,
+            u"undo"_s,        u"redo"_s,        u"separator"_s,   u"pen"_s,          u"mindMap"_s,
+            u"highlighter"_s, u"eraser"_s,      u"hand"_s,        u"selectRegion"_s, u"text"_s,
+            u"codeTool"_s,    u"image"_s,       u"separator"_s,   u"drawingType"_s,  u"eraserType"_s,
+            u"size"_s,        u"font"_s,        u"separator"_s,   u"colors"_s,       u"separator"_s,
+            u"fingerDraws"_s,
     };
     tablet.bars[u"float1"_s] = toolbox;
     return {desktop, tablet};
