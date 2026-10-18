@@ -9,6 +9,7 @@
 
 #include <cmath>
 
+#include <QFontDatabase>
 #include <QImage>
 #include <QPainter>
 #include <QTest>
@@ -92,6 +93,12 @@ private slots:
     }
 
     void monospaceHasAFixedWidth() {
+        // The tests on Windows have Arial only (see tests/CMakeLists.txt): there is no font of fixed width to take
+        const QFont fixed = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+        if (!QFontInfo(fixed).fixedPitch()) {
+            const QString taken = QFontInfo(fixed).family();
+            QSKIP(qPrintable(QStringLiteral("No font of fixed width: \"%1\" was taken").arg(taken)));
+        }
         // Pango's name for the font of fixed width, which fontconfig knows on Linux only: every system takes its own
         const QFont font = TextFont::fromDescription(QStringLiteral("Monospace Bold"));
         QCOMPARE(TextFont::family(QStringLiteral("Monospace Bold")), QStringLiteral("Monospace"));
