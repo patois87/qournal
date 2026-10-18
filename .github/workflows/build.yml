@@ -56,21 +56,24 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
       # Against Xournal++ itself: it opens the files written here, and draws its test files as they are drawn here.
-      # A failure does not stop the build: on these machines the program of Xournal++ starts and then ends with
-      # status 127 before it exports anything, which says nothing about the application. To be looked into
+      # A failure does not stop the build. Until 2026-10-19 the program of Xournal++ ended with status 127 here
+      # before it exported anything, as a library was missing (JACK, installed below); whether its drawings match
+      # those of the application on these machines is still to be seen
       - name: Test against Xournal++
         if: matrix.arch == 'x86_64'
         continue-on-error: true
         run: |
-          sudo apt-get install -y xvfb
+          # libjack: JACK, which Xournal++ is linked against for its recordings; its AppImage does not have it, and
+          # without it the program ended at once with status 127
+          sudo apt-get install -y xvfb libjack-jackd2-0
           curl -fL -o xournalpp.AppImage \
             https://github.com/xournalpp/xournalpp/releases/download/v1.3.8/xournalpp-1.3.8-x86_64.AppImage
           chmod +x xournalpp.AppImage
           ./xournalpp.AppImage --appimage-extract > /dev/null
           # Status 127 is also what a program ends with when a library it needs is missing: which ones are
           echo "Libraries Xournal++ does not find:"
-          find squashfs-root -type f -name xournalpp -perm -u+x -exec sh -c 'file "$1" | grep -q ELF && ldd "$1"' _ {} \; \
-            | grep "not found" || echo "(none)"
+          find squashfs-root -type f -name xournalpp -perm -u+x \
+            -exec sh -c 'file "$1" | grep -q ELF && ldd "$1"' _ {} \; | grep "not found" || echo "(none)"
           # Xournal++ needs a display also to export a file. Its AppImage takes X11 whatever GDK_BACKEND says, so
           # it gets an X server that draws nowhere
           XOURNALPP=$PWD/squashfs-root/AppRun xvfb-run -a \
