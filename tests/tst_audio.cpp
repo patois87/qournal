@@ -110,6 +110,8 @@ private slots:
         QVERIFY(text);
         QCOMPARE(text->audio.filename, QStringLiteral("2026-10-02_10-00-00.ogg"));
         QVERIFY(text->audio.timestamp >= afterRelease);
+        // Kept: the strokes drawn below may move the elements, and with them the text
+        const qint64 textTime = text->audio.timestamp;
 
         // The file keeps it
         QTemporaryDir dir;
@@ -131,7 +133,7 @@ private slots:
         c->setAudioRecording(QStringLiteral("second.ogg"));
         f.strokeOnPage(0, {QPointF(100, 420), QPointF(300, 420)});
         QCOMPARE(f.strokes().last().audio.filename, QStringLiteral("second.ogg"));
-        QVERIFY(f.strokes().last().audio.timestamp < text->audio.timestamp);  // counted from its own start
+        QVERIFY(f.strokes().last().audio.timestamp < textTime);  // counted from its own start
     }
 
     /// The list of the recordings of the document: per recording the pages, at the first moment they refer to it
