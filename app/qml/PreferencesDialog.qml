@@ -1173,6 +1173,17 @@ Dialog {
                         checked: dialog.input.mindMapSelection
                         onToggled: dialog.input.mindMapSelection = checked
                     }
+                    Option {
+                        text: qsTr("Empty loops become nodes")
+                        checked: dialog.input.mindMapEmptyNodes
+                        onToggled: dialog.input.mindMapEmptyNodes = checked
+                    }
+                    Note {
+                        text: qsTr("A loop around writing always becomes a node. An empty one does when it is at least "
+                                   + "1.5 cm large on the screen and nothing is written beside it for a moment; a "
+                                   + "letter written beside it soon after turns it back. Off on a phone at first, "
+                                   + "where letters written with a finger are often such loops.")
+                    }
                     Note {
                         text: qsTr("The mind maps are made of ordinary strokes, which Xournal++ shows as they are. "
                                    + "Which of them are nodes and branches is seen from where they are.")

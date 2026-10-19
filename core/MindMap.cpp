@@ -68,6 +68,7 @@ constexpr double SCRIBBLE_MIN_EXTENT = 10;      // along its main direction
 constexpr double SCRIBBLE_HYSTERESIS = 0.15;    // a turn is a way back of this share of the extent, at least
 constexpr double SCRIBBLE_MIN_HYSTERESIS = 3;
 constexpr double SCRIBBLE_MIN_COVER = 0.3;      // of the points of the scribble over a text or an image it deletes
+constexpr double CLOSED_EXACTLY = 1e-3;         // between the ends of an outline the tool made, at most
 
 QRectF boundsOf(const QList<QPointF>& points) {
     if (points.isEmpty()) {
@@ -252,6 +253,11 @@ bool joins(const Node& node, const QPointF& p, double tolerance) {
     return distanceToOutline(p, node.outline) <= tolerance;
 }
 
+/// What the tool makes of a loop ends where it begins; a drawn loop does not
+bool closedExactly(const QPolygonF& points) {
+    return points.size() > 2 && QLineF(points.first(), points.last()).length() < CLOSED_EXACTLY;
+}
+
 Analysis analyze(const Layer& layer, const MindMap::Options& options) {
     Analysis analysis;
     const size_t count = layer.elements.size();
@@ -278,8 +284,11 @@ Analysis analyze(const Layer& layer, const MindMap::Options& options) {
     for (const size_t i: loops) {
         const QPolygonF outline(std::get<Stroke>(layer.elements[i]).points);
         std::vector<size_t> contents = enclosed(outline, layer, i);
-        if (contents.empty() && diagonal(outline.boundingRect()) < options.emptyNodeMinSize) {
-            continue;  // writing
+        // An empty loop is a node only as the tool made it, closed exactly: as it was drawn it is writing, the "o" of
+        // a word (the canvas keeps it so while the word goes on)
+        if (contents.empty() &&
+            (diagonal(outline.boundingRect()) < options.emptyNodeMinSize || !closedExactly(outline))) {
+            continue;
         }
         analysis.structure[i] = true;
         analysis.taken[i] = true;

@@ -2226,6 +2226,14 @@ Establezca la carpeta de grabaciones en «Preferencias &gt; Grabación de audio�
         <translation>Los nodos y grupos seleccionados llevan consigo su escritura, y lo que está unido a ellos los sigue</translation>
     </message>
     <message>
+        <source>Empty loops become nodes</source>
+        <translation>Los bucles vacíos se convierten en nodos</translation>
+    </message>
+    <message>
+        <source>A loop around writing always becomes a node. An empty one does when it is at least 1.5 cm large on the screen and nothing is written beside it for a moment; a letter written beside it soon after turns it back. Off on a phone at first, where letters written with a finger are often such loops.</source>
+        <translation>Un bucle alrededor de algo escrito siempre se convierte en un nodo. Uno vacío lo hace cuando mide al menos 1,5 cm en la pantalla y no se escribe nada a su lado durante un momento; una letra escrita a su lado poco después lo devuelve a su forma. Desactivado al principio en un teléfono, donde las letras escritas con el dedo suelen ser bucles así.</translation>
+    </message>
+    <message>
         <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
         <translation>Los mapas mentales se componen de trazos normales, que Xournal++ muestra tal como son. Cuáles son nodos y ramas se deduce de su posición.</translation>
     </message>

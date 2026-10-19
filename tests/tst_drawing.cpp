@@ -9,6 +9,8 @@
 
 #include <cmath>
 
+#include <QQuickWindow>
+#include <QScreen>
 #include <QSignalSpy>
 #include <QTemporaryDir>
 
@@ -520,6 +522,93 @@ private slots:
         c->redo();
         QCOMPARE(f.strokes().size(), 5);
         QVERIFY(MindMap::hasArrowHead(f.strokes()[4].points));
+    }
+
+    void mindMapEmptyLoops() {
+        Fixture f;
+        PageCanvas* c = f.canvas;
+        c->setTool(PageCanvas::MindMap);
+        // Loops as a hand draws them, whose ends overlap
+        auto loop = [](const QPointF& center, double a, double b) {
+            QList<QPointF> points;
+            for (int i = 0; i <= 88; ++i) {
+                const double t = -2.0 + 2 * M_PI * i / 80;
+                points.append(center + QPointF(a * std::cos(t), b * std::sin(t)));
+            }
+            return points;
+        };
+        auto closed = [](const Stroke& stroke) { return stroke.points.first() == stroke.points.last(); };
+
+        // A large "o" and the rest of the word right after it: all writing, also after a while
+        const QList<QPointF> o = loop({120, 120}, 22, 22);
+        f.strokeOnPage(0, o);
+        f.strokeOnPage(0, handDrawn({{150, 90}, {150, 140}, {170, 125}, {152, 120}}, 2, 0.3));
+        const QList<Stroke> word = f.strokes();
+        QTest::qWait(PageCanvas::EMPTY_NODE_DELAY_MS + 300);
+        QCOMPARE(f.strokes().size(), 2);
+        QCOMPARE(f.strokes()[0].points, word[0].points);
+        QCOMPARE(f.strokes()[1].points, word[1].points);
+        QVERIFY(!closed(word[0]));
+
+        // An empty loop by itself becomes a node after a moment, as a step of its own
+        f.strokeOnPage(0, loop({200, 400}, 60, 30));
+        QVERIFY(!closed(f.strokes()[2]));
+        QTRY_VERIFY_WITH_TIMEOUT(closed(f.strokes()[2]), 3 * PageCanvas::EMPTY_NODE_DELAY_MS);
+        c->undo();
+        QCOMPARE(f.strokes().size(), 3);
+        QVERIFY(!closed(f.strokes()[2]));
+        c->undo();
+        QCOMPARE(f.strokes().size(), 2);
+
+        // Writing put into it at once makes it a node then, around the writing
+        f.strokeOnPage(0, loop({200, 400}, 60, 30));
+        f.strokeOnPage(0, handDrawn({{180, 410}, {188, 390}, {196, 410}}, 2, 0.3));
+        QCOMPARE(f.strokes().size(), 4);
+        QVERIFY(closed(f.strokes()[2]));
+
+        // A branch drawn from it at once too
+        f.strokeOnPage(0, loop({500, 400}, 50, 30));
+        f.strokeOnPage(0, handDrawn({{500, 432}, {520, 560}, {540, 700}}, 3, 1.0));
+        QCOMPARE(f.strokes().size(), 6);
+        QVERIFY(closed(f.strokes()[4]));
+
+        // And anything drawn far from it
+        f.strokeOnPage(0, loop({420, 150}, 40, 40));
+        f.strokeOnPage(0, handDrawn({{150, 300}, {170, 320}}, 2, 0.3));
+        QCOMPARE(f.strokes().size(), 8);
+        QVERIFY(closed(f.strokes()[6]));
+
+        // Written slowly: the "o" became a node after the pause, and the next letter beside it turns it back
+        const QList<QPointF> slow = loop({300, 250}, 22, 22);
+        f.strokeOnPage(0, slow);
+        const QList<QPointF> drawn = f.strokes()[8].points;
+        QTRY_VERIFY_WITH_TIMEOUT(closed(f.strokes()[8]), 3 * PageCanvas::EMPTY_NODE_DELAY_MS);
+        f.strokeOnPage(0, handDrawn({{330, 220}, {330, 270}, {350, 255}, {332, 250}}, 2, 0.3));
+        QCOMPARE(f.strokes().size(), 10);
+        QCOMPARE(f.strokes()[8].points, drawn);
+        // Undo brings back the node, then removes it
+        c->undo();
+        c->undo();
+        QCOMPARE(f.strokes().size(), 9);
+        QVERIFY(closed(f.strokes()[8]));
+
+        // Switched off, a large one stays writing too
+        c->input()->mindMapEmptyNodes = false;
+        f.strokeOnPage(0, loop({300, 160}, 50, 25));
+        QTest::qWait(PageCanvas::EMPTY_NODE_DELAY_MS + 300);
+        QCOMPARE(f.strokes().size(), 10);
+        QVERIFY(!closed(f.strokes()[9]));
+        c->input()->mindMapEmptyNodes = true;
+
+        // Large on the page, but no larger on the screen than a letter, as on a phone: writing, also after a while.
+        // Zoomed out so far that 10 mm on the screen are 70 points across
+        const double dpi = c->window()->screen()->physicalDotsPerInch();
+        const double radius = 70 / 2 / M_SQRT2;
+        c->zoomTo(10 / 25.4 * dpi / 70 * 72 / c->displayDpi());
+        f.strokeOnPage(0, loop({450, 300}, radius, radius));
+        QTest::qWait(PageCanvas::EMPTY_NODE_DELAY_MS + 300);
+        QCOMPARE(f.strokes().size(), 11);
+        QVERIFY(!closed(f.strokes()[10]));
     }
 
     void mindMapNodesMove() {

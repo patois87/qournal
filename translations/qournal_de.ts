@@ -2226,6 +2226,14 @@ Bitte legen Sie einen Aufnahme-Ordner unter &quot;Einstellungen &gt; Audio-Aufze
         <translation>Ausgewählte Knoten und Gruppen nehmen ihre Schrift mit, und was an ihnen hängt, folgt ihnen</translation>
     </message>
     <message>
+        <source>Empty loops become nodes</source>
+        <translation>Leere Schleifen werden zu Knoten</translation>
+    </message>
+    <message>
+        <source>A loop around writing always becomes a node. An empty one does when it is at least 1.5 cm large on the screen and nothing is written beside it for a moment; a letter written beside it soon after turns it back. Off on a phone at first, where letters written with a finger are often such loops.</source>
+        <translation>Eine Schleife um Geschriebenes wird immer zum Knoten. Eine leere wird es, wenn sie auf dem Bildschirm mindestens 1,5 cm groß ist und einen Moment lang nichts daneben geschrieben wird; ein Buchstabe, der kurz danach daneben geschrieben wird, macht sie wieder zur Schleife. Auf einem Smartphone zuerst aus, wo mit dem Finger geschriebene Buchstaben oft solche Schleifen sind.</translation>
+    </message>
+    <message>
         <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
         <translation>Die Mindmaps bestehen aus gewöhnlichen Strichen, die Xournal++ so anzeigt, wie sie sind. Welche davon Knoten und Äste sind, ergibt sich aus ihrer Lage.</translation>
     </message>

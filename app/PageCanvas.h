@@ -103,6 +103,9 @@ class PageCanvas: public QQuickItem {
     /// background, lineNumbers, box, numbers, padding, digitWidth, gap, radius); empty for other texts
     Q_PROPERTY(QVariantMap textEditCode READ textEditCode NOTIFY textEditChanged)
     Q_PROPERTY(QMatrix4x4 textEditMatrix READ textEditMatrix NOTIFY textEditMatrixChanged)
+    /// Where the editor has controls of its own beside the text (code: the choice of its language), in the
+    /// coordinates of the item; the pen presses them instead of drawing there. Set by the editor
+    Q_PROPERTY(QRectF textEditControls MEMBER m_textEditControls)
     // The layers of the current page. The list has an entry with "name" and "visible" for each layer, from the
     // bottom one up
     Q_PROPERTY(QVariantList layers READ layers NOTIFY layersChanged)
@@ -278,6 +281,12 @@ public:
     Q_ENUM(ButtonAction)
     static constexpr int BUTTON_COUNT = 7;
     static constexpr int TOOL_COUNT = 19;
+    /// How long an empty loop of the mind map tool waits for more writing before it becomes a node
+    static constexpr int EMPTY_NODE_DELAY_MS = 1200;
+    /// How long after that a letter written beside the node turns it back into the loop as it was drawn
+    static constexpr int EMPTY_NODE_REVERT_MS = 5000;
+    /// How large an empty loop is on the screen at least to become a node (its diagonal): letters are smaller
+    static constexpr double EMPTY_NODE_MIN_SCREEN_MM = 15;
 
     explicit PageCanvas(QQuickItem* parent = nullptr);
     ~PageCanvas() override;
@@ -1141,9 +1150,20 @@ private:
     StrokeStabilizer::Event stabilizerEvent(const PointerInput& input) const;
     /// Adds a stroke to the top layer of a page, undoable
     void addStroke(int page, const Stroke& newStroke);
-    /// Adds a stroke of the mind map tool and replaces it with the node or branch it is
     void setCodeLook(const std::function<void(Code::Look&)>& modify);
+    /// Adds a stroke of the mind map tool and replaces it with the node or branch it is
     void addMindMapStroke(int page, const Stroke& stroke);
+    /// Replaces the stroke that was just added, the last of its layer, with what the mind map tool made of it
+    void applyMindMap(int page, int layer, MindMap::Result result);
+    /// An empty loop that waits to become a node: whether it is still the last stroke of its layer, as drawn
+    bool pendingNodeValid() const;
+    /// Makes a node of the empty loop that waited (when it is still there), or leaves it as writing
+    void resolvePendingNode(bool node);
+    /// What a new stroke of the mind map tool is to an empty loop drawn just before it, or the node made of it
+    enum class NearLoop { Into, Branch, Beside, Elsewhere };
+    NearLoop nearLoop(const Stroke& stroke, const QList<QPointF>& loop) const;
+    /// The size of a stroke on the screen, its diagonal in millimetres
+    double screenMillimetres(const Stroke& stroke) const;
     void updateShape();
     void eraseAt(const QPointF& pagePos);
 
@@ -1340,6 +1360,7 @@ private:
     bool m_textJustify = false;
     QString m_textCode = QStringLiteral("python");  ///< the language of the code tool
     TextEditState m_textEdit;
+    QRectF m_textEditControls;
     InsertTarget m_insertTarget;
     QPointF m_handPressPos;  ///< where the hand tool was pressed: a tap on a link opens it
     EraserType m_eraserType = EraseStandard;
@@ -1453,6 +1474,25 @@ private:
 
     // Tiles are rendered at the final resolution once zooming has settled
     QTimer m_settle;
+
+    // The mind map tool: an empty loop stays writing at first, as the "o" of a word that goes on. It becomes a
+    // node when nothing is written after it for a moment, or when writing is put into it
+    struct PendingNode {
+        int page = -1;
+        int layer = -1;
+        size_t index = 0;
+        Stroke stroke;
+    } m_pendingNode;
+    QTimer m_pendingNodeTimer;
+    // The node made of it after the pause: the hand may only have been slow between two letters
+    struct RecentNode {
+        int page = -1;
+        int layer = -1;
+        size_t index = 0;
+        Stroke drawn;
+        Stroke made;
+        QElapsedTimer since;
+    } m_recentNode;
 
     // The pen of electronic paper (Platform::EinkPen): the device draws the stroke of the pen itself, at once.
     // While it does, nothing the application draws on the pages is shown, so it is on only while the pen writes

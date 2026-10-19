@@ -16,6 +16,7 @@
 #include <QtQml/qqmlregistration.h>
 
 #include "MindMap.h"
+#include "Platform.h"
 #include "Snapping.h"
 #include "StrokeStabilizer.h"
 
@@ -111,6 +112,9 @@ class InputSettings: public QObject {
     Q_PROPERTY(bool mindMapScribbleErases MEMBER mindMapScribbleErases NOTIFY changed)
     /// Selected nodes and groups of mind maps bring their writing, and what joins them follows when they are moved
     Q_PROPERTY(bool mindMapSelection MEMBER mindMapSelection NOTIFY changed)
+    /// An empty loop becomes a node (after a moment without writing beside it, and when it is large on the screen).
+    /// Off on a phone at first: a finger writes letters there that cannot be told from such loops
+    Q_PROPERTY(bool mindMapEmptyNodes MEMBER mindMapEmptyNodes NOTIFY changed)
 
 public:
     enum Averaging { NoAveraging, Arithmetic, VelocityGaussian };
@@ -211,6 +215,7 @@ public:
     bool mindMapBranchColors = false;
     bool mindMapScribbleErases = true;
     bool mindMapSelection = true;
+    bool mindMapEmptyNodes = !Platform::isPhone();
 
     bool zoomGestures = true;
     bool palmRejection = true;

@@ -61,6 +61,19 @@ Item {
         edit.insert(edit.cursorPosition, canvas.codeNewLine(edit.text, edit.cursorPosition))
     }
 
+    // Under the choice of the language: some styles draw a combo box without a background of its own (Material in
+    // the dark mode: light text and an outline), which on white paper could not be seen
+    Rectangle {
+        visible: languageBox.visible
+        x: languageBox.x
+        y: languageBox.y
+        width: languageBox.width
+        height: languageBox.height
+        radius: 4
+        color: languageBox.palette.window
+        border.color: languageBox.palette.mid
+    }
+
     // Code: the choice of its language, at the top right corner of its box, upright and as large as the controls
     FitComboBox {
         id: languageBox
@@ -74,9 +87,17 @@ Item {
         }
 
         visible: editor.isCode
-        x: corner.x - width
-        y: corner.y - height - 4
+        // Kept in the view: on a phone the box of the code is often narrower than this, or at the edge of the
+        // screen. Below the box where there is no room above it
+        x: Math.max(4, Math.min(corner.x - width, editor.width - width - 4))
+        y: corner.y - height - 4 >= 4 ? corner.y - height - 4 : Math.min(boxBottom + 4, editor.height - height - 4)
         width: 140
+
+        readonly property real boxBottom: {
+            const p = editor.canvas.textEditMatrix.times(
+                        Qt.vector4d(editor.codeBox.x, editor.codeBox.y + editor.codeBox.height, 0, 1))
+            return p.y
+        }
         focusPolicy: Qt.NoFocus
         model: [qsTr("No code")].concat(languages.map(language => language.name))
         currentIndex: languages.findIndex(language => language.id === editor.canvas.textCode) + 1
@@ -88,6 +109,12 @@ Item {
         ToolTip.visible: hovered
         ToolTip.delay: 600
         ToolTip.text: qsTr("Language of the code")
+    }
+    Binding {
+        target: editor.canvas
+        property: "textEditControls"
+        value: languageBox.visible && editor.visible
+               ? Qt.rect(languageBox.x, languageBox.y, languageBox.width, languageBox.height) : Qt.rect(0, 0, 0, 0)
     }
 
     TextEdit {

@@ -2225,6 +2225,14 @@ Por favor, defina a pasta de gravação em &quot;Preferências &gt; Gravação d
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Empty loops become nodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A loop around writing always becomes a node. An empty one does when it is at least 1.5 cm large on the screen and nothing is written beside it for a moment; a letter written beside it soon after turns it back. Off on a phone at first, where letters written with a finger are often such loops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
         <translation type="unfinished"></translation>
     </message>

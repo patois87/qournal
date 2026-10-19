@@ -253,8 +253,10 @@ private slots:
         write(layer, QRectF(400, 100, 60, 20), 3);
         const size_t second = add(layer, MindMap::recognize(strokeOf(loop({430, 110}, 60, 30)), layer).stroke);
         add(layer, strokeOf(loop({300, 110}, 260, 90)));  // a group around both
-        const size_t empty = add(layer, strokeOf(loop({300, 400}, 40, 40)));  // a node without writing yet
-        add(layer, strokeOf(loop({300, 500}, 10, 8)));                        // a small loop: writing
+        // A node without writing yet, as the tool made it; as it was drawn, a large empty loop is writing too
+        const size_t empty = add(layer, MindMap::recognize(strokeOf(loop({300, 400}, 40, 40)), layer).stroke);
+        add(layer, strokeOf(loop({300, 500}, 10, 8)));  // a small loop: writing
+        add(layer, strokeOf(loop({500, 500}, 40, 40, 1.1)));  // its ends overlap, as those of a hand do
 
         const std::vector<MindMap::Node> nodes = MindMap::findNodes(layer);
         QCOMPARE(nodes.size(), size_t(3));

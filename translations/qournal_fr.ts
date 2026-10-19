@@ -2226,6 +2226,14 @@ Veuillez définir le dossier d&apos;enregistrement sous &quot;Préférences &gt;
         <translation>Les nœuds et groupes sélectionnés emportent leur écriture, et ce qui y est rattaché les suit</translation>
     </message>
     <message>
+        <source>Empty loops become nodes</source>
+        <translation>Les boucles vides deviennent des nœuds</translation>
+    </message>
+    <message>
+        <source>A loop around writing always becomes a node. An empty one does when it is at least 1.5 cm large on the screen and nothing is written beside it for a moment; a letter written beside it soon after turns it back. Off on a phone at first, where letters written with a finger are often such loops.</source>
+        <translation>Une boucle autour d&apos;une écriture devient toujours un nœud. Une boucle vide le devient lorsqu&apos;elle mesure au moins 1,5 cm à l&apos;écran et que rien n&apos;est écrit à côté pendant un instant ; une lettre écrite à côté peu après la rétablit. Désactivé au départ sur un téléphone, où les lettres écrites au doigt sont souvent de telles boucles.</translation>
+    </message>
+    <message>
         <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
         <translation>Les cartes mentales sont faites de traits ordinaires, que Xournal++ affiche tels quels. Lesquels sont des nœuds et des branches se déduit de leur position.</translation>
     </message>

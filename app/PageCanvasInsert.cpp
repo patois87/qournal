@@ -237,7 +237,8 @@ QRectF PageCanvas::textEditViewRect() const {
     constexpr double MARGIN_PX = 12;      // the frame and the handle for the width
     constexpr double LANGUAGE_PX = 56;  // code: the choice of its language above the box
     const double top = text.code.isEmpty() ? MARGIN_PX : LANGUAGE_PX;
-    return textEditMatrix().toTransform().mapRect(local).adjusted(-MARGIN_PX, -top, MARGIN_PX, MARGIN_PX);
+    const QRectF view = textEditMatrix().toTransform().mapRect(local).adjusted(-MARGIN_PX, -top, MARGIN_PX, MARGIN_PX);
+    return m_textEditControls.isEmpty() ? view : view | m_textEditControls;
 }
 
 void PageCanvas::setTextEditText(const QString& text) {

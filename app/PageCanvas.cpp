@@ -148,6 +148,15 @@ PageCanvas::PageCanvas(QQuickItem* parent): QQuickItem(parent) {
         }
     });
 
+    m_pendingNodeTimer.setSingleShot(true);
+    m_pendingNodeTimer.setInterval(EMPTY_NODE_DELAY_MS);
+    connect(&m_pendingNodeTimer, &QTimer::timeout, this, [this] {
+        if (m_action != Action::None) {
+            m_pendingNodeTimer.start();  // not while something is drawn: the end of it decides
+            return;
+        }
+        resolvePendingNode(true);
+    });
     m_settle.setSingleShot(true);
     m_settle.setInterval(200);
     connect(&m_settle, &QTimer::timeout, this, [this] {

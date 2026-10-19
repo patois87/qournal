@@ -16,6 +16,7 @@
 #include <QPainterPath>
 #include <QPixmap>
 #include <QPointingDevice>
+#include <QScreen>
 #include <QStyleHints>
 #include <QTabletEvent>
 #include <QTouchEvent>
@@ -90,6 +91,19 @@ constexpr int PEN_HOVER_MS = 500;
 
 bool validMotion(const QPointF& p, const QPointF& q) {
     return QLineF(p, q).length() >= StrokeBuilder::MOTION_THRESHOLD;
+}
+
+/// The distance of a point from a closed line, such as the outline of a node
+double distanceToOutline(const QPointF& point, const QPolygonF& outline) {
+    double distance = outline.isEmpty() ? 0 : QLineF(point, outline.first()).length();
+    for (qsizetype i = 0; i + 1 < outline.size(); ++i) {
+        const QPointF a = outline[i];
+        const QPointF d = outline[i + 1] - a;
+        const double square = QPointF::dotProduct(d, d);
+        const double t = square > 0 ? std::clamp(QPointF::dotProduct(point - a, d) / square, 0.0, 1.0) : 0.0;
+        distance = std::min(distance, QLineF(point, a + d * t).length());
+    }
+    return distance;
 }
 
 }  // namespace
@@ -1562,11 +1576,123 @@ void PageCanvas::playObjectPress(const PointerInput& input) {
 }
 
 void PageCanvas::addMindMapStroke(int pageIndex, const Stroke& stroke) {
+    // An empty loop drawn just before: writing beside it is a word it is a letter of; anything else makes it a node
+    // at once
+    if (pendingNodeValid() && m_pendingNode.page == pageIndex) {
+        resolvePendingNode(nearLoop(stroke, m_pendingNode.stroke.points) != NearLoop::Beside);
+    } else {
+        resolvePendingNode(false);
+    }
+    // A node made of an empty loop a moment ago, and a letter beside it: it was the loop of a letter, written slowly
+    RecentNode recent = std::exchange(m_recentNode, RecentNode{});
+    if (recent.page == pageIndex && recent.since.isValid() && recent.since.elapsed() < EMPTY_NODE_REVERT_MS) {
+        const auto& elements = m_doc.pages[static_cast<size_t>(pageIndex)].layers[static_cast<size_t>(recent.layer)]
+                                       .elements;
+        const auto* node = recent.index < elements.size() ? std::get_if<Stroke>(&elements[recent.index]) : nullptr;
+        if (node && node->points == recent.made.points && nearLoop(stroke, recent.made.points) == NearLoop::Beside) {
+            perform({ElementReplaceEdit{pageIndex, {{recent.layer, recent.index, recent.made, recent.drawn}}}});
+        }
+    }
+
     // What the stroke is depends on what is on the layer already
     const int layer = activeLayer(pageIndex);
     const Layer& target = m_doc.pages[static_cast<size_t>(pageIndex)].layers[static_cast<size_t>(layer)];
     MindMap::Result result = MindMap::recognize(stroke, target, m_input.mindMap());
     addStroke(pageIndex, stroke);
+    if (result.kind == MindMap::Result::Kind::Node && result.contents.empty()) {
+        // Writing at first, and for good when such loops are not to be nodes or it is no larger than a letter
+        if (m_input.mindMapEmptyNodes && screenMillimetres(stroke) >= EMPTY_NODE_MIN_SCREEN_MM) {
+            m_pendingNode = {pageIndex, layer, target.elements.size() - 1,
+                             std::get<Stroke>(target.elements.back())};
+            m_pendingNodeTimer.start();
+        }
+        return;
+    }
+    applyMindMap(pageIndex, layer, std::move(result));
+}
+
+bool PageCanvas::pendingNodeValid() const {
+    const PendingNode& pending = m_pendingNode;
+    if (pending.page < 0 || pending.page >= static_cast<int>(m_doc.pages.size())) {
+        return false;
+    }
+    const Page& page = m_doc.pages[static_cast<size_t>(pending.page)];
+    if (pending.layer < 0 || pending.layer >= static_cast<int>(page.layers.size())) {
+        return false;
+    }
+    const auto& elements = page.layers[static_cast<size_t>(pending.layer)].elements;
+    if (elements.size() != pending.index + 1) {
+        return false;
+    }
+    const auto* stroke = std::get_if<Stroke>(&elements.back());
+    return stroke && stroke->points == pending.stroke.points;
+}
+
+void PageCanvas::resolvePendingNode(bool node) {
+    m_pendingNodeTimer.stop();
+    const bool valid = pendingNodeValid();
+    const PendingNode pending = std::exchange(m_pendingNode, PendingNode{});
+    if (!node || !valid) {
+        return;
+    }
+    // Recognised again on the layer without it, as it was when the loop was drawn
+    Layer before = m_doc.pages[static_cast<size_t>(pending.page)].layers[static_cast<size_t>(pending.layer)];
+    before.elements.pop_back();
+    MindMap::Result result = MindMap::recognize(pending.stroke, before, m_input.mindMap());
+    if (result.kind != MindMap::Result::Kind::Node) {
+        return;
+    }
+    const bool alone = result.changes.empty();
+    applyMindMap(pending.page, pending.layer, std::move(result));
+    const auto& elements = m_doc.pages[static_cast<size_t>(pending.page)].layers[static_cast<size_t>(pending.layer)]
+                                   .elements;
+    if (alone && elements.size() == pending.index + 1) {
+        // Nothing else changed with it: it can still become the letter it was
+        m_recentNode = {pending.page, pending.layer, pending.index, pending.stroke,
+                        std::get<Stroke>(elements.back()), {}};
+        m_recentNode.since.start();
+    }
+}
+
+double PageCanvas::screenMillimetres(const Stroke& stroke) const {
+    // Handwriting has about the same size on the glass at any zoom; the screen says how many of its pixels make an
+    // inch (pixels of the view, as the zoom counts them)
+    const QRectF bounds = QPolygonF(stroke.points).boundingRect();
+    const QScreen* screen = window() ? window()->screen() : nullptr;
+    const double dpi = screen && screen->physicalDotsPerInch() > 0 ? screen->physicalDotsPerInch() : 96.0;
+    return std::hypot(bounds.width(), bounds.height()) * m_scale / dpi * 25.4;
+}
+
+PageCanvas::NearLoop PageCanvas::nearLoop(const Stroke& stroke, const QList<QPointF>& points) const {
+    if (stroke.points.isEmpty()) {
+        return NearLoop::Elsewhere;
+    }
+    const QPolygonF loop(points);
+    const QRectF bounds = loop.boundingRect();
+    const double size = std::hypot(bounds.width(), bounds.height());
+    const auto inside = std::count_if(stroke.points.begin(), stroke.points.end(), [&loop](const QPointF& p) {
+        return loop.containsPoint(p, Qt::OddEvenFill);
+    });
+    if (2 * inside > stroke.points.size()) {
+        return NearLoop::Into;
+    }
+    const bool fromIt = loop.containsPoint(stroke.points.first(), Qt::OddEvenFill) ||
+                        distanceToOutline(stroke.points.first(), loop) <= m_input.mindMapAttachTolerance + stroke.width;
+    if (fromIt && QLineF(stroke.points.last(), bounds.center()).length() > 1.5 * size) {
+        return NearLoop::Branch;
+    }
+    // The next letter of the word: no larger than a few of them, close to the loop
+    const QRectF strokeBounds = QPolygonF(stroke.points).boundingRect();
+    const double reach = 0.6 * std::max(bounds.width(), bounds.height());
+    if (std::hypot(strokeBounds.width(), strokeBounds.height()) <= 3 * size &&
+        bounds.adjusted(-reach, -reach, reach, reach).intersects(strokeBounds.adjusted(-1, -1, 1, 1))) {
+        return NearLoop::Beside;
+    }
+    return NearLoop::Elsewhere;
+}
+
+void PageCanvas::applyMindMap(int pageIndex, int layer, MindMap::Result result) {
+    const Layer& target = m_doc.pages[static_cast<size_t>(pageIndex)].layers[static_cast<size_t>(layer)];
     if (result.kind == MindMap::Result::Kind::Ink && result.changes.empty()) {
         return;
     }

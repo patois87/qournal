@@ -2226,6 +2226,14 @@ Impostare la cartella di registrazione in “Preferenze &gt; Registrazione audio
         <translation>I nodi e i gruppi selezionati portano con sé la loro scrittura, e ciò che è collegato a loro li segue</translation>
     </message>
     <message>
+        <source>Empty loops become nodes</source>
+        <translation>I cerchi vuoti diventano nodi</translation>
+    </message>
+    <message>
+        <source>A loop around writing always becomes a node. An empty one does when it is at least 1.5 cm large on the screen and nothing is written beside it for a moment; a letter written beside it soon after turns it back. Off on a phone at first, where letters written with a finger are often such loops.</source>
+        <translation>Un cerchio intorno a una scritta diventa sempre un nodo. Uno vuoto lo diventa quando è grande almeno 1,5 cm sullo schermo e per un momento non si scrive nulla accanto; una lettera scritta accanto poco dopo lo riporta com&apos;era. Disattivato all&apos;inizio su un telefono, dove le lettere scritte con il dito sono spesso cerchi di questo tipo.</translation>
+    </message>
+    <message>
         <source>The mind maps are made of ordinary strokes, which Xournal++ shows as they are. Which of them are nodes and branches is seen from where they are.</source>
         <translation>Le mappe mentali sono fatte di tratti normali, che Xournal++ mostra così come sono. Quali di essi sono nodi e rami si deduce dalla loro posizione.</translation>
     </message>

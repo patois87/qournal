@@ -221,6 +221,19 @@ if (ANDROID)
     set(ANDROID_PACKAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/android-package)
     file(REMOVE_RECURSE ${ANDROID_PACKAGE_DIR})
     file(COPY ${PROJECT_SOURCE_DIR}/android/ DESTINATION ${ANDROID_PACKAGE_DIR})
+    # A package for trying, with an id and a name of its own: it is installed next to the one from Google Play,
+    # which is signed with another key, and does not touch its documents
+    option(ANDROID_TEST_PACKAGE "Package \"Qournal Test\" (ch.vereo.qournal.android.test), next to the published one"
+        OFF)
+    set(ANDROID_APPLICATION_ID ch.vereo.qournal.android)
+    if (ANDROID_TEST_PACKAGE)
+        set(ANDROID_APPLICATION_ID ch.vereo.qournal.android.test)
+        file(READ ${ANDROID_PACKAGE_DIR}/AndroidManifest.xml MANIFEST)
+        string(REPLACE "package=\"ch.vereo.qournal.android\"" "package=\"${ANDROID_APPLICATION_ID}\"" MANIFEST
+            "${MANIFEST}")
+        string(REPLACE "android:label=\"Qournal\"" "android:label=\"Qournal Test\"" MANIFEST "${MANIFEST}")
+        file(WRITE ${ANDROID_PACKAGE_DIR}/AndroidManifest.xml "${MANIFEST}")
+    endif ()
     set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/android/AndroidManifest.xml)
     if (ENABLE_EINK_PEN)
         set(HIDDEN_API_VERSION 6.1)
@@ -240,9 +253,9 @@ if (ANDROID)
     # "ch.vereo.qournal" was set to free there by mistake. It cannot change once the app is published
     set_target_properties(qournal PROPERTIES
         QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_PACKAGE_DIR}
-        QT_ANDROID_PACKAGE_NAME ch.vereo.qournal.android
+        QT_ANDROID_PACKAGE_NAME ${ANDROID_APPLICATION_ID}
         QT_ANDROID_VERSION_NAME ${PROJECT_VERSION}
-        QT_ANDROID_VERSION_CODE 6
+        QT_ANDROID_VERSION_CODE 9
     )
 endif ()
 
