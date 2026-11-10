@@ -164,6 +164,8 @@ private slots:
         QCOMPARE(rectangle.size(), 5);
         QCOMPARE(rectangle.first(), rectangle.last());
         QCOMPARE(QPolygonF(rectangle).boundingRect(), QRectF(94, 94, 92, 32));
+        // Still a loop with its five points: a node of the layer, as the ellipse is
+        QVERIFY(MindMap::isLoop(rectangle));
 
         const QList<QPointF> ellipse = MindMap::outline(Shape::Ellipse, writing, 6);
         QVERIFY(ellipse.size() > 24);
@@ -714,7 +716,17 @@ private slots:
         options.nodeShape = MindMap::Options::NodeShape::Ellipse;
         QVERIFY(MindMap::recognize(strokeOf(box), layer, options).stroke.points.size() > 24);
         options.nodeShape = MindMap::Options::NodeShape::Rectangle;
-        QCOMPARE(MindMap::recognize(strokeOf(loop({140, 110}, 70, 30)), layer, options).stroke.points.size(), 5);
+        const Result rectangle = MindMap::recognize(strokeOf(loop({140, 110}, 70, 30)), layer, options);
+        QCOMPARE(rectangle.stroke.points.size(), 5);
+        {
+            // Such a node is one for the strokes after it: a branch starts at its outline
+            Layer boxed = layer;
+            add(boxed, rectangle.stroke);
+            QCOMPARE(MindMap::findNodes(boxed).size(), size_t(1));
+            const Result from =
+                    MindMap::recognize(strokeOf(handDrawn({{150, 120}, {260, 160}, {300, 235}}, 3, 1.0)), boxed);
+            QCOMPARE(from.kind, Result::Kind::Branch);
+        }
 
         // Straight branches
         add(layer, MindMap::recognize(strokeOf(loop({140, 110}, 70, 30)), layer).stroke);

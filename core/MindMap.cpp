@@ -1017,7 +1017,8 @@ std::optional<MindMap::Result> crossLink(const Stroke& stroke, const Analysis& a
 }  // namespace
 
 bool MindMap::isLoop(const QList<QPointF>& points) {
-    if (points.size() < LOOP_MIN_POINTS) {
+    // Fewer points are not drawn by a hand, but the rectangle of a node the tool made has five
+    if (points.size() < LOOP_MIN_POINTS && !(points.size() >= 5 && closedExactly(QPolygonF(points)))) {
         return false;
     }
     const QRectF bounds = boundsOf(points);
